@@ -23,7 +23,7 @@ const BigAsideMenuContainer = styled.ul`
 
 `;
 
-const HomeAsideMenu = ({ asideData }) => {
+const AsideMenu = ({ asideData }) => {
     return (
         <Container>
             <BigAsideMenuContainer>
@@ -41,4 +41,4 @@ const HomeAsideMenu = ({ asideData }) => {
     );
 };
 
-export default HomeAsideMenu;
+export default AsideMenu;

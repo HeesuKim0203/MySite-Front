@@ -1,7 +1,13 @@
-import React from 'react' ;
+import React, { useContext } from 'react' ;
 import styled from 'styled-components' ;
 
 import MDEditor from '@uiw/react-md-editor' ;
+import { connect } from 'react-redux';
+
+import ButtonContainer from '../Components/Blog/ButtonContainer' ;
+import BlogPageContainer from '../Components/Blog/BlogPageContainer' ;
+
+import { createAction } from '../Store/store';
 
 const Container = styled.div`
     width : 100% ;
@@ -13,6 +19,8 @@ const Main = styled.div`
     width : 100% ;
 
     float : left ;
+
+    padding : 50px 20px ;
 `;
 
 const ContentBox = styled.div`
@@ -79,53 +87,55 @@ const Button = styled.button`
     }
 `;
 
-const ButtonContainer = styled.div`
-
-    float : left ;
-    width : 100% ;
-
-    display : flex ;
-    
-    justify-content : center ;
-    align-items : center ;
-`;
-
-const BlogPage = ({ location : { state : { css, html } } }) => {
-    console.log(html) ;
+const BlogPage = ({ location : { state }, pageContents,
+    pageSelect,
+    updatePageSelect }) => {
+    const { text : html } = state ;
+    console.log(pageContents) ;
     return (
         <Container>
-            <style>
-                {css}
-            </style>
             <Main>
                 <MDEditor.Markdown source={ html || null } />
             </Main>
             <Footer>
                 <ContentBox>
-                    <ContentTextBox>
-                        <ContentText>
-                            <Title>이전 글...</Title>
-                            <Date>2020-05-23</Date>
-                        </ContentText>
-                        <ContentText>
-                            <Title>지금 글...</Title>
-                            <Date>2020-05-23</Date>
-                        </ContentText>
-                        <ContentText>
-                            <Title>다음 글...</Title>
-                            <Date>2020-05-23</Date>
-                        </ContentText>
-                    </ContentTextBox>
+                { pageContents && pageContents.map((content, index) => {
+                    return pageSelect === index ? (
+                        <BlogPageContainer 
+                            key={index}
+                            pageContents={content}
+                            pageSelect={true}
+                        />
+                    ) : (
+                        <BlogPageContainer 
+                            key={index}
+                            pageContents={content}
+                        />
+                    )
+                })}
                 </ContentBox>
-                <ButtonContainer>
-                    <Button>1</Button>
-                    <Button>2</Button>
-                    <Button>3</Button>
-                    <Button>4</Button>
-                </ButtonContainer>
+                <ButtonContainer 
+                    contents={pageContents}
+                    select={pageSelect}
+                    updateSelect={updatePageSelect}
+                />
             </Footer>
         </Container>
     );
 };
 
-export default BlogPage ;
+function mapStateToProps(state) {
+    const { pageContents, pageSelect } = state ;
+    return {
+        pageContents,
+        pageSelect
+    } ;
+} ;
+
+function mapDispatchToProps(dispatch) {
+    return {
+        updatePageSelect : select => dispatch(createAction.updatePageSelect(select))
+    }
+} ;
+
+export default connect(mapStateToProps, mapDispatchToProps)(BlogPage) ;

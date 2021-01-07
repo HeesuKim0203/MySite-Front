@@ -47,6 +47,8 @@ const Img = styled.div`
     height : 250px ;
     
     background-image : url(${props=>props.url}) ;
+    background-repeat : no-repeat ;
+    background-size : cover ;
 
     border-bottom : 1.5px solid #999 ;
     float : left ; 
@@ -103,20 +105,18 @@ const StyleFontAwesomeIcon = styled(FontAwesomeIcon)`
 `;
 
 const Content = ({ content }) => {
-    const { title, url, update_at, content_id, language_id } = content ;
+    const { id, title, image_url, updated_at } = content ;
     return (
         <Container>
             <Link to={{
-                pathname : `${DOCUMENT}/${1}`,
+                pathname : `${DOCUMENT}/${id}`,
                 state : content
                 }}
-                // onClick={content_id ?  () => {} : e => e.preventDefault()}
                 >
-                <Img url={url} />
+                <Img url={image_url} />
                 <TextContainer>
                     <HeadContainer>
-                        {/* <Date draggable="false">{update_at && update_at.substring(0, 10)}</Date> */}
-                        <Date>2020-10-29</Date>
+                        <Date draggable="false">{updated_at && updated_at.substring(0, 10)}</Date>
                         {/* <Code>
                             { 
                               language_id && language_id === 2 ? (<StyleFontAwesomeIcon icon={fab.faJsSquare} />) : 

@@ -168,21 +168,20 @@ const LoginButton = styled.button`
     text-align : center ; 
 `;
 
-const Profile = ({ location : { pathname }, cookies }) => {
+const Profile = ({ cookies }) => {
 
     const [ email, setEmail ] = useState('') ;
     const [ pw, setPw ] = useState('') ;
     const [ login, setLogin ] = useState(false) ;
 
     useEffect(() => {
+        const token = cookies.get('token') ;
 
-        const { cookies : { token } } = cookies ;
-
-        if(token)
+        if(token) {
             setLogin(true) ;
-        else 
+        }else {
             setLogin(false) ;
-
+        }
     }) ;
 
     function onChange(e) {
@@ -203,34 +202,50 @@ const Profile = ({ location : { pathname }, cookies }) => {
         userData.append('email', email) ;
         userData.append('password', pw) ;
 
-        const { data : { Authorization } } = await axiosApi.login(userData) ;
-    
-        return  Authorization ? cookies.set('token', Authorization) : null ;
+        try {
+            const { 
+                data : { 
+                    Authorization 
+                } 
+            } = await axiosApi.login(userData) ;
+
+            if(Authorization) {
+                cookies.set('token', Authorization) ;
+                setLogin(true) ;
+            }
+
+        }catch {
+
+        }
+
+        return ;
     }
 
-    function onLogout(e) {
+    async function onLogout(e) {
         e.preventDefault() ;
 
         const token = cookies.get('token') ;
 
-        console.log(token) ;
-
-        console.log('logout')
-
         const logoutData = new FormData() ;
 
-        // const data = await axiosApi.logout(logoutData, token) ;
-        // console.log(data) ;
+        try {
+            const { 
+                data : { 
+                    status 
+                } 
+            } = await axiosApi.logout(logoutData, token) ;
 
-        api.post('http://54.145.229.76:80/api/auth/logout', logoutData, {
-            headers : {
-                'Authorization' : 'Bearer ' + token
+            if(status === "success") {
+                cookies.remove('token') ;
+                setLogin(false) ;
+                setEmail('') ;
+                setPw('') ;
             }
-        }).then(response => {
-            console.log(response) ;
-        }).catch(err => {
-            console.log(err) ;
-        }) ;
+        }catch {
+            
+        }
+
+        return ;
     }
 
     return (
@@ -278,7 +293,7 @@ const Profile = ({ location : { pathname }, cookies }) => {
                 </MainContainer>
             </MyContainer>
             <LoginContainer>
-                <Form onSubmit={ login ? onLogout : onLogin}>
+                <Form onSubmit={ login ? onLogout : onLogin} action="POST">
                    {login ? null : ( 
                         <>
                             <Label name="email">아이디</Label>

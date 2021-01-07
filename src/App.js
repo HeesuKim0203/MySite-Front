@@ -4,6 +4,7 @@ import Router from './Components/Router' ;
 import GlobalStyle from './Components/GlobalStyle' ;
 
 function App() {
+
   return (
     <>
       <GlobalStyle />

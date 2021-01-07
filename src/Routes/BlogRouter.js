@@ -20,18 +20,33 @@ const Container = styled.div`
     width : 100% ;
 
     overflow : hidden ;
+    
 `;
 
 const AsideMenuContainer = styled.div`
     float : left ;
 
     width : 18% ;
+
+    @media ${props => props.theme.mobileL} {
+        width : 100% ;
+    }
+    @media ${props => props.theme.mobileS} {
+       
+    }
 `;
 
 const MainContainer = styled.div`
     float : left ;
     width : 82% ;
     overflow : hidden ;
+
+    @media ${props => props.theme.mobileL} {
+        width : 100% ;
+    }
+    @media ${props => props.theme.mobileS} {
+       
+    }
 `;
 
 
@@ -48,9 +63,16 @@ const SearchContainer = styled.div`
     align-items : center ;
 
     overflow : hidden ;
-
+    
     @media ${props => props.theme.laptop} {
         height : 40px ;
+    }
+    @media ${props => props.theme.mobileL} {
+        margin-top : 0px ;
+        height : 30px ;
+    }
+    @media ${props => props.theme.mobileS} {
+       
     }
 `;
 
@@ -62,6 +84,12 @@ const FontAwesomeIconContainer = styled.div`
 
     @media ${props => props.theme.laptop} {
         top : 8px ;
+    }
+    @media ${props => props.theme.mobileL} {
+        top : 6px ;
+    }
+    @media ${props => props.theme.mobileS} {
+       
     }
 `;
 
@@ -83,6 +111,13 @@ const Form = styled.form`
 
     @media ${props => props.theme.laptop} {
         margin-right : 35px ;
+    }
+
+    @media ${props => props.theme.mobileL} {
+        margin-right : 3px ;
+    }
+    @media ${props => props.theme.mobileS} {
+       
     }
 `;
 
@@ -115,6 +150,14 @@ const SearhInput = styled.input`
         width : 280px ;
         height : 30px ;
     }
+    @media ${props => props.theme.mobileL} {
+        font-size : 9px ;
+        width : 100px ;
+        height : 30px ;
+    }
+    @media ${props => props.theme.mobileS} {
+       
+    }
 `;
 
 const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
@@ -124,6 +167,13 @@ const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
 
     &:hover {
         color : #3949ab ;
+    }
+
+    @media ${props => props.theme.mobileL} {
+        font-size : 11px ;
+    }
+    @media ${props => props.theme.mobileS} {
+       
     }
 `;
 

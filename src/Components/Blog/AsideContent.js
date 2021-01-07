@@ -14,9 +14,17 @@ const Title = styled.h6`
     @media ${props => props.theme.laptop} {
         font-size : 20px ;
     }
+    @media ${props => props.theme.mobileL} {
+        text-align : center ;
+        font-size : 0px ;
+    }
+    @media ${props => props.theme.mobileS} {
+       
+    }
 `;
 
 const BigAisdeMenu = styled.li`
+    width : 100% ;
     margin-top : 40px ;
 
     color : #9e9e9e ;
@@ -24,10 +32,20 @@ const BigAisdeMenu = styled.li`
     user-select : none ;
 
     cursor : pointer ; 
+
+    @media ${props => props.theme.mobileL} {
+        margin-top : 0px ;
+    }
+    @media ${props => props.theme.mobileS} {
+       
+    }
 `;
 
 const AsideMenu = styled.ul`
-
+    @media ${props => props.theme.mobileL} {
+        display : flex ;
+        flex-wrap : wrap ;
+    }
 `;
 
 const Menu = styled.li`
@@ -47,6 +65,19 @@ const Menu = styled.li`
         background-color : #e8eaf6 ;
         color : #3949ab ;
     }
+
+    @media ${props => props.theme.mobileL} {
+        width : 50% ;
+        font-size : 10px ;
+        &:first-child {
+            margin-top : 0px ;
+        }
+        padding : 8px ;
+        text-align : center ;
+    }
+    @media ${props => props.theme.mobileS} {
+       
+    }
 `;
 
 const FontContainer = styled.div`
@@ -61,6 +92,9 @@ const FontContainer = styled.div`
     @media ${props => props.theme.laptop} {
         height : 25px ;
     }
+    @media ${props => props.theme.mobileL} {
+        height : 10px ;
+    }
 `;
 
 const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
@@ -68,6 +102,10 @@ const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
     font-size : 28px ;
 
     font-weight : 700 ;
+
+    @media ${props => props.theme.mobileL} {
+        font-size : 11px
+    }
 `;
 
 const Text = styled.span`
@@ -78,6 +116,11 @@ const Text = styled.span`
     font-size : 16px ;
 
     font-weight : 650 ;
+
+    @media ${props => props.theme.mobileL} {
+        font-size : 11px ;
+        padding-left : 10px ;
+    }
 `;
 
 const AsideContent = ({ title, menu }) => {

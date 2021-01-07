@@ -1,4 +1,4 @@
-import React from 'react' ;
+import React, { useEffect, useState } from 'react' ;
 import { withCookies } from 'react-cookie';
 import { withRouter } from 'react-router-dom' ;
 
@@ -20,7 +20,10 @@ const HeaderImgBright = css`
         height : 445px ;
     }
     @media ${props => props.theme.mobileL} {
-        height : 380px ;
+        height : 350px ;
+    }
+    @media ${props => props.theme.mobileS} {
+        height : 210px ;
     }
 `;
 
@@ -95,6 +98,9 @@ const TitContainer = styled.div`
     @media ${props => props.theme.mobileL} {
         margin-top : 130px ;
     }
+    @media ${props => props.theme.mobileS} {
+        margin-top : 70px ;
+    }
 `;
 
 const Title = styled.h1`
@@ -116,6 +122,9 @@ const Title = styled.h1`
     @media ${props => props.theme.mobileL} {
         font-size : 64px ;
     }
+    @media ${props => props.theme.mobileS} {
+        font-size : 36px ;
+    }
 `;
 
 const TitleMyName = styled.a`
@@ -135,6 +144,9 @@ const TitleMyName = styled.a`
     } 
     @media ${props => props.theme.mobileL} {
         font-size : 22px ;
+    }
+    @media ${props => props.theme.mobileS} {
+        font-size : 14px ;
     }
 `;
 
@@ -169,6 +181,13 @@ const Button = styled.button`
         height : 40px ;
         margin-top : 90px ;
     }
+    @media ${props => props.theme.mobileS} {
+        font-weight : 550 ;
+        width : 90px ;
+        font-size : 13px ;
+        height : 28px ;
+        margin-top : 40px ;
+    }
 `;
 
 const NullContainer = styled.div`
@@ -176,19 +195,11 @@ const NullContainer = styled.div`
     height : 70px ;
 `;
 
-const Header = ({ location : { pathname }, cookies }) => {
+const Header = (props) => {
 
-    const { cookies : { token } } = cookies ;
+    const { location : { pathname } } = props ;
 
-    function onMy() {
-        return token 
-        ? {
-            path : MY,
-            text : 'MY'
-        } : null ;
-    }
-
-    const data = [
+    const [ data, setData ] = useState([
         {
             path : HOME,
             text : 'HOME',
@@ -201,8 +212,22 @@ const Header = ({ location : { pathname }, cookies }) => {
             path : PROFILE,
             text : 'PROFILE',
         },
-        onMy()
-    ] ;
+    ]) ;
+
+    useEffect(() => {
+        const token = props.cookies.get('token') ;
+        if(token && data.length === 3) {
+            setData([
+                ...data,
+                {
+                    path : MY,
+                    text : 'MY'
+                }    
+            ]) ;
+        }else if( !token && data.length >= 4) {
+            setData([ ...data.slice(0, data.length - 1) ]) ;
+        }
+    }, [ props ]) ;
     
     const checkPathName = pathname.includes(WRITE) ? false : true ;
 

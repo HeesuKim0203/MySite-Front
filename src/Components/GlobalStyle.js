@@ -6,7 +6,6 @@ const GlobalStyled = createGlobalStyle`
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&family=Roboto:wght@300&display=swap');
     @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
     @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap');
-    @import 'pell/dist/pell.css' ;
     ${reset}
     * {
         padding : 0 ;

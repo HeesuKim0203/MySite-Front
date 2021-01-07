@@ -19,6 +19,15 @@ const Container = styled.li`
     &:not(:last-child) {
         padding-right : 2% ;
     }
+
+    @media ${props => props.theme.mobileL} {
+        font-size : 14px ;
+        height : 45px ;
+    }
+    @media ${props => props.theme.mobileS} {
+        font-size : 11px ;
+        height : 33px ;
+    }
 `;
 
 const StyledLinked = styled(Link)`

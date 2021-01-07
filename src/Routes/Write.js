@@ -8,6 +8,9 @@ import { axiosApi } from '../Util/api' ;
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome' ;
 import { faSortDown } from '@fortawesome/free-solid-svg-icons' ;
 
+import { useInputImg } from '../Util/fucntion' ;
+import Image from '../Components/Me/Image' ;
+
 const Container = styled.div`
     
 `;
@@ -17,7 +20,7 @@ const Header = styled.div`
     height : 500px ;
     overflow : hidden ;
 
-    display : flex ;
+    display : ${props => props.display} ;
     align-items : center ;
     justify-content : center ;
 
@@ -92,17 +95,6 @@ const ImgInput = styled.input`
     padding-right : 7px ;
 `;
 
-const Description = styled.textarea`
-    all : unset ;
-
-    width : 300px ;
-    height : 60px ;
-
-    padding : 3.5px ;
-
-    border : 2px solid ${props => props.status} ;
-`;
-
 const Label = styled.label`
     &:not(:first-child) {
         margin-top : 10px ;
@@ -131,7 +123,6 @@ const FixdMenu = styled.div`
 const Menu = styled.div`
 
     box-sizing : content-box ;
-    width : 40px ;
     height : 25px ;
     
     border : 1px solid #111 ;
@@ -153,63 +144,28 @@ const Menu = styled.div`
     }
 `;
 
-const FixedInputCss = styled.div`
-    position : fixed ;
-    
-    top : 100px ;
-    left : 100px ;
-`;
-
 const FixedMorkDown = styled.div`
-    position : fixed ;
-    
-    top : 100px ;
-    left : 700px ;
 
-    width : 500px ;
+    width : 800px ;
+
+    margin : 0 auto ;
     display : ${props => props.display} ;
 `;
 
-
-const InputCss = styled.textarea`
-    all : unset ;
-
-    border : 1.5px solid #999 ;
-
-    background-color : #fff ;
+const ImageListContainer = styled.div`
     display : ${props => props.display} ;
 `;
-
-const useInputImg = (initialValue) => {
-    const [ file, setFile ] = useState(initialValue) ;
-    const [ url, setUrl ] = useState('') ;
-
-    const onChange = e => {
-        let reader = new FileReader() ;
-        const {
-            target : {
-                files : [ fileData ]
-            }
-        } = e ;
-        reader.onloadend = () => {
-            setFile(fileData) ;
-            setUrl(reader.result) ;
-        }
-        reader.readAsDataURL(fileData) ;
-    }
-    return { file, url, onChange } ;
-} ;
 
 const Write = () => {
     const [ title, setTitle ] = useState('') ;
     const [ language, setLanguage ] = useState('') ;
     const [ html, setHTML ] = useState('') ;
-    const [ css, setCss ] = useState('') ;
-    const [ description, setDescription ] = useState('') ;
     const [ type, setType ] = useState('') ;
     const [ value, setValue ] = useState('') ;
+
     const [ htmlWriter, setHtmlWriter ] = useState(false) ;
-    const [ cssWriter, setCssWriter ] = useState(false) ;
+    const [ preview, setPreview ] = useState(false) ;
+    const [ ImageView, setImageView ] = useState(false) ;
 
     const today = new Date() ;
     const { 
@@ -218,39 +174,30 @@ const Write = () => {
         onChange : imgOnChange 
     } = useInputImg('') ; 
 
-    async function onSubmitImage(e) {
-        e.preventDefault() ;
-        const formData = new FormData() ;
-        formData.append('file', img) ;
+    // async function onSubmitImage(e) {
+    //     e.preventDefault() ;
+    //     const formData = new FormData() ;
+    //     formData.append('file', img) ;
 
-        const {
-            data
-        } = await axiosApi.imgTest(formData) ;
+    //     const {
+    //         data
+    //     } = await axiosApi.addImg(formData) ;
 
-        const contentFormData = new FormData() ;
-        contentFormData.append('title', title) ;
-        contentFormData.append('css', css) ;
-        contentFormData.append('html', html) ;
-        contentFormData.append('language', language) ;
-        contentFormData.append('url', data) ;
+    //     const contentFormData = new FormData() ;
+    //     contentFormData.append('title', title) ;
+    //     contentFormData.append('html', html) ;
+    //     contentFormData.append('language', language) ;
+    //     contentFormData.append('url', data) ;
 
-        await axiosApi.createContent(contentFormData) ;
-    }
+    //     await axiosApi.createContent(contentFormData) ;
+    // }
 
     function onChangeValue(e) {
         setValue(e.target.value) ;
     }
 
-    function onChagneDescrption(e) {
-        setDescription(e.target.value) ;
-    }
-
     function onChangeType(e) {
         setType(e.target.value) ;
-    }
-
-    function onChangeCss(e) {
-        setCss(e.target.value) ;
     }
 
     function onChangeTitle(e) {
@@ -261,20 +208,22 @@ const Write = () => {
         setLanguage(e.target.value) ;
     }
 
-    function onViewCss(e) {
-        setCssWriter(cssWriter ? false : true) ;
-    }
-
     function onViewHtml(e) {
         setHtmlWriter(htmlWriter ? false : true) ;
     }
 
+    function onViewPreview(e) {
+        setPreview(preview ? false : true) ;
+    }
+
+    function onViewImage(e) {
+        console.log(ImageView) ;
+        setImageView(ImageView ? false :  true) ;
+    }
+
     return (
         <Container>
-            <style>
-                {css}
-            </style>
-            <Header>
+            <Header display={preview ? 'flex' : 'none'}>
                 <InputContainer>
                     <Label name="title">제목</Label>
                     <Title 
@@ -295,8 +244,8 @@ const Write = () => {
                         url={require("../assets/select_arrow.PNG").default}
                     >
                         <LanguageOption value="0">--Select Type--</LanguageOption>
-                        <LanguageOption value="1">프로그래밍</LanguageOption>
-                        <LanguageOption value="2">일상</LanguageOption>
+                        <LanguageOption value="programming">프로그래밍</LanguageOption>
+                        <LanguageOption value="chat">잡담</LanguageOption>
                     </Language>
                     {type === "1" ? (
                         <>
@@ -311,9 +260,9 @@ const Write = () => {
                                 url={require("../assets/select_arrow.PNG").default}
                             >
                                 <LanguageOption value="0">--Select LanguageOption--</LanguageOption>
-                                <LanguageOption value="2">JS</LanguageOption>
-                                <LanguageOption value="1">HTML</LanguageOption>
-                                <LanguageOption value="3">CSS</LanguageOption>
+                                <LanguageOption value="js">JS</LanguageOption>
+                                <LanguageOption value="html">HTML</LanguageOption>
+                                <LanguageOption value="css">CSS</LanguageOption>
                             </Language>
                         </>
                     ) : (
@@ -329,9 +278,9 @@ const Write = () => {
                                 url={require("../assets/select_arrow.PNG").default}
                             >
                                 <LanguageOption value="0">--Select--</LanguageOption>
-                                <LanguageOption value="1">일상</LanguageOption>
-                                <LanguageOption value="2">이모저모</LanguageOption>
-                                <LanguageOption value="3">여행기</LanguageOption>
+                                <LanguageOption value="daily">일상</LanguageOption>
+                                <LanguageOption value="chatter">이모저모</LanguageOption>
+                                <LanguageOption value="travel">여행기</LanguageOption>
                             </Language>
                         </>
                     )}
@@ -351,36 +300,29 @@ const Write = () => {
                                 title,
                                 language_id : Number(language),
                                 url : imgUrl,
-                                description,
                                 update_at : today.getFullYear() + "/" +  today.getMonth() + "/" + today.getDay()
                             }}
                     /> }
                 </PreviewContainer>
             </Header>
             <Main>
+                <ImageListContainer display={ImageView ? 'block' : 'none'}>
+                    <Image />
+                </ImageListContainer>
+                <FixedMorkDown
+                    display={htmlWriter ? 'block' : 'none' }
+                >
+                    <MDEditor
+                        value={html}
+                        onChange={setHTML}
+                    />
+                </FixedMorkDown>
                 <MDEditor.Markdown source={html || null} />
             </Main>
-            <FixedMorkDown
-                display={htmlWriter ? 'block' : 'none' }
-            >
-                <MDEditor
-                    value={html}
-                    onChange={setHTML}
-                />
-            </FixedMorkDown>
-            <FixedInputCss>
-                <InputCss
-                    placeholder="Start css!!"
-                    value={css}
-                    onChange={onChangeCss}
-                    rows="20" 
-                    cols="60"
-                    display={cssWriter ? 'block' : 'none' }
-                />
-            </FixedInputCss>
             <FixdMenu>
-                <Menu onClick={onViewCss}>CSS</Menu>
+                <Menu onClick={onViewPreview}>개시글 컨텐츠</Menu>
                 <Menu onClick={onViewHtml}>HTML</Menu>
+                <Menu onClick={onViewImage}>이미지</Menu>
                 <Menu  onClick={null}>작성</Menu>
             </FixdMenu>
         </Container>

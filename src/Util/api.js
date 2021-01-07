@@ -4,19 +4,20 @@ const api = axios.create({
     baseURL : 'http://54.145.229.76:80',
 }) ;
 
-export { api } ;
-
 export const axiosApi = {
     getContents : () => api.get('/api/contents'),
     createContent : (data) => api.post('/api/contents', data),
-    imgTest : file => api.post('/api/images', file, { 
+    addImg : (file) => api.post('/api/images', file, { 
         headers : { 'Content-Type' : 'multipart/form-data' }
     }),
+    getImgList : () => api.get('api/images'),
+    deleteImg : id => api.delete(`api/images/${id}`),
     login : userData => api.post('/api/auth/login', userData),
     token : tokenData => api.post('/api/test', tokenData),
-    logout : (aa, token) => api.post('/api/auth/logout', aa, {
+    logout : (form, token) => api.post('/api/auth/logout', form, {
         headers : { 
             'Authorization' : 'Bearer ' + token
         }
-    })
+    }),
+    getProjectList : () => api.get('api/projects')
 } ;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react' ;
+import React, { useState, useEffect, createContext } from 'react' ;
 import styled from 'styled-components' ;
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome' ;
@@ -8,6 +8,9 @@ import { fas, faSearch } from '@fortawesome/free-solid-svg-icons' ;
 import AsideMenu from '../Components/Blog/AsideMenu' ;
 import BlogContainer from '../Components/Blog/BlogContainer' ;
 import { axiosApi } from '../Util/api' ;  
+import { connect } from 'react-redux';
+import { createAction } from '../Store/store';
+import ButtonContainer from '../Components/Blog/ButtonContainer' ;
 
 const Container = styled.div`
     width : 100% ;
@@ -20,89 +23,46 @@ const ContentContainer = styled.div`
 
     width : 100% ;
     padding : 40px 10px ;
-`;
 
-const Button = styled.button`
-    all : unset ;
-
-    padding : 15px 20px ;
-
-    font-size : 18px ;
-    font-weight : 900 ;
-
-    color : ${props => props.select ? '#3949ab' : '#cfd8dc'} ;
-    background-color : ${props => props.select ? '#e8eaf6' : '#fff'} ;
-
-    &:hover {
-        background-color : #e8eaf6 ;
-        color : #3949ab ;
+    @media ${props => props.theme.mobileL} {
+        padding : 20px 5px ;
     }
 `;
 
-const ButtonContainer = styled.div`
+const Blog = ({ contents, select, setContents, setPageContents, updateSelect }) => {
 
-    float : left ;
-    width : 100% ;
-
-    display : flex ;
-    
-    justify-content : center ;
-    align-items : center ;
-`;
-
-
-const Blog = () => {
     const [ loading, setLoading ] = useState(true) ;
-    const [ contents, setContents ] = useState() ;
-    const [ select, setSelect ] = useState(0) ;
-
-    function onClickButton(e) {
-        return e.target !== e.currentTarget ? setSelect(e.target.innerHTML - 1) : null ;
-    }
 
     useEffect(() => {
-        
-        let num = 0 ;
-        let numCounte = 9 ;
 
         const data = [] ;
 
-        for(let i = 0 ; i < 32 ; i++) {
-            data[i] = {
-                title : '안녕하세요',
-                created_at : '2020-12-28',
-                description : '설명합니다.'
+        async function fetchData() {
+            try {
+                const { 
+                    data : { 
+                        contents 
+                    } 
+                } = await axiosApi.getContents() ;
+
+                // 예비 데이터
+                for(let i = 0 ; i < 32 ; i++) {
+                    data[i] = contents[0] ;
+                }
+
+                setContents(data) ;
+                setPageContents(data) ;
+
+            }catch {
+                console.log('error') ;
+            }finally {
+                setLoading(false) ;
             }
         }
 
-        setContents(data.reduce((prev, item, index ) => {
-            if(index === num) {
-                prev.push([]) ;
-                num += numCounte ;
-            }
-            prev[num / numCounte - 1][index % numCounte] = item ;
-            return prev ;
-        }, [])) ;
+        fetchData() ;
 
-        // async function fetchData() {
-        //     try {
-        //         const { 
-        //             data : { 
-        //                 contents 
-        //             } 
-        //         } = await axiosApi.getContents() ;
-
-        //         setContents(contents) ;
-        //     }catch {
-        //         console.log('error') ;
-        //     }finally {
-        //         setLoading(false) ;
-        //     }
-        // }
-
-        // fetchData() ;
-
-    }, []) ;
+    }, [ setContents ]) ;
 
     return (
         <Container>
@@ -122,22 +82,32 @@ const Blog = () => {
                     )
                 })}
             </ContentContainer>
-            <ButtonContainer onClick={onClickButton}>
-                { contents && contents.map((__, index) => {
-                    return select === index ? (
-                        <Button 
-                            key={index}
-                            select={true}
-                        >{index + 1}</Button>
-                    ) : (
-                        <Button 
-                            key={index}
-                        >{index + 1}</Button>
-                    ) ;
-                })}
-            </ButtonContainer>
+            <ButtonContainer 
+                contents={contents}
+                updateSelect={updateSelect}
+                select={select}
+            />
         </Container>
     );
 };
 
-export default Blog;
+function mapStateToProps(state) {
+    const { contents, select } = state ;
+    return {
+        contents,
+        select
+    } ;
+} ;
+
+function mapDispatchToProps(dispatch) {
+    return {
+        setContents : contents => 
+            dispatch(createAction.setContents(contents)),
+        setPageContents : contents => 
+            dispatch(createAction.setPageContents(contents)),
+        updateSelect : select => 
+            dispatch(createAction.updateSelect(select))
+    }
+} ;
+
+export default  connect(mapStateToProps, mapDispatchToProps)(Blog);

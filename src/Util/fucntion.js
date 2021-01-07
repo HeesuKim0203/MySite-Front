@@ -1,19 +1,22 @@
-import { useState } from 'react' ;
+import React, { useState } from 'react' ;
 import { axiosApi } from './api' ;
 
-export const token_check = () => {
+export const useInputImg = (initialValue) => {
+    const [ file, setFile ] = useState(initialValue) ;
+    const [ url, setUrl ] = useState('') ;
 
-    const [ login, setLogin ] = useState(false) ;
-    
-    async function tokenCheck() {
-        const { data } = await axiosApi.token(test) ; 
-
-        return data ;
+    const onChange = e => {
+        let reader = new FileReader() ;
+        const {
+            target : {
+                files : [ fileData ]
+            }
+        } = e ;
+        reader.onloadend = () => {
+            setFile(fileData) ;
+            setUrl(reader.result) ;
+        }
+        reader.readAsDataURL(fileData) ;
     }
-    
-    return {
-        tokenCheck,
-        login,
-        setLogin
-    } ;
+    return { file, url, onChange } ;
 } ;

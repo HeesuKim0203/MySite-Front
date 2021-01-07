@@ -9,6 +9,10 @@ const Container = styled.div`
     width : 100% ;
 
     overflow : hidden ;
+
+    @media ${props => props.theme.mobileS} {
+        margin-top : 4px ;
+    }
 `;
 
 const UseLanguageContentContainer = styled.div`
@@ -49,6 +53,7 @@ const UseLanguageFooter = styled.div`
     align-items : center ;
 
     padding-bottom : 15px ;
+
 `;
 
 const Button = styled.button`
@@ -73,9 +78,9 @@ const UseLanguage = () => {
         { text : 'HTML' , icon : fab.faHtml5 },
         { text : 'CSS3' , icon : fab.faCss3Alt },
         { text : 'Laravel', icon : fab.faLaravel },
-        { text : 'NodeJs', icon : fab.faNode },
+        // { text : 'NodeJs', icon : fab.faNode },
         { text : 'AWS', icon : fab.faAws },
-        { text : 'Android', icon : fab.faAndroid }
+        // { text : 'Android', icon : fab.faAndroid }
     ] ;
 
     function onClickCreate() {
