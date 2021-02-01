@@ -3,11 +3,20 @@ import logger from 'redux-logger' ;
 
 import { blogContentNum, blogPageContentNum } from '../Util/util' ;
 
+const STORE_DEFAULT_DATA = 'STORE_DEFAULT_DATA' ;
+
 const SET_CONTENTS_DATA = 'SET_CONTENTS_DATA' ;
 const SET_PAGE_CONTENTS_DATA = 'SET__PAGE_CONTENTS_DATA' ;
 
 const UPDATE_SELECT = 'UPDATE_SELECT' ;
 const UPDATE_PAGE_SELECT = 'UPDATE_PAGE_SELECT' ;
+
+const SEARCH_CONTENTS = 'SEARCH_CONTENTS' ;
+
+const setDefaultData = defaultData => ({
+        type : STORE_DEFAULT_DATA,
+        defaultData
+}) ;
 
 const setContents = contents => ({
     type : SET_CONTENTS_DATA,
@@ -29,44 +38,100 @@ const updatePageSelect = select => ({
     select
 }) ;
 
-const contentsReducer = (state =[], action) => {
+const searchContents = (defaultData, searchValue) => ({
+    type : SEARCH_CONTENTS,
+    searchValue,
+    defaultData
+}) ;
+
+// search all -> search 값 보내기 x
+const dataForm = (array, search) => {
+
+    let num = 0 ;
+    const numCounte = blogContentNum ;
+
+    const arrayDataSet = array.map((content, index) => ({ 
+        ...content,
+        id : index
+    })) ;
+
+    return !search ? arrayDataSet.reduce((prev, item, index ) => {
+        if(index === num) {
+            prev.push([]) ;
+            num += numCounte ;
+        }
+        prev[num / numCounte - 1][index % numCounte] = item ;
+        return prev ;
+    }, []) 
+    :  arrayDataSet.filter(item =>  search === item.type).reduce((prev, item, index) => {
+        // 문제 있으면 고치자
+        if(index === num) {
+            prev.push([]) ;
+            num += numCounte ;
+        }
+        prev[num / numCounte - 1][index % numCounte] = item ;
+
+        return prev ;
+    }, [])
+}
+
+const contentReducer = (
+    state = {
+        defaultData : [],
+        contentsData : [],
+        buttonsData : [],
+        pageContents : [],
+        pageButtonsData : [],
+        select : 0,
+        pageSelect : 0,
+    },
+    action
+) => {
+
+    let contentsData ;
+    let buttonsData ;
+
     switch(action.type) {
-        case SET_CONTENTS_DATA :
+        case STORE_DEFAULT_DATA :
 
-            let num = 0 ;
-            const numCounte = blogContentNum ;
+             return {
+                ...state,                                            
+                defaultData : action.defaultData
+            } ; 
+             
+         case SET_CONTENTS_DATA :
 
-            const data = action.contents.reduce((prev, item, index ) => {
-                if(index === num) {
-                    prev.push([]) ;
-                    num += numCounte ;
-                }
-                prev[num / numCounte - 1][index % numCounte] = item ;
-                return prev ;
-            }, []) ;
 
-            return data ;
-        default :
-            return state ;
-    }
-} ;
+            contentsData = dataForm(action.contents) ;
+            buttonsData = contentsData.map((__, index) => index) ;
 
-const selectReducer = (
-    state = 0 
-, action) => {
-    switch(action.type) {
+             return {
+                 ...state,
+                 contentsData,
+                 buttonsData
+             } ;
+ 
+         case SEARCH_CONTENTS :
+
+            contentsData = dataForm(action.defaultData, action.searchValue) ;
+            buttonsData = contentsData.map((__ , index) => index ) ;
+ 
+             return {
+                 ...state, 
+                 contentsData,
+                 buttonsData
+             }
+
         case UPDATE_SELECT :
-            return action.select ;
-        default :
-            return state ;
-    }
-} ;
 
-const pageContentsReducer = (state =[], action) => {
-    switch(action.type) {
+            return {
+                ...state,
+                select : action.select 
+            }
         case SET_PAGE_CONTENTS_DATA :
 
-            const pageData = action.contents.map(content => ({ 
+            const pageData = action.contents.map((content, index) => ({ 
+                id : index,
                 title : content.title, 
                 updated_at : content.updated_at.substring(0, 10) 
             })) ;
@@ -74,7 +139,7 @@ const pageContentsReducer = (state =[], action) => {
             let num = 0 ;
             const numCounte = blogPageContentNum ;
 
-            const data = pageData.reduce((prev, item, index ) => {
+            const data = pageData.reduce((prev, item, index) => {
                 if(index === num) {
                     prev.push([]) ;
                     num += numCounte ;
@@ -83,28 +148,26 @@ const pageContentsReducer = (state =[], action) => {
                 return prev ;
             }, []) ;
 
-            return data ;
-        default :
-            return state ;
-    }
-} ;
+            buttonsData = data.map((__, index) => index) ;
 
-const pageSelectReducer = (
-    state = 0 
-, action) => {
-    switch(action.type) {
-        case UPDATE_PAGE_SELECT :
-            return action.select ;
+            return {
+                ...state,
+                pageContents : data,
+                pageButtonsData : buttonsData
+            } ;
+
+        case UPDATE_PAGE_SELECT : 
+            return {
+                ...state,
+                pageSelect : action.select 
+            }
         default :
             return state ;
-    }
-} ;
+     }
+}
 
 const reducer = combineReducers({
-    contents : contentsReducer,
-    select : selectReducer,
-    pageContents : pageContentsReducer,
-    pageSelect : pageSelectReducer
+    content : contentReducer,
 }) ;
 
 const store = createStore(reducer, applyMiddleware(logger)) ;
@@ -113,7 +176,9 @@ export const createAction = {
     setContents,
     updateSelect,
     setPageContents,
-    updatePageSelect
+    updatePageSelect,
+    searchContents,
+    setDefaultData
 } ;
 
 export default store ;

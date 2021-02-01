@@ -1,4 +1,4 @@
-import React, { useContext } from 'react' ;
+import React, { useContext, useEffect } from 'react' ;
 import styled from 'styled-components' ;
 
 import MDEditor from '@uiw/react-md-editor' ;
@@ -8,6 +8,11 @@ import ButtonContainer from '../Components/Blog/ButtonContainer' ;
 import BlogPageContainer from '../Components/Blog/BlogPageContainer' ;
 
 import { createAction } from '../Store/store';
+import { withRouter } from 'react-router-dom';
+
+import {
+    DOCUMENT
+} from '../Util/routes' ;
 
 const Container = styled.div`
     width : 100% ;
@@ -27,75 +32,18 @@ const ContentBox = styled.div`
     
 `;
 
-const ContentTextBox = styled.div`
-    
-    width : 100% ;
-
-    display : flex ;
-    flex-direction : column ;
-`;
-
-const ContentText = styled.div`
-    padding : 10px 20px ;
-
-    display : flex ;
-    justify-content : center ;
-    align-items : center ;
-
-    cursor : pointer ;
-
-    &:hover {
-        background-color : #f5f5f5 ;
-    }
-`;
-
-const Title = styled.span`
-    font-size : 15px ;
-    flex : 1 ;
-
-    font-weight : 800 ;
-
-    color : #9e9e9e ;
-`;
-
-const Date = styled.span`
-    font-size : 12px ;
-
-    color : #cfd8dc ;
-`;
-
 const Footer = styled.div`
     width : 100% ;
 
     float : left ;
 `;
 
-const Button = styled.button`
-    all : unset ;
+const BlogPage = ({ location : { pathname }, pageContents, pageSelect, defaultData }) => {
 
-    padding : 15px 20px ;
-
-    font-size : 18px ;
-    font-weight : 900 ;
-
-    color : ${props => props.select ? '#3949ab' : '#cfd8dc'} ;
-    background-color : ${props => props.select ? '#e8eaf6' : '#fff'} ;
-
-    &:hover {
-        background-color : #e8eaf6 ;
-        color : #3949ab ;
-    }
-`;
-
-const BlogPage = ({ location : { state }, pageContents,
-    pageSelect,
-    updatePageSelect }) => {
-    const { text : html } = state ;
-    console.log(pageContents) ;
     return (
         <Container>
             <Main>
-                <MDEditor.Markdown source={ html || null } />
+                <MDEditor.Markdown source={ defaultData[pathname.replace(`${DOCUMENT}/`, "")].text || null } />
             </Main>
             <Footer>
                 <ContentBox>
@@ -114,28 +62,25 @@ const BlogPage = ({ location : { state }, pageContents,
                     )
                 })}
                 </ContentBox>
-                <ButtonContainer 
-                    contents={pageContents}
-                    select={pageSelect}
-                    updateSelect={updatePageSelect}
-                />
+                <ButtonContainer />
             </Footer>
         </Container>
     );
 };
 
 function mapStateToProps(state) {
-    const { pageContents, pageSelect } = state ;
+    const { 
+        content : {
+            pageContents, pageSelect, defaultData
+        } 
+    } = state ;
+
     return {
         pageContents,
-        pageSelect
+        pageSelect,
+        defaultData
     } ;
 } ;
 
-function mapDispatchToProps(dispatch) {
-    return {
-        updatePageSelect : select => dispatch(createAction.updatePageSelect(select))
-    }
-} ;
 
-export default connect(mapStateToProps, mapDispatchToProps)(BlogPage) ;
+export default withRouter(connect(mapStateToProps, null)(BlogPage)) ;

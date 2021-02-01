@@ -2,6 +2,11 @@ import React from 'react' ;
 import styled from 'styled-components' ;
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome' ;
+import { connect } from 'react-redux' ;
+import { createAction } from '../../Store/store' ;
+import { Link } from 'react-router-dom';
+
+import { DOCUMENT } from '../../Util/routes' ;
 
 const Title = styled.h6`
     font-size : 22px ;
@@ -56,6 +61,8 @@ const Menu = styled.li`
     display : flex ;
 
     align-items : center ;
+
+    color : #9e9e9e ;
 
     &:first-child {
         margin-top : 20px ;
@@ -123,24 +130,42 @@ const Text = styled.span`
     }
 `;
 
-const AsideContent = ({ title, menu }) => {
+const AsideContent = ({ title, menu, onClickMenuContent }) => {
     
     return (
         <BigAisdeMenu>
             <Title>{title}</Title>
             <AsideMenu>
                 { menu && menu.map((menu, index) => 
-                    <Menu key={index}>
+                <Link to={DOCUMENT} key={index}>
+                    <Menu onClick={() => onClickMenuContent(menu.text)}>
                         <FontContainer>
                             <StyledFontAwesomeIcon icon={menu.icon}/>
                         </FontContainer>
                         <Text>{menu.text}</Text>
                     </Menu>
+                </Link>
                 )}
             </AsideMenu>
-            
         </BigAisdeMenu>
     );
 };
 
-export default AsideContent;
+function mapStateToProps(state) {
+    const { 
+        content : { 
+            defaultData 
+        } 
+    } = state ;
+    return {
+        defaultData
+    } ;
+} ;
+
+function mapDispatchToProps(dispatch) {
+    return {
+        searchContents : (defaultData, search) => dispatch(createAction.searchContents(defaultData, search))
+    }
+} ;
+
+export default connect( mapStateToProps, mapDispatchToProps )(AsideContent);

@@ -158,42 +158,25 @@ const ImageListContainer = styled.div`
 
 const Write = () => {
     const [ title, setTitle ] = useState('') ;
-    const [ language, setLanguage ] = useState('') ;
     const [ html, setHTML ] = useState('') ;
     const [ type, setType ] = useState('') ;
-    const [ value, setValue ] = useState('') ;
+    const [ imageUrl, setImageUrl] = useState('') ;
 
     const [ htmlWriter, setHtmlWriter ] = useState(false) ;
     const [ preview, setPreview ] = useState(false) ;
     const [ ImageView, setImageView ] = useState(false) ;
 
-    const today = new Date() ;
-    const { 
-        file : img, 
-        url : imgUrl, 
-        onChange : imgOnChange 
-    } = useInputImg('') ; 
+    async function onSubmitImage(e) {
+        e.preventDefault() ;
 
-    // async function onSubmitImage(e) {
-    //     e.preventDefault() ;
-    //     const formData = new FormData() ;
-    //     formData.append('file', img) ;
 
-    //     const {
-    //         data
-    //     } = await axiosApi.addImg(formData) ;
+        const contentFormData = new FormData() ;
+        contentFormData.append('title', title) ;
+        contentFormData.append('text', html) ;
+        contentFormData.append('type', type) ;
+        contentFormData.append('image_url', imageUrl) ;
 
-    //     const contentFormData = new FormData() ;
-    //     contentFormData.append('title', title) ;
-    //     contentFormData.append('html', html) ;
-    //     contentFormData.append('language', language) ;
-    //     contentFormData.append('url', data) ;
-
-    //     await axiosApi.createContent(contentFormData) ;
-    // }
-
-    function onChangeValue(e) {
-        setValue(e.target.value) ;
+        await axiosApi.createContent(contentFormData) ;
     }
 
     function onChangeType(e) {
@@ -202,10 +185,6 @@ const Write = () => {
 
     function onChangeTitle(e) {
         setTitle(e.target.value) ;
-    }
-
-    function onChangeLanguage(e) {
-        setLanguage(e.target.value) ;
     }
 
     function onViewHtml(e) {
@@ -217,8 +196,11 @@ const Write = () => {
     }
 
     function onViewImage(e) {
-        console.log(ImageView) ;
         setImageView(ImageView ? false :  true) ;
+    }
+
+    function onImageUrl(e) {
+        setImageUrl(e.target.value) ;
     }
 
     return (
@@ -234,75 +216,43 @@ const Write = () => {
                         required
                         status={title.length >= 1 ? 'blue' : 'red'}
                     />
-                    <Label name="type">종류</Label>
+                    <Label name="type">타입</Label>
                     <Language
                         type="text"
                         name="type"
                         value={type}
                         onChange={onChangeType}
-                        status={type >= 1 ? 'blue' : 'red'}
+                        status={type ? 'blue' : 'red'}
                         url={require("../assets/select_arrow.PNG").default}
                     >
-                        <LanguageOption value="0">--Select Type--</LanguageOption>
-                        <LanguageOption value="programming">프로그래밍</LanguageOption>
-                        <LanguageOption value="chat">잡담</LanguageOption>
+                        <LanguageOption value="">--Select Type--</LanguageOption>
+                        <LanguageOption value="JS">JS</LanguageOption>
+                        <LanguageOption value="HTML">HTML</LanguageOption>
+                        <LanguageOption value="CSS3">CSS</LanguageOption>
+                        <LanguageOption value="React">React</LanguageOption>
+                        <LanguageOption value="일상">일상</LanguageOption>
+                        <LanguageOption value="이모저모">이모저모</LanguageOption>
+                        <LanguageOption value="여행기">여행기</LanguageOption>
                     </Language>
-                    {type === "1" ? (
-                        <>
-                            <Label name="language">언어</Label>
-                            <Language 
-                                type="text" 
-                                name="language" 
-                                value={language} 
-                                onChange={onChangeLanguage} 
-                                required
-                                status={language >= 1 ? 'blue' : 'red'}
-                                url={require("../assets/select_arrow.PNG").default}
-                            >
-                                <LanguageOption value="0">--Select LanguageOption--</LanguageOption>
-                                <LanguageOption value="js">JS</LanguageOption>
-                                <LanguageOption value="html">HTML</LanguageOption>
-                                <LanguageOption value="css">CSS</LanguageOption>
-                            </Language>
-                        </>
-                    ) : (
-                        <>
-                            <Label name="life">일상</Label>
-                            <Language 
-                                type="text" 
-                                name="life" 
-                                value={value} 
-                                onChange={onChangeValue} 
-                                required
-                                status={value >= 1 ? 'blue' : 'red'}
-                                url={require("../assets/select_arrow.PNG").default}
-                            >
-                                <LanguageOption value="0">--Select--</LanguageOption>
-                                <LanguageOption value="daily">일상</LanguageOption>
-                                <LanguageOption value="chatter">이모저모</LanguageOption>
-                                <LanguageOption value="travel">여행기</LanguageOption>
-                            </Language>
-                        </>
-                    )}
                     <Label name="file">이미지 파일</Label>
                     <ImgInput 
                         name="file"
-                        type="file"
-                        accept='image/jpg, image/png, image/jpeg, image/gif'
-                        onChange={imgOnChange}
+                        type="text"
+                        onChange={onImageUrl}
                         required
-                        status={imgUrl.length >= 1 ? 'blue' : 'red'}
+                        status={imageUrl ? 'blue' : 'red'}
                     />
                 </InputContainer>
                 <PreviewContainer>
-                    { <Content 
+                    { 
+                        <Content 
                             content={{
                                 title,
-                                language_id : Number(language),
-                                url : imgUrl,
-                                update_at : today.getFullYear() + "/" +  today.getMonth() + "/" + today.getDay()
+                                type : type,
+                                url : imageUrl,
                             }}
-                    /> }
+                        /> 
+                    }
                 </PreviewContainer>
             </Header>
             <Main>
@@ -323,7 +273,7 @@ const Write = () => {
                 <Menu onClick={onViewPreview}>개시글 컨텐츠</Menu>
                 <Menu onClick={onViewHtml}>HTML</Menu>
                 <Menu onClick={onViewImage}>이미지</Menu>
-                <Menu  onClick={null}>작성</Menu>
+                <Menu  onClick={onSubmitImage}>작성</Menu>
             </FixdMenu>
         </Container>
     );

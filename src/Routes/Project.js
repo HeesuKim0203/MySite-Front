@@ -66,11 +66,8 @@ const Project = () => {
                 }
             } = await axiosApi.getProjectList() ;
 
-            console.log(projects) ;
-
             setProjectData(projects) ;
         }
-
         getProjectList() ;
     }, []) ;
 

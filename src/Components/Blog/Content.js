@@ -108,11 +108,7 @@ const Content = ({ content }) => {
     const { id, title, image_url, updated_at } = content ;
     return (
         <Container>
-            <Link to={{
-                pathname : `${DOCUMENT}/${id}`,
-                state : content
-                }}
-                >
+            <Link to={`${DOCUMENT}/${id}`}>
                 <Img url={image_url} />
                 <TextContainer>
                     <HeadContainer>

@@ -1,16 +1,13 @@
-import React, { useState, useEffect, createContext } from 'react' ;
+import React, { useState, useEffect } from 'react' ;
 import styled from 'styled-components' ;
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome' ;
-import { fab } from '@fortawesome/free-brands-svg-icons' ;
-import { fas, faSearch } from '@fortawesome/free-solid-svg-icons' ;
-
-import AsideMenu from '../Components/Blog/AsideMenu' ;
 import BlogContainer from '../Components/Blog/BlogContainer' ;
 import { axiosApi } from '../Util/api' ;  
 import { connect } from 'react-redux';
 import { createAction } from '../Store/store';
 import ButtonContainer from '../Components/Blog/ButtonContainer' ;
+
+import Loader from '../Components/Loader' ;
 
 const Container = styled.div`
     width : 100% ;
@@ -29,13 +26,11 @@ const ContentContainer = styled.div`
     }
 `;
 
-const Blog = ({ contents, select, setContents, setPageContents, updateSelect }) => {
+const Blog = ({ contentsData, select, setContents, setPageContents, setDefaultData }) => {
 
     const [ loading, setLoading ] = useState(true) ;
 
     useEffect(() => {
-
-        const data = [] ;
 
         async function fetchData() {
             try {
@@ -44,14 +39,10 @@ const Blog = ({ contents, select, setContents, setPageContents, updateSelect }) 
                         contents 
                     } 
                 } = await axiosApi.getContents() ;
-
-                // 예비 데이터
-                for(let i = 0 ; i < 32 ; i++) {
-                    data[i] = contents[0] ;
-                }
-
-                setContents(data) ;
-                setPageContents(data) ;
+                
+                setDefaultData(contents) ;
+                setContents(contents) ;
+                setPageContents(contents) ;
 
             }catch {
                 console.log('error') ;
@@ -62,39 +53,45 @@ const Blog = ({ contents, select, setContents, setPageContents, updateSelect }) 
 
         fetchData() ;
 
-    }, [ setContents ]) ;
+    }, [ setContents, setDefaultData, setPageContents ]) ;
 
     return (
         <Container>
-            <ContentContainer>
-                { contents && contents.map((content, index) => {
-                    return select === index ? (
-                        <BlogContainer 
-                            key={index}
-                            content={content}
-                            select={true}
-                        />
-                    ) : (
-                        <BlogContainer 
-                            key={index}
-                            content={content}
-                        />
-                    )
-                })}
-            </ContentContainer>
-            <ButtonContainer 
-                contents={contents}
-                updateSelect={updateSelect}
-                select={select}
-            />
+            {loading ? (<Loader />) : (
+            <>
+                <ContentContainer>
+                    { contentsData && contentsData.map((content, index) => {
+                        return select === index ? (
+                            <BlogContainer 
+                                key={index}
+                                content={content}
+                                select={true}
+                            />
+                        ) : (
+                            <BlogContainer 
+                                key={index}
+                                content={content}
+                            />
+                        )
+                    })}
+                </ContentContainer>
+                <ButtonContainer />
+            </>
+            )
+        }
         </Container>
     );
 };
 
 function mapStateToProps(state) {
-    const { contents, select } = state ;
+    const { 
+        content : {
+             contentsData, select
+        } 
+    } = state ;
+
     return {
-        contents,
+        contentsData,
         select
     } ;
 } ;
@@ -105,8 +102,8 @@ function mapDispatchToProps(dispatch) {
             dispatch(createAction.setContents(contents)),
         setPageContents : contents => 
             dispatch(createAction.setPageContents(contents)),
-        updateSelect : select => 
-            dispatch(createAction.updateSelect(select))
+        setDefaultData : defaultData =>
+            dispatch(createAction.setDefaultData(defaultData))
     }
 } ;
 

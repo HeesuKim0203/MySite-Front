@@ -35,6 +35,7 @@ const Container = styled.div`
 `;
 
 const BlogPageContainer = ({ pageContents, pageSelect }) => {
+    console.log(pageContents) ;
     return (
         <Container
             display={pageSelect ? 'flex' : 'none' }
@@ -50,4 +51,5 @@ const BlogPageContainer = ({ pageContents, pageSelect }) => {
     ) ;
 } ;
 
-export default  BlogPageContainer ;
+
+export default BlogPageContainer ;

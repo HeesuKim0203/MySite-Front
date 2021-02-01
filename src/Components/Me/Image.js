@@ -155,10 +155,10 @@ const Image = () => {
             try {
                 const { data } = await axiosApi.deleteImg(selectUrl.id) ;
                 if(data) {
-                    const id = imageList.findIndex(image => image.url === e.target.innerHTML) ;
+                    const id = imageList.findIndex(image => image.id === selectUrl.id) ;
                     setImageList([
-                        imageList.slice(0, id),
-                        imageList.slice(id + 1, imageList.length)
+                        ...imageList.slice(0, id),
+                        ...imageList.slice(id + 1, imageList.length)
                     ]) ;
                 }
             }catch {
@@ -170,8 +170,8 @@ const Image = () => {
     return (
         <Container>
             <ImageListContainer onClick={onClickImage}>
-                {imageList && imageList.map((content) => 
-                    <ImageContent>
+                {imageList && imageList.map((content, index) => 
+                    <ImageContent key={index}>
                         {content.url}
                     </ImageContent>
                 )}
