@@ -1,15 +1,15 @@
-import React, { useEffect, useState, useRef } from 'react' ;
+import React, { useState } from 'react' ;
 import styled from 'styled-components' ;
 
 import Content from '../Components/Blog/Content' ;
 
 import MDEditor from '@uiw/react-md-editor' ;
 import { axiosApi } from '../Util/api' ;
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome' ;
-import { faSortDown } from '@fortawesome/free-solid-svg-icons' ;
 
-import { useInputImg } from '../Util/fucntion' ;
 import Image from '../Components/Me/Image' ;
+import { Redirect } from 'react-router-dom' ;
+
+import { DOCUMENT } from '../Util/routes' ;
 
 const Container = styled.div`
     
@@ -166,6 +166,8 @@ const Write = () => {
     const [ preview, setPreview ] = useState(false) ;
     const [ ImageView, setImageView ] = useState(false) ;
 
+    const [ pageState, setPageState ] = useState(true) ;
+
     async function onSubmitImage(e) {
         e.preventDefault() ;
 
@@ -176,7 +178,13 @@ const Write = () => {
         contentFormData.append('type', type) ;
         contentFormData.append('image_url', imageUrl) ;
 
-        await axiosApi.createContent(contentFormData) ;
+        const data = await axiosApi.createContent(contentFormData) ;
+
+
+        console.log(data) ;
+        
+
+        setPageState(!pageState) ;
     }
 
     function onChangeType(e) {
@@ -204,78 +212,83 @@ const Write = () => {
     }
 
     return (
-        <Container>
-            <Header display={preview ? 'flex' : 'none'}>
-                <InputContainer>
-                    <Label name="title">제목</Label>
-                    <Title 
-                        type="text" 
-                        name="title" 
-                        value={title} 
-                        onChange={onChangeTitle} 
-                        required
-                        status={title.length >= 1 ? 'blue' : 'red'}
-                    />
-                    <Label name="type">타입</Label>
-                    <Language
-                        type="text"
-                        name="type"
-                        value={type}
-                        onChange={onChangeType}
-                        status={type ? 'blue' : 'red'}
-                        url={require("../assets/select_arrow.PNG").default}
+        <>
+        { pageState ? (
+            <Container>
+                <Header display={preview ? 'flex' : 'none'}>
+                    <InputContainer>
+                        <Label name="title">제목</Label>
+                        <Title 
+                            type="text" 
+                            name="title" 
+                            value={title} 
+                            onChange={onChangeTitle} 
+                            required
+                            status={title.length >= 1 ? 'blue' : 'red'}
+                        />
+                        <Label name="type">타입</Label>
+                        <Language
+                            type="text"
+                            name="type"
+                            value={type}
+                            onChange={onChangeType}
+                            status={type ? 'blue' : 'red'}
+                            url={require("../assets/select_arrow.PNG").default}
+                        >
+                            <LanguageOption value="">--Select Type--</LanguageOption>
+                            <LanguageOption value="JS">JS</LanguageOption>
+                            <LanguageOption value="HTML">HTML</LanguageOption>
+                            <LanguageOption value="CSS3">CSS</LanguageOption>
+                            <LanguageOption value="React">React</LanguageOption>
+                            <LanguageOption value="일상">일상</LanguageOption>
+                            <LanguageOption value="이모저모">이모저모</LanguageOption>
+                            <LanguageOption value="여행기">여행기</LanguageOption>
+                        </Language>
+                        <Label name="file">이미지 파일</Label>
+                        <ImgInput 
+                            name="file"
+                            type="text"
+                            onChange={onImageUrl}
+                            required
+                            status={imageUrl ? 'blue' : 'red'}
+                        />
+                    </InputContainer>
+                    <PreviewContainer>
+                        { 
+                            <Content 
+                                content={{
+                                    title,
+                                    type : type,
+                                    image_url : imageUrl,
+                                }}
+                            /> 
+                        }
+                    </PreviewContainer>
+                </Header>
+                <Main>
+                    <ImageListContainer display={ImageView ? 'block' : 'none'}>
+                        <Image />
+                    </ImageListContainer>
+                    <FixedMorkDown
+                        display={htmlWriter ? 'block' : 'none' }
                     >
-                        <LanguageOption value="">--Select Type--</LanguageOption>
-                        <LanguageOption value="JS">JS</LanguageOption>
-                        <LanguageOption value="HTML">HTML</LanguageOption>
-                        <LanguageOption value="CSS3">CSS</LanguageOption>
-                        <LanguageOption value="React">React</LanguageOption>
-                        <LanguageOption value="일상">일상</LanguageOption>
-                        <LanguageOption value="이모저모">이모저모</LanguageOption>
-                        <LanguageOption value="여행기">여행기</LanguageOption>
-                    </Language>
-                    <Label name="file">이미지 파일</Label>
-                    <ImgInput 
-                        name="file"
-                        type="text"
-                        onChange={onImageUrl}
-                        required
-                        status={imageUrl ? 'blue' : 'red'}
-                    />
-                </InputContainer>
-                <PreviewContainer>
-                    { 
-                        <Content 
-                            content={{
-                                title,
-                                type : type,
-                                url : imageUrl,
-                            }}
-                        /> 
-                    }
-                </PreviewContainer>
-            </Header>
-            <Main>
-                <ImageListContainer display={ImageView ? 'block' : 'none'}>
-                    <Image />
-                </ImageListContainer>
-                <FixedMorkDown
-                    display={htmlWriter ? 'block' : 'none' }
-                >
-                    <MDEditor
-                        value={html}
-                        onChange={setHTML}
-                    />
-                </FixedMorkDown>
-                <MDEditor.Markdown source={html || null} />
-            </Main>
-            <FixdMenu>
-                <Menu onClick={onViewPreview}>개시글 컨텐츠</Menu>
-                <Menu onClick={onViewHtml}>HTML</Menu>
-                <Menu onClick={onViewImage}>이미지</Menu>
-                <Menu  onClick={onSubmitImage}>작성</Menu>
-            </FixdMenu>
-        </Container>
+                        <MDEditor
+                            value={html}
+                            onChange={setHTML}
+                        />
+                    </FixedMorkDown>
+                    <MDEditor.Markdown source={html || null} />
+                </Main>
+                <FixdMenu>
+                    <Menu onClick={onViewPreview}>개시글 컨텐츠</Menu>
+                    <Menu onClick={onViewHtml}>HTML</Menu>
+                    <Menu onClick={onViewImage}>이미지</Menu>
+                    <Menu onClick={onSubmitImage}>작성</Menu>
+                </FixdMenu>
+            </Container>) : (
+                <Redirect to={DOCUMENT} />
+            )}
+        </>
     );
 };
 

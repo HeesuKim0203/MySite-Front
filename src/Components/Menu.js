@@ -6,7 +6,7 @@ import styled from 'styled-components' ;
 const GRAY_1 = '#bdbdbd' ;
 
 const Container = styled.li`
-    width : 130px ;
+    width : 200px ;
     height : 58px ;
 
     display : flex ;
@@ -21,10 +21,12 @@ const Container = styled.li`
     }
 
     @media ${props => props.theme.mobileL} {
+        width : 150px ;
         font-size : 14px ;
         height : 45px ;
     }
     @media ${props => props.theme.mobileS} {
+        width : 130px ;
         font-size : 11px ;
         height : 33px ;
     }

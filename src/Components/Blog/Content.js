@@ -11,7 +11,7 @@ import {
 
 const Title = styled.h5`
     font-size : 18px ;
-    font-weight : 600 ;
+    font-weight : 550 ;
 
     width : 100% ;
 
@@ -30,7 +30,7 @@ const Container = styled.div`
     width : 92% ;
     overflow : hidden ;
 
-    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    box-shadow: 0 5px 10px rgba(0,0,0,0.19), 0 3px 3px rgba(0,0,0,0.23);
 
     cursor : pointer ;
 
@@ -50,7 +50,6 @@ const Img = styled.div`
     background-repeat : no-repeat ;
     background-size : cover ;
 
-    border-bottom : 1.5px solid #999 ;
     float : left ; 
 
     @media ${props => props.theme.laptop} {
@@ -70,6 +69,7 @@ const TextContainer = styled.div`
     padding : 15px ;
 
     float : left ;
+
 `;
 
 const HeadContainer = styled.div`
@@ -113,14 +113,6 @@ const Content = ({ content }) => {
                 <TextContainer>
                     <HeadContainer>
                         <Date draggable="false">{updated_at && updated_at.substring(0, 10)}</Date>
-                        {/* <Code>
-                            { 
-                              language_id && language_id === 2 ? (<StyleFontAwesomeIcon icon={fab.faJsSquare} />) : 
-                              language_id === 1 ? (<StyleFontAwesomeIcon icon={fab.faHtml5} />) :
-                              language_id === 3 ? (<StyleFontAwesomeIcon icon={fab.faCss3Alt} />) :
-                              language_id === 4 ? (<StyleFontAwesomeIcon icon={fab.faReact} />) : null
-                            }
-                        </Code> */}
                         <Code>
                             <StyleFontAwesomeIcon icon={fab.faJsSquare} />
                         </Code>

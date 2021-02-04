@@ -2,10 +2,9 @@ import React from 'react' ;
 import styled from 'styled-components' ;
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome' ;
-import { faTimes } from '@fortawesome/free-solid-svg-icons' ;
 
 const Container = styled.div`
-    width : 130px ;
+    width : 100px ;
 
     border-radius : 20px ;
 
@@ -67,9 +66,6 @@ const TextContainer = styled.div`
 
     text-align : center ;
 
-    /* @media ${props => props.theme.mobileL} {
-        font-size : 11px ;
-    } */
     @media ${props => props.theme.mobileS} {
         font-size : 7px ;
     }
@@ -79,11 +75,6 @@ const Text = styled.span`
     font-weight : 700 ;
 
     user-select : none ;
-`;
-
-const XIconContainer = styled.div`
-    text-align : right ;
-    padding-right : 30px ;
 `;
 
 const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
@@ -101,25 +92,14 @@ const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
     }
 `;
 
-const DeleteIcon = styled(FontAwesomeIcon)`
-    font-size : 10px ;
-`;
+const LanguageContent = ({ menu }) => {
 
-const LanguageContent = ({ data, token }) => {
-
-    const { text, icon } = data ;
-
-    function onClickDelete() {
-        // delete ;
-    }
+    const { text, icon, color } = menu ;
 
     return (
         <Container>
-            <XIconContainer>
-                {token ?  <DeleteIcon icon={faTimes} /> : null }
-            </XIconContainer>
             <Img>
-                <StyledFontAwesomeIcon icon={icon} />
+                <StyledFontAwesomeIcon icon={icon} color={color} />
             </Img>
             <TextContainer>
                 <Text>{text}</Text>

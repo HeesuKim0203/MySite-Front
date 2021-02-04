@@ -26,15 +26,15 @@ const Title = styled.span`
     font-size : 15px ;
     flex : 1 ;
 
-    font-weight : 800 ;
+    font-weight : 500 ;
 
-    color : #9e9e9e ;
+    color : #222 ;
 `;
 
 const Date = styled.span`
     font-size : 12px ;
 
-    color : #cfd8dc ;
+    color : #333 ;
 `;
 
 const BlogPageContent = ({ content, location : { pathname } }) => {
@@ -53,7 +53,7 @@ const BlogPageContent = ({ content, location : { pathname } }) => {
 
     return (
         <Link to={`${DOCUMENT}/${id}`}>
-            <Container select={select ? '#f1f8e9' : 'white'}>
+            <Container select={select ? '#f1f8e9' : ''}>
                 <Title>{title}</Title>
                 <Date>{updated_at}</Date>
             </Container>

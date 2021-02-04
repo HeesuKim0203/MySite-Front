@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react' ;
+import React from 'react' ;
 import styled from 'styled-components' ;
 
 import MDEditor from '@uiw/react-md-editor' ;
@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 import ButtonContainer from '../Components/Blog/ButtonContainer' ;
 import BlogPageContainer from '../Components/Blog/BlogPageContainer' ;
 
-import { createAction } from '../Store/store';
 import { withRouter } from 'react-router-dom';
 
 import {
@@ -43,7 +42,7 @@ const BlogPage = ({ location : { pathname }, pageContents, pageSelect, defaultDa
     return (
         <Container>
             <Main>
-                <MDEditor.Markdown source={ defaultData[pathname.replace(`${DOCUMENT}/`, "")].text || null } />
+                <MDEditor.Markdown source={ defaultData[pathname.replace(`${DOCUMENT}/`, "")].text || "" } />
             </Main>
             <Footer>
                 <ContentBox>

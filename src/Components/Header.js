@@ -111,7 +111,6 @@ const Title = styled.h1`
     font-weight : 600 ;
     font-size : 82px ;
 
-
     font-family : 'Montserrat', sans-serif ;
 
     user-select : none ;
@@ -136,6 +135,8 @@ const TitleMyName = styled.a`
 
     font-weight : 500 ;
     font-size : 26px ;
+
+    margin-top : 15px ;
 
     user-select : none ;
 
@@ -251,9 +252,9 @@ const Header = (props) => {
                     <>
                         <Img imgUrl={require("../assets/header_image.jpg").default}/>
                         <TitContainer>
-                            <Title>Professional</Title>
+                            <Title>Programer</Title>
                             <br />
-                            <TitleMyName draggable="false" >Programer.Kim Hee Su</TitleMyName>
+                            <TitleMyName draggable="false" >Kim Hee Su</TitleMyName>
                             <br/>
                             <Button>Lean More</Button>
                         </TitContainer>

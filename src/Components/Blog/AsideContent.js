@@ -54,9 +54,9 @@ const AsideMenu = styled.ul`
 `;
 
 const Menu = styled.li`
-    width : 100% ;
+    width : 80% ;
 
-    padding : 15px ;
+    padding : 15px 0 15px 15px ;
 
     display : flex ;
 
@@ -122,7 +122,7 @@ const Text = styled.span`
 
     font-size : 16px ;
 
-    font-weight : 650 ;
+    font-weight : 550 ;
 
     @media ${props => props.theme.mobileL} {
         font-size : 11px ;
@@ -140,7 +140,7 @@ const AsideContent = ({ title, menu, onClickMenuContent }) => {
                 <Link to={DOCUMENT} key={index}>
                     <Menu onClick={() => onClickMenuContent(menu.text)}>
                         <FontContainer>
-                            <StyledFontAwesomeIcon icon={menu.icon}/>
+                            <StyledFontAwesomeIcon icon={menu.icon} />
                         </FontContainer>
                         <Text>{menu.text}</Text>
                     </Menu>

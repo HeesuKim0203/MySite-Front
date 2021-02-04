@@ -12,15 +12,15 @@ const UPDATE_SELECT = 'UPDATE_SELECT' ;
 const UPDATE_PAGE_SELECT = 'UPDATE_PAGE_SELECT' ;
 
 const SEARCH_CONTENTS = 'SEARCH_CONTENTS' ;
+const SEARCH_TITLE = 'SEARCH_TITLE' ;
 
 const setDefaultData = defaultData => ({
         type : STORE_DEFAULT_DATA,
         defaultData
 }) ;
 
-const setContents = contents => ({
+const setContents = () => ({
     type : SET_CONTENTS_DATA,
-    contents
 }) ;
 
 const setPageContents = contents => ({
@@ -38,10 +38,14 @@ const updatePageSelect = select => ({
     select
 }) ;
 
-const searchContents = (defaultData, searchValue) => ({
+const searchContents = (searchValue) => ({
     type : SEARCH_CONTENTS,
     searchValue,
-    defaultData
+}) ;
+
+const searchTitle = (searchValue) => ({
+    type : SEARCH_TITLE,
+    searchValue
 }) ;
 
 // search all -> search 값 보내기 x
@@ -50,12 +54,7 @@ const dataForm = (array, search) => {
     let num = 0 ;
     const numCounte = blogContentNum ;
 
-    const arrayDataSet = array.map((content, index) => ({ 
-        ...content,
-        id : index
-    })) ;
-
-    return !search ? arrayDataSet.reduce((prev, item, index ) => {
+    return !search ? array.reduce((prev, item, index ) => {
         if(index === num) {
             prev.push([]) ;
             num += numCounte ;
@@ -63,8 +62,7 @@ const dataForm = (array, search) => {
         prev[num / numCounte - 1][index % numCounte] = item ;
         return prev ;
     }, []) 
-    :  arrayDataSet.filter(item =>  search === item.type).reduce((prev, item, index) => {
-        // 문제 있으면 고치자
+    :  array.filter(item =>  search === item.type).reduce((prev, item, index) => {
         if(index === num) {
             prev.push([]) ;
             num += numCounte ;
@@ -91,18 +89,25 @@ const contentReducer = (
     let contentsData ;
     let buttonsData ;
 
+    let num = 0 ;
+    const numCounte = blogPageContentNum ;
+
     switch(action.type) {
         case STORE_DEFAULT_DATA :
 
+            const arrayDataSet = action.defaultData.map((content, index) => ({ 
+                ...content,
+                id : index
+            })) ;
+
              return {
                 ...state,                                            
-                defaultData : action.defaultData
+                defaultData : arrayDataSet
             } ; 
              
          case SET_CONTENTS_DATA :
 
-
-            contentsData = dataForm(action.contents) ;
+            contentsData = dataForm(state.defaultData) ;
             buttonsData = contentsData.map((__, index) => index) ;
 
              return {
@@ -113,8 +118,8 @@ const contentReducer = (
  
          case SEARCH_CONTENTS :
 
-            contentsData = dataForm(action.defaultData, action.searchValue) ;
-            buttonsData = contentsData.map((__ , index) => index ) ;
+            contentsData = dataForm(state.defaultData, action.searchValue) ;
+            buttonsData = contentsData.map((__ , index) => index) ;
  
              return {
                  ...state, 
@@ -135,9 +140,6 @@ const contentReducer = (
                 title : content.title, 
                 updated_at : content.updated_at.substring(0, 10) 
             })) ;
-
-            let num = 0 ;
-            const numCounte = blogPageContentNum ;
 
             const data = pageData.reduce((prev, item, index) => {
                 if(index === num) {
@@ -161,6 +163,22 @@ const contentReducer = (
                 ...state,
                 pageSelect : action.select 
             }
+        case SEARCH_TITLE : 
+
+            return {
+                ...state,
+                contentsData : state.defaultData
+                            .filter(item => item.title.includes(action.searchValue, 0))
+                            .reduce((prev, item, index) => {
+                    if(index === num) {
+                        prev.push([]) ;
+                        num += numCounte ;
+                    }
+                    prev[num / numCounte - 1][index % numCounte] = item ;
+            
+                    return prev ;
+                }, [])
+            }
         default :
             return state ;
      }
@@ -178,7 +196,8 @@ export const createAction = {
     setPageContents,
     updatePageSelect,
     searchContents,
-    setDefaultData
+    setDefaultData,
+    searchTitle
 } ;
 
 export default store ;
