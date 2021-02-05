@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react' ;
+import { connect } from 'react-redux';
 import styled from 'styled-components' ;
 
 import ProjectContent from '../Components/Project/ProjectContent' ;
@@ -27,28 +28,13 @@ const ContentContainer = styled.div`
     }
 `;
 
-const Project = () => {
-
-    const [ projectData, setProjectData ] = useState(null) ;
-
-    useEffect(() => {
-        async function getProjectList() {
-            const {
-                data : { 
-                    projects
-                }
-            } = await axiosApi.getProjectList() ;
-
-            setProjectData(projects) ;
-        }
-        getProjectList() ;
-    }, []) ;
+const Project = ({ projectsData }) => {
 
     return (
         <Container>
             
             <ContentContainer>
-                {projectData && projectData.map((content, index) => (
+                {projectsData && projectsData.map((content, index) => (
                     <ProjectContent 
                         key={index}
                         content={content}
@@ -59,4 +45,14 @@ const Project = () => {
     );
 };
 
-export default Project ;
+function mapStateToProps(state) {
+    const { 
+        project : { projectsData }
+    } = state ;
+  
+    return {
+        projectsData
+    } ;
+  } ;
+
+export default connect(mapStateToProps, null)(Project) ;

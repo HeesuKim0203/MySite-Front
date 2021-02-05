@@ -4,6 +4,7 @@ import logger from 'redux-logger' ;
 import { blogContentNum, blogPageContentNum } from '../Util/util' ;
 
 const STORE_DEFAULT_DATA = 'STORE_DEFAULT_DATA' ;
+const PROJECT_DEFAULT_DATA = 'PROJECT_DEFAULT_DATA' ;
 
 const SET_CONTENTS_DATA = 'SET_CONTENTS_DATA' ;
 const SET_PAGE_CONTENTS_DATA = 'SET__PAGE_CONTENTS_DATA' ;
@@ -46,6 +47,11 @@ const searchContents = (searchValue) => ({
 const searchTitle = (searchValue) => ({
     type : SEARCH_TITLE,
     searchValue
+}) ;
+
+const setProjectContents = (defaultData) => ({
+    type : PROJECT_DEFAULT_DATA,
+    defaultData
 }) ;
 
 // search all -> search 값 보내기 x
@@ -95,14 +101,9 @@ const contentReducer = (
     switch(action.type) {
         case STORE_DEFAULT_DATA :
 
-            const arrayDataSet = action.defaultData.map((content, index) => ({ 
-                ...content,
-                id : index
-            })) ;
-
              return {
                 ...state,                                            
-                defaultData : arrayDataSet
+                defaultData :  action.defaultData
             } ; 
              
          case SET_CONTENTS_DATA :
@@ -184,8 +185,25 @@ const contentReducer = (
      }
 }
 
+const projectReducer = (
+    state = {
+        projectsData : [],
+    },
+    action
+) => {
+    switch(action.type) {
+        case PROJECT_DEFAULT_DATA :
+            return {
+                projectsData : action.defaultData
+            }
+        default : 
+            return state ;
+    }
+} ;
+
 const reducer = combineReducers({
     content : contentReducer,
+    project : projectReducer
 }) ;
 
 const store = createStore(reducer, applyMiddleware(logger)) ;
@@ -197,7 +215,8 @@ export const createAction = {
     updatePageSelect,
     searchContents,
     setDefaultData,
-    searchTitle
+    searchTitle,
+    setProjectContents
 } ;
 
 export default store ;

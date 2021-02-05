@@ -6,7 +6,7 @@ import { axiosApi } from './Util/api';
 import { connect } from 'react-redux';
 import { createAction } from './Store/store';
 
-function App({ setContents, setPageContents, setDefaultData }) {
+function App({ setContents, setPageContents, setDefaultData, setProjectContents }) {
 
   useEffect(() => {
 
@@ -22,10 +22,20 @@ function App({ setContents, setPageContents, setDefaultData }) {
             setContents() ;
             setPageContents(contents) ;
 
+            const {
+              data : { 
+                  projects
+              }
+          } = await axiosApi.getProjectList() ;
+    
+          setProjectContents(projects) ;
+
         }catch {
             console.log('error') ;
         }finally {
+
         }
+    
     }
 
     fetchData() ;
@@ -40,20 +50,6 @@ function App({ setContents, setPageContents, setDefaultData }) {
   );
 }
 
-function mapStateToProps(state) {
-  const { 
-      content : {
-           contentsData, select, defaultData
-      } 
-  } = state ;
-
-  return {
-      contentsData,
-      defaultData,
-      select
-  } ;
-} ;
-
 function mapDispatchToProps(dispatch) {
   return {
       setContents : () => 
@@ -61,9 +57,11 @@ function mapDispatchToProps(dispatch) {
       setPageContents : contents => 
           dispatch(createAction.setPageContents(contents)),
       setDefaultData : defaultData =>
-          dispatch(createAction.setDefaultData(defaultData))
+          dispatch(createAction.setDefaultData(defaultData)),
+      setProjectContents : defaultData =>
+          dispatch(createAction.setProjectContents(defaultData))
   }
 } ;
 
 
-export default  connect(mapStateToProps, mapDispatchToProps)(App) ;
+export default  connect(null, mapDispatchToProps)(App) ;

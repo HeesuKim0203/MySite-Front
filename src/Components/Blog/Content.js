@@ -8,6 +8,7 @@ import { fab } from '@fortawesome/free-brands-svg-icons' ;
 import {
     DOCUMENT
 } from '../../Util/routes' ;
+import { connect } from 'react-redux';
 
 const Title = styled.h5`
     font-size : 18px ;
@@ -106,6 +107,9 @@ const StyleFontAwesomeIcon = styled(FontAwesomeIcon)`
 
 const Content = ({ content }) => {
     const { id, title, image_url, updated_at } = content ;
+
+    // index 찾는 코드
+
     return (
         <Container>
             <Link to={`${DOCUMENT}/${id}`}>
@@ -126,4 +130,29 @@ const Content = ({ content }) => {
     );
 };
 
-export default Content ;
+function mapStateToProps(state) {
+    const { 
+        content : {
+            defaultData
+        } 
+    } = state ;
+
+    // const { 
+    //     content : { 
+    //         id : findId 
+    //     },
+    //     content
+    // } = oneToProp ;
+
+    // const id = defaultData.findIndex(content => content.id === findId) ;
+
+    return {
+        // content : {
+        //     ...content,
+        //     id : findId
+        // }
+    } ;
+} ;
+  
+  
+export default  connect(mapStateToProps, null)(Content) ;

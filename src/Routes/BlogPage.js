@@ -1,4 +1,4 @@
-import React from 'react' ;
+import React, { useState, useEffect } from 'react' ;
 import styled from 'styled-components' ;
 
 import MDEditor from '@uiw/react-md-editor' ;
@@ -7,11 +7,12 @@ import { connect } from 'react-redux';
 import ButtonContainer from '../Components/Blog/ButtonContainer' ;
 import BlogPageContainer from '../Components/Blog/BlogPageContainer' ;
 
-import { withRouter } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
 
 import {
     DOCUMENT
 } from '../Util/routes' ;
+import CommentContainer from '../Components/Blog/CommentContainer';
 
 const Container = styled.div`
     width : 100% ;
@@ -37,47 +38,87 @@ const Footer = styled.div`
     float : left ;
 `;
 
-const BlogPage = ({ location : { pathname }, pageContents, pageSelect, defaultData }) => {
+const ButtonWrap = styled.div`
+    margin-top : 40px ;
+`;
+
+const CommentWrap= styled.div`
+    width : 100% ;
+`;
+
+const BlogPage = ({ pageContents, pageSelect, text, id }) => {
+
+    const [ redirect, setRedirect ] = useState(false) ;
+
+    useEffect(() => {
+
+        if(!text || !id) 
+            setRedirect(true) ;
+
+    }, [text, id]) ;
 
     return (
-        <Container>
-            <Main>
-                <MDEditor.Markdown source={ defaultData[pathname.replace(`${DOCUMENT}/`, "")].text || "" } />
-            </Main>
-            <Footer>
-                <ContentBox>
-                { pageContents && pageContents.map((content, index) => {
-                    return pageSelect === index ? (
-                        <BlogPageContainer 
-                            key={index}
-                            pageContents={content}
-                            pageSelect={true}
-                        />
-                    ) : (
-                        <BlogPageContainer 
-                            key={index}
-                            pageContents={content}
-                        />
-                    )
-                })}
-                </ContentBox>
-                <ButtonContainer />
-            </Footer>
-        </Container>
+        <>
+            {redirect ? (
+                <Redirect to={DOCUMENT} />
+            ) : (<Container>
+                <Main>
+                    <MDEditor.Markdown source={ text } />
+                </Main>
+                <Footer>
+                    <ContentBox>
+                    { pageContents && pageContents.map((content, index) => {
+                        return pageSelect === index ? (
+                            <BlogPageContainer 
+                                key={index}
+                                pageContents={content}
+                                pageSelect={true}
+                            />
+                        ) : (
+                            <BlogPageContainer 
+                                key={index}
+                                pageContents={content}
+                            />
+                        )
+                    })}
+                    </ContentBox>
+                    <ButtonWrap>
+                        <ButtonContainer />
+                    </ButtonWrap>
+                    <CommentWrap>
+                        <CommentContainer contentId={id} />
+                    </CommentWrap>
+                </Footer>
+            </Container>)}
+        </>
     );
 };
 
-function mapStateToProps(state) {
+function mapStateToProps(state, stateAll) {
+
     const { 
         content : {
             pageContents, pageSelect, defaultData
-        } 
+        }
     } = state ;
+
+    const {
+        location : {
+            pathname
+        }
+    } = stateAll ;
+
+    const findId = pathname.replace(`${DOCUMENT}/`, "") ;
+
+    const id = defaultData.findIndex(content => content.id === Number(findId)) ;
+    const content = defaultData[id] ;
+
 
     return {
         pageContents,
         pageSelect,
-        defaultData
+        text : content ? content.text : "",
+        id : content ? content.id : -1,
     } ;
 } ;
 

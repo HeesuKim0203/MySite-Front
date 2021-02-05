@@ -25,6 +25,10 @@ const ContentContainer = styled.div`
 
     margin-top : 40px ;
 
+    &:nth-child(2) {
+        margin-top : 70px ;
+    }
+
     padding : 20px ;
 `;
 
@@ -35,11 +39,11 @@ const SlideContainer = styled.div`
 
     overflow : hidden ;
 
-    margin-top : 130px ;
+    margin-top : 160px ;
 `;
 
 const SlideDataContainer = styled.div`
-    margin-top : 35px ;
+    margin-top : 45px ;
 
     width : 100% ;
 
@@ -84,6 +88,8 @@ const Title = styled.h3`
     font-size : 32px ;
 
     text-align : center ;
+
+    user-select : none ;
 `;
 
 const Text = styled.p`
@@ -91,15 +97,11 @@ const Text = styled.p`
 
     text-align : center ;
     padding : 5px 3px ;
+
+    user-select : none ;
 `;
 
-const ContentWrap = styled.div`
-    width : 100% ;           
-`;
-
-const Home = (props) => {
-
-    const { cookies } = props ;
+const Home = () => {
 
     return (
         <>
@@ -131,22 +133,6 @@ const Home = (props) => {
                         <Slide />
                     </SlideDataContainer>
                 </SlideContainer>
-                    {/* <ContentWrap>
-                        {data.map((container, index) => {
-                            return selectContainer === index ? (
-                                    <HomeContentContainer 
-                                        key={index}
-                                        title={container.title}
-                                        select={true}
-                                    />
-                                ) : (
-                                    <HomeContentContainer 
-                                        key={index}
-                                        title={container.title}
-                                    />
-                                ) ;
-                        })}
-                    </ContentWrap> */}
             </Container>
         </>
     );
