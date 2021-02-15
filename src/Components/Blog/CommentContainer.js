@@ -180,6 +180,8 @@ const CommentContainer = ({ contentId }) => {
     async function onCheckUser(e, commentData, password) {
         e.preventDefault() ;
 
+        let resultValue ;
+
         try {
 
             const userData = new FormData() ;
@@ -194,13 +196,17 @@ const CommentContainer = ({ contentId }) => {
                 }
             } = await axiosApi.checkUser(userData) ;
 
-            return result ;
-            
+            resultValue = result ;
+
         }catch {
 
-        }finally {
+            resultValue = false ;
 
+        }finally {
+            
         }
+
+        return resultValue ;
     }
 
     function onChangeUserName(e) {
@@ -236,7 +242,7 @@ const CommentContainer = ({ contentId }) => {
         if(contentId) 
             getCommnetsList() ;
 
-    }, []) ;
+    }, [contentId]) ;
 
     return (
         <Container>

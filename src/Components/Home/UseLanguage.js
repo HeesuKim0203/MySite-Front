@@ -4,12 +4,11 @@ import styled from 'styled-components' ;
 
 import LanguageContent from './LanguageContent' ;
 
-import { language } from '../../Util/util'
+import { language, LanguageContentNum } from '../../Util/util'
+import UseLanguageContainer from './UseLanguageContainer';
 
 const Container = styled.div`
     width : 100% ;
-
-    overflow : hidden ;
 `;
 
 const UseLanguageContentContainer = styled.div`
@@ -22,28 +21,38 @@ const UseLanguageContentContainer = styled.div`
     align-items : center ;
 `;
 
-const GridDiv = styled.div`
-    width : 95% ;
+const UseLanguageWrap = styled.div`
 
     margin : 0 auto ;
 
     display : flex ;
-
-    justify-content : center ;
-    align-items : center ;
     
+    flex-direction : column ;
+
+    overflow : hidden ;
 `;
 
 const UseLanguage = () => {
 
-    const menu = language ;
+    let num = 0 ;
+
+    const menu = language.reduce((prev, item, index ) => {
+        if(index === num) {
+            prev.push([]) ;
+            num += LanguageContentNum ;
+        }
+        prev[num / LanguageContentNum - 1][index % LanguageContentNum] = item ;
+        return prev ;
+    }, []) ;
 
     return (
         <Container>
             <UseLanguageContentContainer>
-                <GridDiv>
-                    {menu.map((data, index) => <LanguageContent key={index} menu={data} />)}
-                </GridDiv>
+                <UseLanguageWrap>
+                    {menu && menu.map((menuArray, index) => (
+                        <UseLanguageContainer key={index} content={menuArray}/>
+                    ))}
+                </UseLanguageWrap>
             </UseLanguageContentContainer>
         </Container>
     );

@@ -26,7 +26,7 @@ const Container = styled.li`
         height : 45px ;
     }
     @media ${props => props.theme.mobileS} {
-        width : 130px ;
+        width : 80px ;
         font-size : 11px ;
         height : 33px ;
     }

@@ -1,13 +1,7 @@
 ## 해야 할 일
 
-## 언어 CSS 줄바꿈 기능
-
-## 현재 보고 있는 content 데이터 새로고침 하면 오류 뜬다
-
-## comments 디비 수정
-
-## 접속자 수 확인
+## window => innerWidth 상태로 바꿔서 store 관리 시도
 
 ## 디자인
 
-## 댓글 => async await 기능 완료해라
+## 접속자 수 확인

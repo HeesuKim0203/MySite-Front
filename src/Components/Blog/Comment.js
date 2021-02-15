@@ -182,8 +182,10 @@ const Comment = ({ comment, deleteCommnet, onUpdateComment, onCheckUser }) => {
                             </CommentCommentAdd>
                         </>
                     ) : (
-                    <Form onSubmit={(e) => {
-                            return onCheckUser(e, comment, password) ? setCheckUser(!checkUser) : null ;
+                    <Form onSubmit={async (e) => {
+                            const result = await onCheckUser(e, comment, password) ;
+                            
+                            return result ? setCheckUser(!checkUser) : null ;
                         }}>
                         <Input 
                             type="text" 

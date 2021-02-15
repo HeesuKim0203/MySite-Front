@@ -13,6 +13,8 @@ import {
     DOCUMENT
 } from '../Util/routes' ;
 import CommentContainer from '../Components/Blog/CommentContainer';
+import { blogPageContentNum } from '../Util/util';
+import { createAction } from '../Store/store';
 
 const Container = styled.div`
     width : 100% ;
@@ -46,7 +48,7 @@ const CommentWrap= styled.div`
     width : 100% ;
 `;
 
-const BlogPage = ({ pageContents, pageSelect, text, id }) => {
+const BlogPage = ({ pageContents, pageSelect, text, id, pageContentsPotition, updatePageSelect }) => {
 
     const [ redirect, setRedirect ] = useState(false) ;
 
@@ -56,6 +58,12 @@ const BlogPage = ({ pageContents, pageSelect, text, id }) => {
             setRedirect(true) ;
 
     }, [text, id]) ;
+
+    useEffect(() => {
+
+        updatePageSelect(pageContentsPotition) ;
+
+    }, []) ;
 
     return (
         <>
@@ -98,7 +106,7 @@ function mapStateToProps(state, stateAll) {
 
     const { 
         content : {
-            pageContents, pageSelect, defaultData
+            pageContents, pageSelect, defaultData, pageButtonsData
         }
     } = state ;
 
@@ -113,14 +121,27 @@ function mapStateToProps(state, stateAll) {
     const id = defaultData.findIndex(content => content.id === Number(findId)) ;
     const content = defaultData[id] ;
 
+    let position ;
+
+    pageButtonsData.forEach(buttons => {
+        if(buttons * blogPageContentNum <= id && id <= (buttons + 1) * blogPageContentNum)
+            position = buttons ;
+    }) ;
 
     return {
         pageContents,
         pageSelect,
         text : content ? content.text : "",
         id : content ? content.id : -1,
+        pageContentsPotition : position 
     } ;
 } ;
 
+function mapDispatchToProps(dispatch) {
+    return {
+        updatePageSelect : select => dispatch(createAction.updatePageSelect(select))
+    }
+} ;
 
-export default withRouter(connect(mapStateToProps, null)(BlogPage)) ;
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(BlogPage)) ;

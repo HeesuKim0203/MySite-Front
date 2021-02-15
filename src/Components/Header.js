@@ -23,7 +23,7 @@ const HeaderImgBright = css`
         height : 350px ;
     }
     @media ${props => props.theme.mobileS} {
-        height : 210px ;
+        height : 200px ;
     }
 `;
 
@@ -69,13 +69,22 @@ const Bright = styled.div`
 
 const Img = styled.div`
     background : url(${props => props.imgUrl}) ;
-    background-size : 2000px 1100px ;
+    background-size : 2000px 1000px ;
     background-position : 0 -190px ;
     background-repeat : no-repeat ;
 
     width : 100% ;
 
     ${HeaderImgBright}
+
+    @media ${props => props.theme.mobileL} {
+        background-size : 1000px 500px ;
+        background-position : 0 -100px ;
+    }
+    @media ${props => props.theme.mobileS} {
+        background-size : 500px 250px ;
+        background-position : 0 0 ;
+    }
 `;
 
 const TitContainer = styled.div`
@@ -96,7 +105,7 @@ const TitContainer = styled.div`
         margin-top : 140px ;
     } 
     @media ${props => props.theme.mobileL} {
-        margin-top : 130px ;
+        margin-top : 100px ;
     }
     @media ${props => props.theme.mobileS} {
         margin-top : 70px ;
@@ -119,10 +128,10 @@ const Title = styled.h1`
         font-size : 72px ;
     } 
     @media ${props => props.theme.mobileL} {
-        font-size : 64px ;
+        font-size : 58px ;
     }
     @media ${props => props.theme.mobileS} {
-        font-size : 36px ;
+        font-size : 28px ;
     }
 `;
 
@@ -141,12 +150,13 @@ const TitleMyName = styled.a`
     user-select : none ;
 
     @media ${props => props.theme.laptop} {
-        font-size : 24px ;
+        font-size : 22px ;
     } 
     @media ${props => props.theme.mobileL} {
-        font-size : 22px ;
+        font-size : 18px ;
     }
     @media ${props => props.theme.mobileS} {
+        margin-top : 5px ;
         font-size : 14px ;
     }
 `;
@@ -171,22 +181,22 @@ const Button = styled.button`
     color : #fff ;
 
     @media ${props => props.theme.laptop} {
-        font-size : 20px ;
+        font-size : 18px ;
         width : 160px ;
         height : 45px ;
-        margin-top : 120px ;
+        margin-top : 100px ;
     } 
     @media ${props => props.theme.mobileL} {
         width : 140px ;
-        font-size : 18px ;
+        font-size : 15px ;
         height : 40px ;
-        margin-top : 90px ;
+        margin-top : 70px ;
     }
     @media ${props => props.theme.mobileS} {
-        font-weight : 550 ;
-        width : 90px ;
-        font-size : 13px ;
-        height : 28px ;
+        font-weight : 0 ;
+        width : 80px ;
+        font-size : 9px ;
+        height : 22px ;
         margin-top : 40px ;
     }
 `;

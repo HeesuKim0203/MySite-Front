@@ -3,15 +3,19 @@ import { connect } from 'react-redux';
 import styled from 'styled-components' ;
 
 import ProjectContent from '../Components/Project/ProjectContent' ;
-import { axiosApi } from '../Util/api' ;
-
 
 const Container = styled.div`
-    width : 100% ;
+    width : 70% ;
+
+    margin : 0 auto ;
 
     display : flex ;
     flex-direction : column ;
     align-items : center ;
+
+    @media ${props => props.theme.mobileL} {
+        width : 100% ;
+    }
 `;
 
 const ContentContainer = styled.div`
@@ -20,15 +24,20 @@ const ContentContainer = styled.div`
     display : grid ;
     
     grid-template-columns : repeat(2, 50%) ;
-    grid-row-gap : 10px ;
+    grid-row-gap : 30px ;
 
-    @media ${props => props.theme.mobileL} {
+    @media ${props => props.theme.tabletS} {
         grid-template-columns : repeat(1, 100%) ;
-        grid-row-gap : 10px ;
     }
 `;
 
 const Project = ({ projectsData }) => {
+
+    // const [ windowWidth, setWindowWidth ] = useState(window.innerWidth) ;
+
+    // useEffect(() => {
+        
+    // }, []) ;
 
     return (
         <Container>

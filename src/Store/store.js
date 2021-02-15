@@ -7,7 +7,7 @@ const STORE_DEFAULT_DATA = 'STORE_DEFAULT_DATA' ;
 const PROJECT_DEFAULT_DATA = 'PROJECT_DEFAULT_DATA' ;
 
 const SET_CONTENTS_DATA = 'SET_CONTENTS_DATA' ;
-const SET_PAGE_CONTENTS_DATA = 'SET__PAGE_CONTENTS_DATA' ;
+const SET_PAGE_CONTENTS_DATA = 'SET_PAGE_CONTENTS_DATA' ;
 
 const UPDATE_SELECT = 'UPDATE_SELECT' ;
 const UPDATE_PAGE_SELECT = 'UPDATE_PAGE_SELECT' ;
@@ -137,7 +137,7 @@ const contentReducer = (
         case SET_PAGE_CONTENTS_DATA :
 
             const pageData = action.contents.map((content, index) => ({ 
-                id : index,
+                id : content.id,
                 title : content.title, 
                 updated_at : content.updated_at.substring(0, 10) 
             })) ;

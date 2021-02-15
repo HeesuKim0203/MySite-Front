@@ -17,14 +17,10 @@ const Title = styled.h6`
     user-select : none ;
 
     @media ${props => props.theme.laptop} {
-        font-size : 20px ;
+        font-size : 18px ;
     }
-    @media ${props => props.theme.mobileL} {
+    @media ${props => props.theme.tabletL} {
         text-align : center ;
-        font-size : 0px ;
-    }
-    @media ${props => props.theme.mobileS} {
-       
     }
 `;
 
@@ -32,25 +28,26 @@ const BigAisdeMenu = styled.li`
     width : 100% ;
     margin-top : 40px ;
 
+    float : left ;
+
     color : #9e9e9e ;
 
     user-select : none ;
 
     cursor : pointer ; 
-
-    @media ${props => props.theme.mobileL} {
-        margin-top : 0px ;
-    }
-    @media ${props => props.theme.mobileS} {
-       
+    @media ${props => props.theme.tabletL} {
+        &:nth-child(2) {
+            margin-top : 40px ;
+        }
     }
 `;
 
 const AsideMenu = styled.ul`
-    @media ${props => props.theme.mobileL} {
-        display : flex ;
-        flex-wrap : wrap ;
-    }
+    margin-top : 20px ;
+
+    /* @media ${props => props.theme.tabletL} {
+        margin-top : 0 ;
+    } */
 `;
 
 const Menu = styled.li`
@@ -64,26 +61,23 @@ const Menu = styled.li`
 
     color : #9e9e9e ;
 
-    &:first-child {
-        margin-top : 20px ;
-    }
-
     &:hover {
         background-color : #e8eaf6 ;
         color : #3949ab ;
     }
 
-    @media ${props => props.theme.mobileL} {
-        width : 50% ;
-        font-size : 10px ;
-        &:first-child {
-            margin-top : 0px ;
-        }
-        padding : 8px ;
-        text-align : center ;
-    }
-    @media ${props => props.theme.mobileS} {
-       
+    @media ${props => props.theme.tabletL} {
+        width : 33.3333% ;
+        float : left ;
+
+        display : flex ;
+        
+        justify-content : center ;
+        align-items : center ;
+
+        margin-top : 0 ;
+
+        border : 1px solid #999 ;
     }
 `;
 
@@ -95,13 +89,6 @@ const FontContainer = styled.div`
 
     align-items : center ;
     justify-content : center ;
-
-    @media ${props => props.theme.laptop} {
-        height : 25px ;
-    }
-    @media ${props => props.theme.mobileL} {
-        height : 10px ;
-    }
 `;
 
 const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
@@ -110,8 +97,8 @@ const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
 
     font-weight : 700 ;
 
-    @media ${props => props.theme.mobileL} {
-        font-size : 11px
+    @media ${props => props.theme.laptop} {
+        font-size : 24px ;
     }
 `;
 
@@ -124,10 +111,16 @@ const Text = styled.span`
 
     font-weight : 550 ;
 
-    @media ${props => props.theme.mobileL} {
-        font-size : 11px ;
-        padding-left : 10px ;
+    @media ${props => props.theme.laptop} {
+        font-size : 14px ;
     }
+    /* @media ${props => props.theme.tabletL} {
+        padding-left : 10px ;
+    } */
+`;
+
+const ContentBox = styled.div`
+
 `;
 
 const AsideContent = ({ title, menu, onClickMenuContent }) => {
@@ -139,10 +132,12 @@ const AsideContent = ({ title, menu, onClickMenuContent }) => {
                 { menu && menu.map((menu, index) => 
                 <Link to={DOCUMENT} key={index}>
                     <Menu onClick={() => onClickMenuContent(menu.text)}>
-                        <FontContainer>
-                            <StyledFontAwesomeIcon icon={menu.icon} />
-                        </FontContainer>
-                        <Text>{menu.text}</Text>
+                        {/* <ContentBox>    */}
+                            <FontContainer>
+                                <StyledFontAwesomeIcon icon={menu.icon} />
+                            </FontContainer>
+                            <Text>{menu.text}</Text>
+                        {/* </ContentBox> */}
                     </Menu>
                 </Link>
                 )}
