@@ -1,8 +1,5 @@
-import { fab } from '@fortawesome/free-brands-svg-icons';
-import React, { useState } from 'react' ;
+import React from 'react' ;
 import styled from 'styled-components' ;
-
-import LanguageContent from './LanguageContent' ;
 
 import { language, LanguageContentNum } from '../../Util/util'
 import UseLanguageContainer from './UseLanguageContainer';

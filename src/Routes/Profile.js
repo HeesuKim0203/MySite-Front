@@ -7,10 +7,16 @@ import { faFacebookF, faGithub, faInstagram } from '@fortawesome/free-brands-svg
 import { axiosApi, api } from '../Util/api' ;
 import { withCookies } from 'react-cookie';
 
+import { size } from '../Util/theme' ;
+
 const Container = styled.div`
     width : 100% ;
 
     padding : 70px 0 ;
+
+    @media ${props => props.theme.mobileS} {
+        padding : 20px 0 ;
+    }
 `;
 
 const MyContainer = styled.div`
@@ -21,6 +27,11 @@ const MyContainer = styled.div`
     margin : 0 auto ;
 
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23) ;
+
+    @media ${props => props.theme.mobileS} {
+        width : 100% ;
+        height : 300px ;
+    }
 `;
 
 const MainContainer = styled.div`
@@ -44,7 +55,6 @@ const Main2 = styled(Main)`
     width : 50% ;
 
     border-left : 1px solid #111 ;
-
 `;
 
 const Footer = styled.ul`
@@ -65,6 +75,10 @@ const IconBox = styled.li`
     &:not(:last-child) {
         margin-right : 20px ;
     }
+
+    @media ${props => props.theme.mobileS} {
+        width : 30px ;
+    }
 `;
 
 const Icon = styled(FontAwesomeIcon)`
@@ -77,6 +91,13 @@ const Icon = styled(FontAwesomeIcon)`
 
     &:hover {
         font-size : 32px ;
+    }
+
+    @media ${props => props.theme.mobileS} {
+        font-size : 18px ;
+        &:hover {
+            font-size : 20px ;
+        }
     }
 `;
 
@@ -95,6 +116,12 @@ const MyIntroductionLi = styled.li`
     &:not(:last-child) {
         margin-bottom : 50px ;
     }
+
+    @media ${props => props.theme.mobileS} {
+        &:not(:last-child) {
+            margin-bottom : 10px ;
+        }
+    }
 `;
 
 const TitleText = styled.span`
@@ -103,6 +130,21 @@ const TitleText = styled.span`
     font-size : 22px ;
 
     padding-bottom : 8px ;
+
+    &:not(:last-child) {
+        margin-bottom : 14px ;
+        padding-bottom : 3px ;
+    }
+
+    @media ${props => props.theme.mobileS} {
+        font-size : 15px ;
+
+        padding-bottom : 3px ;
+
+        &:not(:last-child) {
+            margin-bottom : 3px ;
+        }
+    }
 `;
 
 const Text = styled.span`
@@ -111,10 +153,17 @@ const Text = styled.span`
     padding-bottom : 8px ;
 
     font-weight : 550 ;
+
+    @media ${props => props.theme.mobileS} {
+        font-size : 8px ;
+        padding-bottom : 3px ;
+    }
 `;
 
 const Content = styled.span`
-
+    @media ${props => props.theme.mobileS} {
+        font-size : 6px ;
+    }
 `;
 
 const LoginContainer = styled.div`
@@ -125,7 +174,7 @@ const LoginContainer = styled.div`
 
     margin-top : 100px ;
 
-    display : flex ;
+    display : ${props => props.display} ;
     justify-content : center ;
     align-items : center ;
 `;
@@ -173,6 +222,36 @@ const Profile = ({ cookies }) => {
     const [ email, setEmail ] = useState('') ;
     const [ pw, setPw ] = useState('') ;
     const [ login, setLogin ] = useState(false) ;
+
+    const [ showLogin, setShowLogin ] = useState(true) ;
+
+    const { mobileS } = size ;
+
+    const viewContentNumCheck = innerWidth => {
+        if( innerWidth <= mobileS ) {
+            setShowLogin(false) ;
+        }else if( innerWidth > mobileS ) {
+
+        }
+      }
+
+    const onResize = (e) => {
+        const { currentTarget : { innerWidth } } = e ;
+
+        viewContentNumCheck(innerWidth) ;
+    }
+
+    useEffect(() => {
+        const { innerWidth } = window ;
+
+        viewContentNumCheck(innerWidth) ;
+    
+        window.addEventListener('resize', onResize, false) ;
+    
+        return () => {
+          window.removeEventListener('resize', onResize, false) ;
+        }
+    }, [])
 
     useEffect(() => {
         const token = cookies.get('token') ;
@@ -292,7 +371,7 @@ const Profile = ({ cookies }) => {
                     </Footer>
                 </MainContainer>
             </MyContainer>
-            <LoginContainer>
+            <LoginContainer display={showLogin ? 'flex' : 'none'}>
                 <Form onSubmit={ login ? onLogout : onLogin} action="POST">
                    {login ? null : ( 
                         <>

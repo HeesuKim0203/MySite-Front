@@ -11,7 +11,7 @@ import {
 import { connect } from 'react-redux';
 
 const Title = styled.h5`
-    font-size : 18px ;
+    font-size : 16px ;
     font-weight : 550 ;
 
     width : 100% ;
@@ -25,10 +25,18 @@ const Title = styled.h5`
     user-select : none ;
 
     font-family : 'Montserrat', sans-serif ;
+
+    @media ${props => props.theme.laptop} {
+        font-size : 15px ;
+        margin-top : 10px ;
+    }
+    @media ${props => props.theme.mobileS} {
+        font-size : 13px ;
+    }
 `;
 
 const Container = styled.div`
-    width : 92% ;
+    width : 78% ;
     overflow : hidden ;
 
     box-shadow: 0 5px 10px rgba(0,0,0,0.19), 0 3px 3px rgba(0,0,0,0.23);
@@ -41,11 +49,41 @@ const Container = styled.div`
             text-decoration : underline ;
         }
     }
+
+    &:nth-child(3n-2) {
+        margin-left : 10% ;
+        @media ${props => props.theme.laptop} {
+            margin-left : 12% ;
+        }
+        @media ${props => props.theme.mobileS} {
+            margin-left : 20% ;
+        }
+    }
+    &:nth-child(3n - 1) {
+        margin-left : 5% ;
+        @media ${props => props.theme.laptop} {
+            margin-left : 7% ;
+        }
+        @media ${props => props.theme.mobileS} {
+            margin-left : 20% ;
+        }
+    }
+
+    @media ${props => props.theme.laptop} {
+        width : 70% ;
+    }
+    @media ${props => props.theme.mobileS} {
+        width : 60% ;
+
+        &:nth-child(3n) {
+            margin-left : 20% ;
+        }
+    }
 `;
 
 const Img = styled.div`
     width : 100% ;
-    height : 250px ;
+    height : 220px ;
     
     background-image : url(${props=>props.url}) ;
     background-repeat : no-repeat ;
@@ -54,7 +92,10 @@ const Img = styled.div`
     float : left ; 
 
     @media ${props => props.theme.laptop} {
-        height : 200px ;
+        height : 160px ;
+    }
+    @media ${props => props.theme.mobileS} {
+        height : 140px ;
     }
 `;
 
@@ -67,9 +108,16 @@ const Code = styled.div`
 const TextContainer = styled.div`
     width : 100% ;
 
-    padding : 15px ;
+    padding : 12px ;
 
     float : left ;
+
+    @media ${props => props.theme.laptop} {
+        padding : 10px 7px ;
+    }
+    @media ${props => props.theme.mobileS} {
+        padding : 6px 3px ;
+    }
 
 `;
 
@@ -88,11 +136,17 @@ const Date = styled.span`
     user-select : none ;
 
     font-family : 'Montserrat', sans-serif ;
+
+    @media ${props => props.theme.laptop} {
+        font-size : 7px ;
+    }
+    @media ${props => props.theme.mobileS} {
+        padding-left : 3px ;
+    }
 `;
 
 const TitleContainer = styled.div`
     width : 100% ;
-
     float : left ;
 `;
 
@@ -102,6 +156,9 @@ const StyleFontAwesomeIcon = styled(FontAwesomeIcon)`
 
     @media ${props => props.theme.laptop} {
         font-size : 18px ;
+    }
+    @media ${props => props.theme.laptop} {
+        font-size : 13px ;
     }
 `;
 

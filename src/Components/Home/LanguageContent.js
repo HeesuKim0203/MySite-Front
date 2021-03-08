@@ -4,8 +4,8 @@ import styled from 'styled-components' ;
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome' ;
 
 const Container = styled.div`
-    width : 81px ;
-    height : 130px ;
+    width : 70px ;
+    height : 110px ;
 
     float : left ;
 
@@ -30,7 +30,7 @@ const Container = styled.div`
 
 const Img = styled.div`
     width: 100% ;
-    height : 81px ;
+    height : 70px ;
 
     margin : 5px auto 0 auto ;
 
@@ -74,6 +74,8 @@ const Text = styled.span`
     font-weight : 600 ;
     user-select : none ;
 
+    font-size : 14px ;
+
     @media ${props => props.theme.mobileL} {
         font-size : 11px ;
         font-weight : 500 ;
@@ -85,7 +87,7 @@ const Text = styled.span`
 
 const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
 
-    font-size : 48px ;
+    font-size : 42px ;
 
     @media ${props => props.theme.mobileL} {
         font-size : 38px ;

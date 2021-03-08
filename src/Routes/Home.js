@@ -53,7 +53,7 @@ const SlideContainer = styled.div`
     overflow : hidden ;
 
     // contentContainer margin-top과 같이 변경    
-    margin-top : 160px ;
+    margin-top : 200px ;
 
     @media ${props => props.theme.mobileL} {
         margin-top : 60px ;
@@ -91,7 +91,11 @@ const LanguageDataContainer = styled.div`
     ${flexLanguageWidth}
     height : 300px ;
 
-    margin-left : 20% ;
+    margin-left : 10% ;
+
+    display : flex ;
+    
+    align-items : center ;
 
     @media ${props => props.theme.laptop} {
         margin-left : 0 ;
@@ -108,6 +112,7 @@ const LanguageTextContainer = styled.div`
 
     ${flexLanguageWidth}
     height : 300px ;
+    margin-left : 5% ;
 
     overflow : hidden ;
 
@@ -116,6 +121,10 @@ const LanguageTextContainer = styled.div`
     flex-direction : column ;
     justify-content : center ;
     align-items : center ;
+
+    @media ${props => props.theme.laptop} {
+        margin-left : 0 ;
+    }
 `;
 
 const ProjectTextContainer = styled.div`
@@ -124,11 +133,15 @@ const ProjectTextContainer = styled.div`
     float : left ;
 
     margin-bottom : 80px ;
+
+    @media ${props => props.theme.laptop} {
+        margin-bottom : 40px ;
+    }
 `;
 
 const Title = styled.h3`
     width : 100% ;
-    font-size : 32px ;
+    font-size : 28px ;
 
     text-align : center ;
 
@@ -143,7 +156,7 @@ const Title = styled.h3`
 `;
 
 const Text = styled.p`
-    font-size : 14px ;
+    font-size : 12px ;
 
     text-align : center ;
     padding : 5px 3px ;

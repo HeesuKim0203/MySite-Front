@@ -180,10 +180,6 @@ const Write = () => {
 
         const data = await axiosApi.createContent(contentFormData) ;
 
-
-        console.log(data) ;
-        
-
         setPageState(!pageState) ;
     }
 

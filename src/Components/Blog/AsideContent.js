@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import { DOCUMENT } from '../../Util/routes' ;
 
 const Title = styled.h6`
-    font-size : 22px ;
+    font-size : 20px ;
     font-weight : 700 ;
 
     color : #424242 ;
@@ -17,10 +17,10 @@ const Title = styled.h6`
     user-select : none ;
 
     @media ${props => props.theme.laptop} {
-        font-size : 18px ;
+        font-size : 16px ;
     }
-    @media ${props => props.theme.tabletL} {
-        text-align : center ;
+    @media ${props => props.theme.mobileS} {
+        font-size : 10px ;
     }
 `;
 
@@ -35,19 +35,18 @@ const BigAisdeMenu = styled.li`
     user-select : none ;
 
     cursor : pointer ; 
-    @media ${props => props.theme.tabletL} {
-        &:nth-child(2) {
-            margin-top : 40px ;
-        }
+    @media ${props => props.theme.mobileS} {
+        margin-top : 15px ;
     }
 `;
 
 const AsideMenu = styled.ul`
+
     margin-top : 20px ;
 
-    /* @media ${props => props.theme.tabletL} {
-        margin-top : 0 ;
-    } */
+    @media ${props => props.theme.mobileS} {
+        margin-top : 5px ;
+    }
 `;
 
 const Menu = styled.li`
@@ -66,18 +65,8 @@ const Menu = styled.li`
         color : #3949ab ;
     }
 
-    @media ${props => props.theme.tabletL} {
-        width : 33.3333% ;
-        float : left ;
-
-        display : flex ;
-        
-        justify-content : center ;
-        align-items : center ;
-
-        margin-top : 0 ;
-
-        border : 1px solid #999 ;
+    @media ${props => props.theme.mobileS} {
+        padding : 5px 0 ;
     }
 `;
 
@@ -98,29 +87,30 @@ const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
     font-weight : 700 ;
 
     @media ${props => props.theme.laptop} {
-        font-size : 24px ;
+        font-size : 22px ;
+    }
+    @media ${props => props.theme.mobileS} {
+        font-size : 14px ;
     }
 `;
 
 const Text = styled.span`
-    display : inline-block ;
+    display : block ;
 
-    padding-left : 20px ;
+    margin-left : 20px ;
 
-    font-size : 16px ;
+    font-size : 14px ;
 
     font-weight : 550 ;
 
     @media ${props => props.theme.laptop} {
-        font-size : 14px ;
+        font-size : 12px ;
+        margin-left : 5px ;
     }
-    /* @media ${props => props.theme.tabletL} {
-        padding-left : 10px ;
-    } */
-`;
-
-const ContentBox = styled.div`
-
+    @media ${props => props.theme.mobileS} {
+        font-size : 8px ;
+        margin-left : 2px ;
+    }
 `;
 
 const AsideContent = ({ title, menu, onClickMenuContent }) => {
@@ -132,12 +122,10 @@ const AsideContent = ({ title, menu, onClickMenuContent }) => {
                 { menu && menu.map((menu, index) => 
                 <Link to={DOCUMENT} key={index}>
                     <Menu onClick={() => onClickMenuContent(menu.text)}>
-                        {/* <ContentBox>    */}
-                            <FontContainer>
-                                <StyledFontAwesomeIcon icon={menu.icon} />
-                            </FontContainer>
-                            <Text>{menu.text}</Text>
-                        {/* </ContentBox> */}
+                        <FontContainer>
+                            <StyledFontAwesomeIcon icon={menu.icon} />
+                        </FontContainer>
+                        <Text>{menu.text}</Text>
                     </Menu>
                 </Link>
                 )}

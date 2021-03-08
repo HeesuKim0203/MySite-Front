@@ -24,3 +24,5 @@ export const otherType = [
 // asideTitle 길이와 little data의 갯수를 맞춰주세요
 export const asideTitle = [ '프로그래밍 언어', '잡담' ] ;
 export const coreData = [ language, otherType ] ;
+
+export const typeChartData = language.map(data =>({ type : data.text, num : 0, color : data.color }))

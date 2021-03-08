@@ -1,7 +1,11 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux' ;
 import logger from 'redux-logger' ;
 
-import { blogContentNum, blogPageContentNum } from '../Util/util' ;
+import { 
+    blogContentNum,
+    blogPageContentNum,
+    typeChartData
+} from '../Util/util' ;
 
 const STORE_DEFAULT_DATA = 'STORE_DEFAULT_DATA' ;
 const PROJECT_DEFAULT_DATA = 'PROJECT_DEFAULT_DATA' ;
@@ -88,6 +92,7 @@ const contentReducer = (
         pageButtonsData : [],
         select : 0,
         pageSelect : 0,
+        contentType : []
     },
     action
 ) => {
@@ -101,9 +106,19 @@ const contentReducer = (
     switch(action.type) {
         case STORE_DEFAULT_DATA :
 
+            const contentType = action.defaultData.reduce((prev, element) => {
+
+                prev.forEach((typeData) => {
+                    if(typeData.type === element.type)
+                        typeData.num ++ ;
+                }) ;
+                return prev ;
+            }, typeChartData) ;
+
              return {
                 ...state,                                            
-                defaultData :  action.defaultData
+                defaultData :  action.defaultData,
+                contentType
             } ; 
              
          case SET_CONTENTS_DATA :

@@ -5,25 +5,32 @@ const Container = styled.div`
 
     float : left ;
 
-    width : 95% ;
+    width : 80% ;
     overflow : hidden ;
 
     &:nth-child(2n) {
-        margin-left : 5% ;
+        margin-left : 9.5% ;
 
         @media ${props => props.theme.tabletS} {
-            margin-left : 0 ;
+            margin-left : 14.5% ;
+        }
+    }
+    &:nth-child(2n - 1) {
+        margin-left : 9.5% ;
+
+        @media ${props => props.theme.tabletS} {
+            margin-left : 14.5% ;
         }
     }
 
     @media ${props => props.theme.tabletS} {
-        width : 100% ;
+        width : 70% ;
     }
 `;
 
 const Img = styled.div`
     width : 100% ;
-    height : 300px ;
+    height : 270px ;
 
     float : left ;
 
@@ -36,8 +43,11 @@ const Img = styled.div`
     @media ${props => props.theme.laptop} {
         height : 260px ;
     }
-    @media ${props => props.theme.laptop} {
+    @media ${props => props.theme.mobileL} {
         height : 180px ;
+    }
+    @media ${props => props.theme.mobileS} {
+        height : 100px ;
     }
 `;
 
@@ -57,7 +67,7 @@ const TitleContainer = styled.div`
 const Title = styled.h5`
     box-sizing : content-box ;
 
-    font-size : 20px ;
+    font-size : 17px ;
 
     overflow : hidden ;
     text-overflow : ellipsis ; 
@@ -70,10 +80,10 @@ const Title = styled.h5`
     padding : 6px 2px 0 2px ;
 
     @media ${props => props.theme.mobileL} {
-        font-size : 18px ;
+        font-size : 15px ;
     }
     @media ${props => props.theme.mobileS} {
-        font-size : 14px ;
+        font-size : 13px ;
     }
 
 `;
@@ -108,6 +118,8 @@ const DescriptionContainer  = styled.div`
     display : ${props => props.display} ;
 
     background-color : rgba(0, 0, 0, 0.85) ;
+
+    font-size : 13px ;
 
     padding : 20px 10px ;
 

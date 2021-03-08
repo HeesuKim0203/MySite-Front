@@ -23,6 +23,10 @@ const ContentContainer = styled.div`
     @media ${props => props.theme.mobileL} {
         padding : 20px 5px ;
     }
+    @media ${props => props.theme.mobileS} {
+        margin-top : 30px ;
+        padding : 10px 5px 20px 5px ;
+    }
 `;
 
 const Blog = ({ contentsData, select }) => {

@@ -10,6 +10,14 @@ function App({ setContents, setPageContents, setDefaultData, setProjectContents 
 
   useEffect(() => {
 
+    function checkVisitor() {
+      axiosApi.checkVisitor() ;
+
+      return ;
+    }
+
+    checkVisitor() ;
+
     async function fetchData() {
         try {
             const { 

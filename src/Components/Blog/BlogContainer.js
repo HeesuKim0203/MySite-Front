@@ -10,6 +10,11 @@ const Container = styled.div`
     
     grid-template-columns : repeat(3, 33.33%) ;
     grid-row-gap : 50px ;
+
+    @media ${props => props.theme.mobileS} {
+        grid-template-columns : repeat(1, 100%) ;
+        grid-row-gap : 20px ;
+    }
 `;
 
 const BlogContainer = ({ content, select }) => {

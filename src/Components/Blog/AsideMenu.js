@@ -6,38 +6,38 @@ import AsideContent from './AsideContent' ;
 import { createAction } from '../../Store/store' ;
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome' ;
-import { faSearch } from '@fortawesome/free-solid-svg-icons' ;
+import { faSearch, faAlignJustify } from '@fortawesome/free-solid-svg-icons' ;
 import { Redirect } from 'react-router-dom';
 import { DOCUMENT } from '../../Util/routes';
 
 import { size } from '../../Util/theme' ;
 
-const Title = styled.h6`
-    font-size : 28px ;
-`;
-
 const Container = styled.div`
     width : 100% ;
+
+    display : ${props => props.display} ;
 
     font-family: 'Ubuntu', sans-serif ;
 
     padding : 15px 5px ;
 
-    ${Title} {
-        font-weight : 650 ;
-    }
+    @media ${props => props.theme.mobileS} {
+        position : fixed ;
+        width : 30% ;
+        top : 32px ;
+        left : 0 ;
 
-    @media ${props => props.theme.tabletL} {
-        width : 80% ;
+        z-index : 99 ;
 
-        margin : 0 auto ;
+        padding : 3px 0 3px 5px ;
+
+        background-color : #eeeeee ;
     }
 `;
 
 const BigAsideMenuContainer = styled.ul`
     width : 100% ;
     float : left ;
-
 `;
 
 const AllDataViewButton = styled.div`
@@ -45,8 +45,9 @@ const AllDataViewButton = styled.div`
 
     float : left ;
 
+    text-align : center ;
     margin-top : 30px ;
-    font-size : 20px ;
+    font-size : 16px ;
     font-weight : 550 ;
 
     padding : 20px 0 20px 10px ;
@@ -59,6 +60,16 @@ const AllDataViewButton = styled.div`
     &:hover {
         background-color : #e8eaf6 ;
         color : #3949ab ;
+    }
+
+    @media ${props => props.theme.laptop} {
+        font-size : 12px ;
+        margin-left : 5px ;
+    }
+    @media ${props => props.theme.mobileS} {
+        font-size : 8px ;
+        padding : 10px 6px 10px 6px ;
+        margin-top : 10px ;
     }
 `;
 
@@ -77,6 +88,24 @@ const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
     font-size : 16px ;
 
     color : #9e9e9e ;
+
+    @media ${props => props.theme.mobileS} {
+        font-size : 10px ;
+    }
+`;
+
+const StyledFontAwesomeIconMenu = styled(FontAwesomeIcon)`
+
+    display : ${props => props.display} ;
+    position : fixed ;
+
+    font-size : 14px ;
+    
+    z-index : 100;
+    top : 10px ;
+    left : 10px ;
+
+    color : #fff ;
 `;
 
 const FontAwesomeIconContainer = styled.div`
@@ -93,6 +122,11 @@ const FontAwesomeIconContainer = styled.div`
             color : #3949ab ;
         }
     }
+
+    @media ${props => props.theme.mobileS} {
+        top : 0px ;
+        right : 0px ;
+    }
 `;
 
 const Form = styled.form`
@@ -105,17 +139,10 @@ const Form = styled.form`
 
     font-family: 'Ubuntu', sans-serif ;
 
-    @media ${props => props.theme.laptop} {
-        width : 160px ;
+    @media ${props => props.theme.mobileS} {
+        width : 80px ;
+        height : 20px ;
     }
-    /* @media ${props => props.theme.tabletL} {
-        width : 160px ;
-    } */
-
-    /* display : flex ;
-    
-    flex-direction : row-reverse ;
-    align-items : center ; */
 `;
 
 const SearhInput = styled.input`
@@ -143,15 +170,22 @@ const SearhInput = styled.input`
     &::placeholder {
         color : #888 ;
     }
+    @media ${props => props.theme.mobileS} {
+        font-size : 8px ;
+        height : 18px ;
+        padding-left : 0px ;
+    }
 `;
 
 const AsideMenu = ({ asideData, searchContents, searchTitle }) => {
 
-    const { tabletL } = size ;
+    const { mobileS } = size ;
 
     const [ search, setSearch ] = useState('') ;
-    const [ goDocument, setGoDocument ] = useState(true) ;
-    const [ searchPosition, setSearchPosition ] = useState(false) ;
+    const [ goDocument, setGoDocument ] = useState(false) ;
+
+    const [ show, setShow ] = useState(false) ;
+    const [ menu, setMenu ] = useState(true) ;
 
     useEffect(() => {
 
@@ -162,10 +196,12 @@ const AsideMenu = ({ asideData, searchContents, searchTitle }) => {
     }, [goDocument, setGoDocument]) ;
 
     const viewContentNumCheck = innerWidth => {
-        if(innerWidth <= tabletL ) {
-            setSearchPosition(true) ;
-        }else if( innerWidth >= tabletL ) {
-            setSearchPosition(false) ;
+        if( innerWidth <= mobileS ) {
+            setShow(true) ;
+            setMenu(false) ;
+        }else if( innerWidth > mobileS ) {
+            setShow(false) ;
+            setMenu(true) ;
         }
       }
 
@@ -206,46 +242,46 @@ const AsideMenu = ({ asideData, searchContents, searchTitle }) => {
         setSearch(e.target.value) ;
     }
 
+    function onClickMenu(e) {
+        setMenu(!menu) ;
+    }
+
     return (
         <>
         {goDocument ? (
-            <Container>
-                {searchPosition ? (null)  : (<SearchContainer>
-                    <Form onSubmit={onSearchTitle}>
-                        <FontAwesomeIconContainer>
-                            <StyledFontAwesomeIcon icon={faSearch}  size="2x" onClick={onSearchTitle} />
-                        </FontAwesomeIconContainer>
-                        <SearhInput onChange={onChangeSearchValue} value={search} placeholder="게시물 검색.." />
-                    </Form>
-                </SearchContainer>)}
-                <BigAsideMenuContainer>
-                    {asideData && asideData.map((aside, index) => {
-                        return (
-                            <AsideContent  
-                                key={index}
-                                title={aside.title}
-                                menu={aside.menu}
-                                onClickMenuContent={onClickMenuContent}
-                            />
-                        ) ;
-                    })}
-                </BigAsideMenuContainer>
-                <AllDataViewButton onClick={() => onClickMenuContent()}>
-                    전체 보기
-                </AllDataViewButton>
-                {searchPosition ? (<SearchContainer>
-                    <Form onSubmit={onSearchTitle}>
-                        <FontAwesomeIconContainer>
-                            <StyledFontAwesomeIcon icon={faSearch}  size="2x" onClick={onSearchTitle} />
-                        </FontAwesomeIconContainer>
-                        <SearhInput onChange={onChangeSearchValue} value={search} placeholder="게시물 검색.." />
-                    </Form>
-                </SearchContainer>) : (null)}
-            </Container>
+            <>
+                <StyledFontAwesomeIconMenu icon={faAlignJustify} display={show ? 'block' : 'none'} onClick={onClickMenu}/>
+                <Container display={menu  ? 'block' : 'none' }>
+                    <SearchContainer>
+                        <Form onSubmit={onSearchTitle}>
+                            <FontAwesomeIconContainer>
+                                <StyledFontAwesomeIcon icon={faSearch} onClick={onSearchTitle} />
+                            </FontAwesomeIconContainer>
+                            <SearhInput onChange={onChangeSearchValue} value={search} placeholder="게시물 검색.." />
+                        </Form>
+                    </SearchContainer>
+                    <BigAsideMenuContainer>
+                        {asideData && asideData.map((aside, index) => {
+                            return (
+                                <AsideContent  
+                                    key={index}
+                                    title={aside.title}
+                                    menu={aside.menu}
+                                    onClickMenuContent={onClickMenuContent}
+                                />
+                            ) ;
+                        })}
+                    </BigAsideMenuContainer>
+                    <AllDataViewButton onClick={() => onClickMenuContent()}>
+                        전체 보기
+                    </AllDataViewButton>
+                </Container>
+            </>
             ) : (
             <Redirect to={DOCUMENT}/>
         )}
         </>
+        
     );
 };
 

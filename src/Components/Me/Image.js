@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react' ;
-import { withCookies } from 'react-cookie';
 import styled from 'styled-components' ;
 import { axiosApi } from '../../Util/api';
 
@@ -12,8 +11,8 @@ const Container = styled.div`
     
     padding : 20px ;
 
-    background-color : #fff ;
-    border : 1px solid #111 ;
+    background-color : #1565c0 ;
+    border-radius : 20px ;
 
     overflow : hidden ;
 `;
@@ -23,11 +22,13 @@ const ImageListContainer = styled.div`
     width : 50% ;
     height : 100% ;
     
-    border : 1px solid #111 ;
+    border-radius : 20px ;
 
-    overflow-x : scroll ;
+    padding : 15px 10px ;
 
-    &::-webkit-scrollbar {
+    background-color : #fff ;
+
+    /* &::-webkit-scrollbar {
         width : 0.4em ;  
     }
     &::-webkit-scrollbar,
@@ -37,26 +38,28 @@ const ImageListContainer = styled.div`
     }
     &::-webkit-scrollbar-thumb {
         background: rgba(0, 0, 0, 0.2) ; 
-    }
+    } */
 `;
 
 const InputContainer = styled.div`
+    background-color : #fff ;
     float : right ;
 
     width : 48% ;
     height : 100% ;
 
-    border : 1px solid ;
+    border-radius : 20px ;
 `;
 
 const ImagePreviewContainer = styled.div`
     width : 100% ;
+    height : 160px ;
     margin-bottom : 30px ;
 `;
 
 const ImagePreview = styled.img`
     width : 100% ;
-    height : 160px ;
+    height : 100% ;
 
     background-image : url(${props => props.url}) ;
     background-repeat : no-repeat ;
@@ -75,16 +78,36 @@ const Button = styled.button`
     all : unset ;
 
     font-size : 14px ;
+    font-weight : 550 ;
 
-    border : 1px solid #111 ;
     border-radius : 15px ;
 
     padding : 4px 8px ;
+    margin : 2px 4px ;
+
+    background-color : #1de9b6 ;
 `;
 
 const ImageContent = styled.div`
-    /* user-select : none ; */
-    /* cursor : pointer ; */
+    overflow : hidden ; 
+    text-overflow : ellipsis ; 
+    white-space : nowrap ;
+`;
+
+const Msg = styled.div`
+
+    width : 100% ;
+    height : 100% ;
+    
+    font-size : 22px ;
+    font-weight : 600 ;
+    color : #b71c1c ;
+
+    display : flex ;
+
+    justify-content : center ;
+    align-items : center ;
+    
 `;
 
 const Image = () => {
@@ -115,11 +138,14 @@ const Image = () => {
         }
 
         getImgList() ;
-    }, []) ;
 
-    useEffect(() => {
-        console.log(selectUrl) ;
-    }, [selectUrl]) ;
+
+        return () => {
+            setSelectUrl('') ;
+            setImageList([]) ;
+        }
+
+    }, []) ;
 
     async function onSubmitImage(e) {
         e.preventDefault() ;
@@ -167,18 +193,38 @@ const Image = () => {
         }
     }
 
+    function onClickImageContent(e) {
+
+        const node = e.target ;
+        const text = node.innerHTML ;
+
+        const createInput = document.createElement('input') ;
+        createInput.setAttribute('type', 'text') ;
+
+        node.appendChild(createInput) ;
+
+        createInput.value = text ;
+        
+        createInput.select() ;
+        document.execCommand('copy') ;
+
+        node.removeChild(createInput) ;
+
+    }
+
     return (
         <Container>
             <ImageListContainer onClick={onClickImage}>
                 {imageList && imageList.map((content, index) => 
-                    <ImageContent key={index}>
+                    <ImageContent onClick={onClickImageContent} key={index}>
                         {content.url}
                     </ImageContent>
                 )}
             </ImageListContainer>
             <InputContainer>
             <ImagePreviewContainer>
-                <ImagePreview src={selectUrl && selectUrl.url} />
+                {selectUrl ? 
+                    (<ImagePreview src={selectUrl && selectUrl.url} />) : (<Msg>선택된 이미지 없음</Msg>) }
                 <Button onClick={onDeleteImg}>삭제</Button>
             </ImagePreviewContainer>
             <Form onSubmit={onSubmitImage} action="POST">
@@ -196,4 +242,4 @@ const Image = () => {
     );
 };
 
-export default withCookies(Image) ;
+export default Image ;
