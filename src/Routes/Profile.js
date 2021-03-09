@@ -96,7 +96,6 @@ const Icon = styled(FontAwesomeIcon)`
     @media ${props => props.theme.mobileS} {
         font-size : 18px ;
         &:hover {
-            font-size : 20px ;
         }
     }
 `;
@@ -110,6 +109,11 @@ const MyIntroduction = styled.ul`
     padding-right : 30px ;
     margin-top : 10% ;
     margin-left : 18% ;
+
+    @media ${props => props.theme.mobileS} {
+        padding-right : 0 ;
+        margin-left : 8% ;
+    }
 `;
 
 const MyIntroductionLi = styled.li`
@@ -231,7 +235,7 @@ const Profile = ({ cookies }) => {
         if( innerWidth <= mobileS ) {
             setShowLogin(false) ;
         }else if( innerWidth > mobileS ) {
-
+            setShowLogin(true) ;
         }
       }
 

@@ -9,13 +9,20 @@ const Container = styled.div`
 
     float : left ;
 
-    border-top : 1px solid #cfd8dc ;
+    border-bottom : 1px solid #cfd8dc ;
 
     padding : 30px ;
 
+    &:last-child {
+        border-bottom : none ;
+    }
+
     &:first-child {
-        border-top : none ;
         margin-top : 30px ;
+    }
+
+    @media ${props => props.theme.mobileS} {
+        padding : 10px ;
     }
 `;
 
@@ -29,6 +36,10 @@ const HeaderTool = styled.div`
     float : right ;
 
     text-align : right ;
+
+    /* @media ${props => props.theme.mobileS} {
+        width : 45% ;
+    } */
 `;
 
 const Button = styled.button`
@@ -41,14 +52,27 @@ const Button = styled.button`
     font-size : 11px ;
     
     cursor : pointer ;
+
+    @media ${props => props.theme.mobileS} {
+        font-size : 5px ;
+        font-weight : 500 ;
+    }
 `;
 
 const UpdateButton = styled(Button)`
     margin-right : 10px ;
+
+    @media ${props => props.theme.mobileS} {
+        margin-right : 5px ;
+    }
 `;
 
 const DeleteButton = styled(Button)`
     margin-right : 10px ;
+
+    @media ${props => props.theme.mobileS} {
+        margin-right : 5px ;
+    }
 `;
 
 const CommentCommentAdd = styled(Button)`
@@ -57,6 +81,10 @@ const CommentCommentAdd = styled(Button)`
 
 const Main = styled.div`
     padding : 15px 20px ;
+    
+    @media ${props => props.theme.mobileS} {
+        padding : 7px 10px ;
+    }
 `;
 
 const UserName = styled.span`
@@ -67,6 +95,11 @@ const UserName = styled.span`
     font-weight : 600 ;
 
     margin-left : 5px ;
+
+    @media ${props => props.theme.mobileS} {
+        font-size : 12px ;
+        margin-left : 4px ;
+    }
 `;
 
 const Date = styled.span`
@@ -75,10 +108,18 @@ const Date = styled.span`
     padding-left : 10px ;
 
     font-size : 12px ;
+
+    @media ${props => props.theme.mobileS} {
+        font-size : 7px ;
+        padding-left : 5px ;
+    }
 `;
 
 const Text = styled.p`
-
+    @media ${props => props.theme.mobileS} {
+        font-size : 9px ;
+        margin-top : 3px ;
+    }
 `;
 
 const Form = styled.form`
@@ -98,6 +139,12 @@ const Input = styled.input`
     text-align : left ;
 
     font-size : 12px ;
+
+    @media ${props => props.theme.mobileS} {
+        width : 60px ;
+        font-size : 9px ;
+        height : 15px ;
+    }
 `;
 
 const TextArea = styled.textarea`
@@ -109,6 +156,11 @@ const TextArea = styled.textarea`
 
     width : 100% ;
     height : 80px ;
+
+    @media ${props => props.theme.mobileS} {
+        height : 40px ;
+        font-size : 9px ;
+    }
 `;
 
 const SubmitButton = styled(Button)`
@@ -121,6 +173,11 @@ const SubmitButton = styled(Button)`
     font-size : 14px ;
 
     border : 1px solid #999 ;
+
+    @media ${props => props.theme.mobileS} {
+        font-size : 9px ;
+        padding : 3px 5px ;
+    }
 `;
 
 const CheckButton = styled(Button)`
@@ -130,10 +187,18 @@ const CheckButton = styled(Button)`
     padding : 2px ;
 
     margin-left : 10px ;
+
+    @media ${props => props.theme.mobileS} {
+        font-size : 9px ;
+    }
 `;
 
 const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
     text-decoration : none ;
+
+    @media ${props => props.theme.mobileS} {
+        font-size : 12px ;
+    }
 `;
 
 const Comment = ({ comment, deleteCommnet, onUpdateComment, onCheckUser }) => {
@@ -166,7 +231,7 @@ const Comment = ({ comment, deleteCommnet, onUpdateComment, onCheckUser }) => {
                     {user_name}
                 </UserName>
                 <Date>
-                    {updated_at}
+                    {updated_at.substring(0, 10) + " "+ updated_at.substring(11, 19)}
                 </Date>
                 <HeaderTool>
                 {checkUser ? (

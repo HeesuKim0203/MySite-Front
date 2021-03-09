@@ -27,6 +27,7 @@ const Form = styled.form`
     width : 80% ;
 
     margin : 0 auto ;
+    
 `;
 
 const Input = styled.input`
@@ -38,6 +39,14 @@ const Input = styled.input`
     border : 1px solid #999 ;
 
     padding-left : 5px ;
+
+    @media ${props => props.theme.mobileS} {
+        width : 60px ;
+        height : 15px ;
+        padding-left : 2px ;
+
+        font-size : 9px ;
+    }
 `;
 
 const UserName = styled(Input)`
@@ -60,6 +69,12 @@ const Text = styled.textarea`
     padding : 7px ;
 
     margin-top : 10px ;
+
+    @media ${props => props.theme.mobileS} {
+        padding : 3px ;
+        width : 80% ;
+        font-size : 9px ;
+    }
 `;
 
 const Button = styled.button`
@@ -78,6 +93,13 @@ const Button = styled.button`
     font-weight : 550 ;
 
     cursor : pointer ;
+
+    @media ${props => props.theme.mobileS} {
+        width : 50px ;
+        font-size : 9px ;
+        padding : 3px 5px ;
+        font-weight : 500 ;
+    }
 `;
 
 const CommentContainer = ({ contentId }) => {
@@ -241,6 +263,10 @@ const CommentContainer = ({ contentId }) => {
 
         if(contentId) 
             getCommnetsList() ;
+
+        return () => {
+            setCommentsList(null) ;
+        }
 
     }, [contentId]) ;
 

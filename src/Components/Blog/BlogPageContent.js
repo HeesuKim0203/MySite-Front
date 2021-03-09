@@ -15,10 +15,16 @@ const Container = styled.div`
 
     background-color : ${props => props.select} ;
 
+    border-bottom : 1px solid #999 ;
+
     cursor : pointer ;
 
-    &:hover {
+    @media(hover : hover) {
         background-color : #f5f5f5 ;
+    }    
+
+    @media ${props => props.theme.mobileS} {
+        padding : 8px 10px ;
     }
 `;
 
@@ -29,12 +35,22 @@ const Title = styled.span`
     font-weight : 500 ;
 
     color : #222 ;
+
+    @media ${props => props.theme.mobileS} {
+        font-size : 9px ;
+
+        font-weight : 600 ;
+    }
 `;
 
 const Date = styled.span`
     font-size : 12px ;
 
     color : #333 ;
+
+    @media ${props => props.theme.mobileS} {
+        font-size : 7px ;
+    }
 `;
 
 const BlogPageContent = ({ content, location : { pathname } }) => {

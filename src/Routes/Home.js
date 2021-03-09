@@ -7,6 +7,7 @@ import UseLanguage from '../Components/Home/UseLanguage' ;
 
 import Slide from '../Components/Slide' ;
 
+import { size } from '../Util/theme' ;
 
 const Container = styled.div`
     width : 90% ;
@@ -14,6 +15,10 @@ const Container = styled.div`
     margin : 0 auto ;        
 
     overflow : hidden ;     
+
+    @media ${props => props.theme.mobileS} {
+        width : 100% ;
+    }
 `;
 
 const ContentContainer = styled.div`
@@ -41,7 +46,7 @@ const ContentContainer = styled.div`
     }
     @media ${props => props.theme.mobileL} {
         margin-top : 0 ;
-        padding : 5px ;
+        padding : 0 ;
     }
 `;
 
@@ -171,10 +176,88 @@ const Text = styled.p`
     }
 `;
 
+const FixMenu = styled.div`
+    display : ${props => props.display} ;
+    position : fixed ;
+
+    bottom : 300px ;
+    left : 5px ;
+
+    width : 20px ;
+
+    border-radius : 20px ;
+
+    padding : 10px ;
+    z-index : 10 ;
+
+    flex-direction : column ;
+    justify-content : center ;
+    align-items : center ;
+`;
+
+const Button = styled.div`
+    width : 20px ;
+    height : 20px ;
+    
+    border-radius : 20px ;
+    
+    background-color : #111 ;
+    opacity : 0.6 ;
+
+    &:not(:last-child) {
+        margin-bottom : 10px ;
+    }
+`;
+
 const Home = () => {
+
+    const { mobileS } = size ;
+
+    const [ showFixMenu, setShowFixMenu ] = useState(false) ;
+
+    const viewContentNumCheck = innerWidth => {
+        if( innerWidth <= mobileS ) {
+            setShowFixMenu(true) ;
+        }else if( innerWidth > mobileS ) {
+            setShowFixMenu(false) ;
+        }
+      }
+
+    const onResize = (e) => {
+        const { currentTarget : { innerWidth } } = e ;
+
+        viewContentNumCheck(innerWidth) ;
+    }
+
+    useEffect(() => {
+        const { innerWidth } = window ;
+
+        viewContentNumCheck(innerWidth) ;
+    
+        window.addEventListener('resize', onResize, false) ;
+    
+        return () => {
+          window.removeEventListener('resize', onResize, false) ;
+        }
+      }, []) ;
+
+      function onClickScroll1(e) {
+        window.scrollTo(0, 0) ;
+      }
+      function onClickScroll2(e) {
+        window.scrollTo(450, 450) ;
+      }
+      function onClickScroll3(e) {
+        window.scrollTo(1300, 1300) ;
+      }
 
     return (
         <>
+            <FixMenu display={ showFixMenu ? 'flex' : 'none' }>
+                <Button onClick={onClickScroll1} />
+                <Button onClick={onClickScroll2} />
+                <Button onClick={onClickScroll3} />
+            </FixMenu>
             <Container>
                 <ContentContainer>
                     <LanguageTextContainer>

@@ -25,7 +25,7 @@ const ContentContainer = styled.div`
     }
     @media ${props => props.theme.mobileS} {
         margin-top : 30px ;
-        padding : 10px 5px 20px 5px ;
+        padding : 0 ;
     }
 `;
 

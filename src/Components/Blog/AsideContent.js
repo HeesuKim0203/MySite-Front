@@ -21,7 +21,9 @@ const Title = styled.h6`
     }
     @media ${props => props.theme.mobileS} {
         font-size : 10px ;
+        color : #fff ;
     }
+
 `;
 
 const BigAisdeMenu = styled.li`
@@ -67,6 +69,7 @@ const Menu = styled.li`
 
     @media ${props => props.theme.mobileS} {
         padding : 5px 0 ;
+        color : #e0e0e0  ;
     }
 `;
 
@@ -91,6 +94,7 @@ const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
     }
     @media ${props => props.theme.mobileS} {
         font-size : 14px ;
+        color : #e0e0e0  ;
     }
 `;
 
@@ -110,6 +114,7 @@ const Text = styled.span`
     @media ${props => props.theme.mobileS} {
         font-size : 8px ;
         margin-left : 2px ;
+        color : #f5f5f5 ;
     }
 `;
 

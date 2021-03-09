@@ -1,5 +1,7 @@
-import React, { useState } from 'react' ;
+import React, { useState, useEffect } from 'react' ;
 import styled from 'styled-components' ;
+
+import { size } from '../../Util/theme' ;
 
 const Container = styled.div`
 
@@ -14,6 +16,9 @@ const Container = styled.div`
         @media ${props => props.theme.tabletS} {
             margin-left : 14.5% ;
         }
+        @media ${props => props.theme.mobileS} {
+            margin-left : 0 ;
+        }
     }
     &:nth-child(2n - 1) {
         margin-left : 9.5% ;
@@ -21,10 +26,17 @@ const Container = styled.div`
         @media ${props => props.theme.tabletS} {
             margin-left : 14.5% ;
         }
+        @media ${props => props.theme.mobileS} {
+            margin-left : 0 ;
+        }
     }
 
     @media ${props => props.theme.tabletS} {
         width : 70% ;
+    }
+
+    @media ${props => props.theme.mobileS} {
+        width : 100% ;
     }
 `;
 
@@ -47,7 +59,7 @@ const Img = styled.div`
         height : 180px ;
     }
     @media ${props => props.theme.mobileS} {
-        height : 100px ;
+        height : 140px ;
     }
 `;
 
@@ -79,11 +91,8 @@ const Title = styled.h5`
 
     padding : 6px 2px 0 2px ;
 
-    @media ${props => props.theme.mobileL} {
-        font-size : 15px ;
-    }
     @media ${props => props.theme.mobileS} {
-        font-size : 13px ;
+        font-size : 15px ;
     }
 
 `;
@@ -111,11 +120,25 @@ const Date = styled.span`
     }
 `;
 
+const Description = styled.p`
+    display : inline-block ;
+    
+    padding : 30px 5px 0 5px ;
+
+    line-height : 18px ;
+
+    @media ${props => props.theme.mobileS} {
+        padding : 5px 10px ;
+        line-height : 15px ;
+    }
+`;
+
 const DescriptionContainer  = styled.div`
     width : inherit ;
     height : inherit ;
     
     display : ${props => props.display} ;
+    color : #fff ;
 
     background-color : rgba(0, 0, 0, 0.85) ;
 
@@ -124,24 +147,50 @@ const DescriptionContainer  = styled.div`
     padding : 20px 10px ;
 
     align-items : center ;
-`;
 
-const Description = styled.p`
-    display : inline-block ;
-
-    color : #fff ;
-    
-    padding : 30px 5px 0 5px ;
-
-    line-height : 18px ;
+    @media ${props => props.theme.mobileS} {
+        padding : 5px 3px ;
+        font-size : 9px ;
+        color : #111 ;
+        
+        background-color : #fff ;
+    }
 `;
 
 const ProjectContent = ({ content }) => {
-
+    
+    const { mobileS } = size ;
     const { image, period, title, url, description } = content ;
 
     const [ display, setDisplay ] = useState(false) ;
-    // const [ mouseEvent, setMouseEvent ] = useState() ;
+    const [ showDescription, setShowDescription ] = useState(false) ;
+
+    const viewContentNumCheck = innerWidth => {
+        if(innerWidth <= mobileS) {
+            setShowDescription(true) ;       
+        }else if( innerWidth > mobileS ) {
+            setShowDescription(false) ;
+        }
+      }
+    
+      const onResize = (e) => {
+        const { currentTarget : { innerWidth } } = e ;
+    
+        viewContentNumCheck(innerWidth) ;
+      }
+    
+      useEffect(() => {
+    
+        const { innerWidth } = window ;
+    
+        viewContentNumCheck(innerWidth) ;
+    
+        window.addEventListener('resize', onResize, false) ;
+    
+        return () => {
+          window.removeEventListener('resize', onResize, false) ;
+        }
+      }, [])
 
     function onClickContent() {
         window.location.href = url ;
@@ -149,28 +198,10 @@ const ProjectContent = ({ content }) => {
 
     function imgMouseOver(e) {
 
-        // e.currentTarget.addEventListener('mouesmove', checkValidityMouseMove, false) ;
-
-        // setMouseEvent(e.currentTarget) ;
-
         return display ? null :  setDisplay(true) ;
     }
 
-    // function checkValidityMouseMove(e) {
-    //    const { nativeEvent : { offsetX, offsetY}, currentTarget } = e ;
-       
-    //    const { x, y, width, height } = currentTarget.getBoundingClientRect() ;
-
-
-    //    if(x > offsetX && offsetX < x + width && y < offsetY && y + height < offsetY) {
-    //         return setDisplay(true) ;
-    //    }
-    //    return setDisplay(false) ;
-    // }
-
     function descriptionContainerMouseLeave(e) {
-
-        // mouseEvent.removeEventListener('mouesmove', checkValidityMouseMove, false) ;
 
         return display ? setDisplay(false) : null ;
     }
@@ -179,16 +210,16 @@ const ProjectContent = ({ content }) => {
         <Container onClick={onClickContent}>
             <Img 
                 src={image} 
-                onMouseOver={imgMouseOver} 
+                onMouseOver={ showDescription ? null : imgMouseOver} 
             >
-                <DescriptionContainer
-                    display={display ? 'flex' : 'none' } 
-                    onMouseLeave={descriptionContainerMouseLeave}
+                {showDescription ? null : (<DescriptionContainer
+                    display={display || showDescription ? 'flex' : 'none' } 
+                    onMouseLeave={ showDescription ? null :descriptionContainerMouseLeave}
                 >
                     <Description>
                         { description }
                     </Description>
-                </DescriptionContainer>
+                </DescriptionContainer>)}
             </Img>
             <TextContainer>
                 <TitleContainer>
@@ -198,6 +229,14 @@ const ProjectContent = ({ content }) => {
                     <Date draggable="false">{period}</Date>
                 </DateContainer>
             </TextContainer>
+            {showDescription ? (<DescriptionContainer
+                    display={display || showDescription ? 'flex' : 'none' } 
+                    onMouseLeave={ showDescription ? null :descriptionContainerMouseLeave}
+                >
+                    <Description>
+                        { description }
+                    </Description>
+                </DescriptionContainer>) : null}
         </Container>
     );
 };

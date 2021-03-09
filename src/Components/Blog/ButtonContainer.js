@@ -26,8 +26,8 @@ const Button = styled.button`
     }
 
     @media ${props => props.theme.mobileL} {
-        padding : 5px 8px ;
-        font-size : 8px ;
+        padding : 8px 10px ;
+        font-size : 12px ;
     }
 `;
 

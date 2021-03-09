@@ -14,6 +14,11 @@ const GlobalStyled = createGlobalStyle`
     }
     body::-webkit-scrollbar {
         width : .4em ;  
+        margin : 0 ;
+        padding : 0 ;
+        @media ${props => props.theme.mobileS} {
+            width : 0 ;
+        }
     }
     body::-webkit-scrollbar,
     body::-webkit-scrollbar-thumb {

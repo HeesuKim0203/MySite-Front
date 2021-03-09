@@ -40,6 +40,7 @@ const Slide = ({ defaultData }) => {
     const swiperContainer = document.querySelector('div.swiper-container') ;
     swiperContainer.style.padding = "10px 0 10px 0" ;
 
+
     viewContentNumCheck(innerWidth) ;
 
     window.addEventListener('resize', onResize, false) ;

@@ -3,6 +3,7 @@ import { withCookies } from 'react-cookie';
 import { withRouter } from 'react-router-dom' ;
 
 import styled, { css } from 'styled-components' ;
+import Typewriter from 'typewriter-effect' ;
 
 import { 
     HOME,
@@ -23,7 +24,7 @@ const HeaderImgBright = css`
         height : 350px ;
     }
     @media ${props => props.theme.mobileS} {
-        height : 200px ;
+        height : 205px ;
     }
 `;
 
@@ -135,30 +136,35 @@ const Title = styled.h1`
     }
 `;
 
-const TitleMyName = styled.a`
-    box-sizing : content-box ;
+const TypewriterStyled = css`
 
-    display : inline-block ;
+    span.Typewriter__wrapper,
+    span.Typewriter__cursor {
+        box-sizing : content-box ;
 
-    color : #fff ;
+        display : inline-block ;
 
-    font-weight : 500 ;
-    font-size : 26px ;
+        color : #fff ;
 
-    margin-top : 15px ;
+        font-weight : 500 ;
+        font-size : 26px ;
 
-    user-select : none ;
+        margin-top : 15px ;
 
-    @media ${props => props.theme.laptop} {
-        font-size : 22px ;
+        user-select : none ;
+    }
+    @media (max-width : 1400px) {
+        span.Typewriter__wrapper,
+        span.Typewriter__cursor { font-size : 22px ; }
     } 
-    @media ${props => props.theme.mobileL} {
-        font-size : 18px ;
-    }
-    @media ${props => props.theme.mobileS} {
-        margin-top : 5px ;
-        font-size : 14px ;
-    }
+    @media (max-width : 768px) {
+        span.Typewriter__wrapper,
+        span.Typewriter__cursor { font-size : 18px ; }
+    } 
+    @media (max-width : 468px) {
+        span.Typewriter__wrapper,
+        span.Typewriter__cursor { margin-top : 5px ; font-size : 14px ;}
+    } 
 `;
 
 const Button = styled.button`
@@ -197,7 +203,7 @@ const Button = styled.button`
         width : 80px ;
         font-size : 9px ;
         height : 22px ;
-        margin-top : 40px ;
+        margin-top : 20px ;
     }
 `;
 
@@ -238,12 +244,29 @@ const Header = (props) => {
         }else if( !token && data.length >= 4) {
             setData([ ...data.slice(0, data.length - 1) ]) ;
         }
+
     }, [ props ]) ;
+
+    useEffect(() => {
+        // const typeWriterSpan = document.querySelector('span.Typewriter__wrapper') ;
+        // const typeWriterCursor = document.querySelector('span.Typewriter__cursor') ;
+        
+        // typeWriterSpan.style.color = '#fff' ;
+        // typeWriterCursor.style.color = '#fff' ;
+
+        // typeWriterSpan.marginTop = '15px' ;
+        // typeWriterSpan.
+
+        // console.log(typeWriterSpan, typeWriterCursor)
+    }, [])
     
     const checkPathName = pathname.includes(WRITE) ? false : true ;
 
     return (
         <Container>
+            <style>
+                {TypewriterStyled}
+            </style>
             <Menu>
                 {data && data.map((menu, index) => {
                     return  (
@@ -264,7 +287,21 @@ const Header = (props) => {
                         <TitContainer>
                             <Title>Programer</Title>
                             <br />
-                            <TitleMyName draggable="false" >Kim Hee Su</TitleMyName>
+                            {/* <TitleMyName id="name" draggable="false" ></TitleMyName> */}
+                            <Typewriter
+                                onInit={(typewriter) => {
+                                    typewriter.typeString('Kim Hee su')
+                                      .changeDelay(800)
+                                      .pauseFor(2500)
+                                      .deleteAll()
+                                      .start()
+                                  }}
+
+                                  options={{
+                                      autoStart : true,
+                                      loop : true,
+                                  }}
+                                />
                             <br/>
                             <Button>Lean More</Button>
                         </TitContainer>

@@ -11,7 +11,9 @@ const Container = styled.div`
     display : ${props => props.display} ;
     flex-direction : column ;
 
-    border : 1.3px solid #999 ;
+    @media ${props => props.theme.mobileS} {
+        width : 100% ;
+    }
 `;
 
 const BlogPageContainer = ({ pageContents, pageSelect }) => {

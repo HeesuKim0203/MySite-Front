@@ -31,7 +31,7 @@ const Title = styled.h5`
         margin-top : 10px ;
     }
     @media ${props => props.theme.mobileS} {
-        font-size : 13px ;
+        font-size : 12px ;
     }
 `;
 
@@ -56,7 +56,7 @@ const Container = styled.div`
             margin-left : 12% ;
         }
         @media ${props => props.theme.mobileS} {
-            margin-left : 20% ;
+            margin-left : 5% ;
         }
     }
     &:nth-child(3n - 1) {
@@ -65,7 +65,7 @@ const Container = styled.div`
             margin-left : 7% ;
         }
         @media ${props => props.theme.mobileS} {
-            margin-left : 20% ;
+            margin-left : 5% ;
         }
     }
 
@@ -73,10 +73,14 @@ const Container = styled.div`
         width : 70% ;
     }
     @media ${props => props.theme.mobileS} {
-        width : 60% ;
+        width : 90% ;
+
+        box-shadow: 0 3px 4px rgba(0,0,0,0.19), 0 3px 3px rgba(0,0,0,0.23);
+
+        border-radius : 10px ;
 
         &:nth-child(3n) {
-            margin-left : 20% ;
+            margin-left : 5% ;
         }
     }
 `;
@@ -95,6 +99,11 @@ const Img = styled.div`
         height : 160px ;
     }
     @media ${props => props.theme.mobileS} {
+
+        width : 40% ;
+
+        float : right ;
+
         height : 140px ;
     }
 `;
@@ -103,6 +112,12 @@ const Code = styled.div`
     position : absolute ;
     top : 0 ;
     right : 0 ;
+
+    @media ${props => props.theme.mobileS} {
+
+        top : 45px ;
+        left : 2px ;
+    }
 `;
 
 const TextContainer = styled.div`
@@ -116,7 +131,9 @@ const TextContainer = styled.div`
         padding : 10px 7px ;
     }
     @media ${props => props.theme.mobileS} {
-        padding : 6px 3px ;
+        padding : 8px 7px ;
+
+        width : 50% ;
     }
 
 `;
@@ -157,16 +174,16 @@ const StyleFontAwesomeIcon = styled(FontAwesomeIcon)`
     @media ${props => props.theme.laptop} {
         font-size : 18px ;
     }
-    @media ${props => props.theme.laptop} {
-        font-size : 13px ;
-    }
 `;
 
 const Content = ({ content }) => {
     const { id, title, image_url, updated_at } = content ;
 
+    function onClick(e) {
+        console.log(window) ;
+    }
+ 
     // index 찾는 코드
-
     return (
         <Container>
             <Link to={`${DOCUMENT}/${id}`}>

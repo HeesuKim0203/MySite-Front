@@ -29,6 +29,10 @@ const TemplateContainer = styled.main`
     margin : 0 auto ;
 
     background-color : #fff ;
+
+    @media ${props => props.theme.mobileS} {
+        width : 100% ;
+    }
 `;
 
 const Footer = styled.footer`

@@ -24,14 +24,19 @@ const Container = styled.div`
     @media ${props => props.theme.mobileS} {
         position : fixed ;
         width : 30% ;
-        top : 32px ;
+        top : 33px ;
         left : 0 ;
 
         z-index : 99 ;
 
         padding : 3px 0 3px 5px ;
 
-        background-color : #eeeeee ;
+        border-top-right-radius : 20px ;
+        border-bottom-right-radius : 20px ;
+
+        background-color : #111 ;
+
+        opacity : 0.9 ;
     }
 `;
 
@@ -65,11 +70,16 @@ const AllDataViewButton = styled.div`
     @media ${props => props.theme.laptop} {
         font-size : 12px ;
         margin-left : 5px ;
+
+        
+        &:hover {
+        }
     }
     @media ${props => props.theme.mobileS} {
         font-size : 8px ;
         padding : 10px 6px 10px 6px ;
         margin-top : 10px ;
+        color : #f5f5f5 ;
     }
 `;
 
@@ -117,7 +127,7 @@ const FontAwesomeIconContainer = styled.div`
 
     cursor : pointer ;
 
-    &:hover {
+    @media(hover : hover) {
         ${StyledFontAwesomeIcon} {
             color : #3949ab ;
         }
@@ -163,7 +173,7 @@ const SearhInput = styled.input`
     border-bottom : 1.5px solid  #424242 ;
     padding-left : 5px ;
 
-    &:focus {
+    @media(focus : focus) {
         background-color : #f5f5f5 ;
     }
 
@@ -174,6 +184,13 @@ const SearhInput = styled.input`
         font-size : 8px ;
         height : 18px ;
         padding-left : 0px ;
+        color : #fff ;
+
+        &::placeholder {
+            color : #fff ;
+        }
+        &:focus {
+        }
     }
 `;
 

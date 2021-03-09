@@ -13,7 +13,9 @@ const Container = styled.div`
 
     @media ${props => props.theme.mobileS} {
         grid-template-columns : repeat(1, 100%) ;
-        grid-row-gap : 20px ;
+        grid-row-gap : 40px ;
+
+        margin-bottom : 30px ;
     }
 `;
 
