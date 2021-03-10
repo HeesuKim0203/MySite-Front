@@ -70,6 +70,11 @@ const Menu = styled.li`
     @media ${props => props.theme.mobileS} {
         padding : 5px 0 ;
         color : #e0e0e0  ;
+
+        &:hover {
+            background-color : inherit ;
+            color : #e0e0e0 ;
+        }
     }
 `;
 
@@ -126,7 +131,7 @@ const AsideContent = ({ title, menu, onClickMenuContent }) => {
             <AsideMenu>
                 { menu && menu.map((menu, index) => 
                 <Link to={DOCUMENT} key={index}>
-                    <Menu onClick={() => onClickMenuContent(menu.text)}>
+                    <Menu onClick={(e) => onClickMenuContent(e, menu.text)}>
                         <FontContainer>
                             <StyledFontAwesomeIcon icon={menu.icon} />
                         </FontContainer>

@@ -7,7 +7,7 @@ import { createAction } from '../../Store/store' ;
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome' ;
 import { faSearch, faAlignJustify } from '@fortawesome/free-solid-svg-icons' ;
-import { Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { DOCUMENT } from '../../Util/routes';
 
 import { size } from '../../Util/theme' ;
@@ -24,7 +24,7 @@ const Container = styled.div`
     @media ${props => props.theme.mobileS} {
         position : fixed ;
         width : 30% ;
-        top : 33px ;
+        top : 40px ;
         left : 0 ;
 
         z-index : 99 ;
@@ -55,14 +55,14 @@ const AllDataViewButton = styled.div`
     font-size : 16px ;
     font-weight : 550 ;
 
-    padding : 20px 0 20px 10px ;
+    padding : 20px 10px 20px 10px ;
 
     color : #9e9e9e ;
 
     user-select : none ;
     cursor : pointer ;
 
-    &:hover {
+    &:hover { 
         background-color : #e8eaf6 ;
         color : #3949ab ;
     }
@@ -71,15 +71,17 @@ const AllDataViewButton = styled.div`
         font-size : 12px ;
         margin-left : 5px ;
 
-        
-        &:hover {
-        }
     }
     @media ${props => props.theme.mobileS} {
         font-size : 8px ;
         padding : 10px 6px 10px 6px ;
         margin-top : 10px ;
-        color : #f5f5f5 ;
+        color : #e0e0e0 ;
+
+        &:hover {
+            background-color : inherit ;
+            color : #e0e0e0 ;
+        }
     }
 `;
 
@@ -109,11 +111,11 @@ const StyledFontAwesomeIconMenu = styled(FontAwesomeIcon)`
     display : ${props => props.display} ;
     position : fixed ;
 
-    font-size : 14px ;
+    font-size : 18px ;
     
     z-index : 100;
-    top : 10px ;
-    left : 10px ;
+    top : 11px ;
+    left : 11px ;
 
     color : #fff ;
 `;
@@ -127,7 +129,7 @@ const FontAwesomeIconContainer = styled.div`
 
     cursor : pointer ;
 
-    @media(hover : hover) {
+    &:hover {
         ${StyledFontAwesomeIcon} {
             color : #3949ab ;
         }
@@ -173,10 +175,6 @@ const SearhInput = styled.input`
     border-bottom : 1.5px solid  #424242 ;
     padding-left : 5px ;
 
-    @media(focus : focus) {
-        background-color : #f5f5f5 ;
-    }
-
     &::placeholder {
         color : #888 ;
     }
@@ -189,8 +187,6 @@ const SearhInput = styled.input`
         &::placeholder {
             color : #fff ;
         }
-        &:focus {
-        }
     }
 `;
 
@@ -199,18 +195,9 @@ const AsideMenu = ({ asideData, searchContents, searchTitle }) => {
     const { mobileS } = size ;
 
     const [ search, setSearch ] = useState('') ;
-    const [ goDocument, setGoDocument ] = useState(false) ;
 
-    const [ show, setShow ] = useState(false) ;
-    const [ menu, setMenu ] = useState(true) ;
-
-    useEffect(() => {
-
-        if(!goDocument) 
-            setGoDocument(true) ;
-
-
-    }, [goDocument, setGoDocument]) ;
+    const [ show, setShow ] = useState(window.innerWidth <= mobileS ? true : false) ;
+    const [ menu, setMenu ] = useState(window.innerWidth <= mobileS ? false : true) ;
 
     const viewContentNumCheck = innerWidth => {
         if( innerWidth <= mobileS ) {
@@ -220,7 +207,7 @@ const AsideMenu = ({ asideData, searchContents, searchTitle }) => {
             setShow(false) ;
             setMenu(true) ;
         }
-      }
+    }
 
     const onResize = (e) => {
         const { currentTarget : { innerWidth } } = e ;
@@ -229,10 +216,6 @@ const AsideMenu = ({ asideData, searchContents, searchTitle }) => {
     }
 
     useEffect(() => {
-        const { innerWidth } = window ;
-
-        viewContentNumCheck(innerWidth) ;
-    
         window.addEventListener('resize', onResize, false) ;
     
         return () => {
@@ -240,41 +223,56 @@ const AsideMenu = ({ asideData, searchContents, searchTitle }) => {
         }
       }, []) ;
 
-    function onClickMenuContent(search) {
-        searchContents(search) ;
+      function onClickSideMenuEvent(e) {
+        e.stopImmediatePropagation() ;
+        setMenu(false) ;
+      }
 
-        setGoDocument(false) ;
+      useEffect(() => {
+        if(menu)
+            window.onclick = onClickSideMenuEvent ;
+        else
+            window.onclick = null ;
+      }, [ menu ])
+ 
+    function onClickMenuContent(e, search) {
+        e.nativeEvent.stopImmediatePropagation() ;
+        searchContents(search) ;
     }
 
     function onSearchTitle(e) {
+        e.nativeEvent.stopImmediatePropagation() ;
         e.preventDefault() ;
 
         searchTitle(search) ;
 
         setSearch('') ;
-        setGoDocument(false) ;
     }
 
     function onChangeSearchValue(e) {
+        e.nativeEvent.stopImmediatePropagation() ;
         setSearch(e.target.value) ;
     }
 
     function onClickMenu(e) {
+        e.nativeEvent.stopImmediatePropagation() ;
         setMenu(!menu) ;
     }
 
     return (
         <>
-        {goDocument ? (
-            <>
-                <StyledFontAwesomeIconMenu icon={faAlignJustify} display={show ? 'block' : 'none'} onClick={onClickMenu}/>
-                <Container display={menu  ? 'block' : 'none' }>
+            <StyledFontAwesomeIconMenu icon={faAlignJustify} display={show ? 'block' : 'none'} onClick={onClickMenu}/>
+                <Container display={menu ? 'block' : 'none'}>
                     <SearchContainer>
                         <Form onSubmit={onSearchTitle}>
                             <FontAwesomeIconContainer>
                                 <StyledFontAwesomeIcon icon={faSearch} onClick={onSearchTitle} />
                             </FontAwesomeIconContainer>
-                            <SearhInput onChange={onChangeSearchValue} value={search} placeholder="게시물 검색.." />
+                            <SearhInput 
+                                onClick={(e) => e.nativeEvent.stopImmediatePropagation()} 
+                                onChange={onChangeSearchValue} value={search} 
+                                placeholder="게시물 검색.." 
+                            />
                         </Form>
                     </SearchContainer>
                     <BigAsideMenuContainer>
@@ -289,16 +287,13 @@ const AsideMenu = ({ asideData, searchContents, searchTitle }) => {
                             ) ;
                         })}
                     </BigAsideMenuContainer>
-                    <AllDataViewButton onClick={() => onClickMenuContent()}>
-                        전체 보기
-                    </AllDataViewButton>
+                    <Link to={DOCUMENT}>
+                        <AllDataViewButton onClick={(e) => onClickMenuContent(e)}>
+                            전체 보기
+                        </AllDataViewButton>
+                    </Link>
                 </Container>
-            </>
-            ) : (
-            <Redirect to={DOCUMENT}/>
-        )}
         </>
-        
     );
 };
 

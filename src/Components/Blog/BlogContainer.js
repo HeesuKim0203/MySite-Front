@@ -1,4 +1,4 @@
-import React from 'react' ;
+import React, { useEffect, useState } from 'react' ;
 import styled from 'styled-components' ;
 
 import Content from './Content' ;
@@ -19,18 +19,19 @@ const Container = styled.div`
     }
 `;
 
-const BlogContainer = ({ content, select }) => {
+const BlogContainer = ({ content, select, error }) => {
+
     return (
-        <Container
-            display={select ? 'grid' : 'none' }
-        >
-            { content && content.map((content, index) => (
-                <Content 
-                    key={index}
-                    content={content}
-                />
-            )) }
-        </Container>
+            <Container
+                display={select ? 'grid' : 'none' }
+            >  
+                { content && content.map((content, index) => (
+                    <Content 
+                        key={index}
+                        content={content}
+                    />
+                )) }
+            </Container>
     );
 };
 

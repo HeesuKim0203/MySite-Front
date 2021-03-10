@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route } from 'react-router-dom' ;
 import styled from 'styled-components' ;
+import Helmet from 'react-helmet' ;
 
 import AsideMenu from '../Components/Blog/AsideMenu' ;
 import {
@@ -41,7 +42,7 @@ const MainContainer = styled.div`
     }
 `;
 
-const BlogRouter = () => {
+const BlogRouter = (props) => {
 
     const asideData = asideTitle.map((asideData, index) => {
         return {
@@ -51,15 +52,20 @@ const BlogRouter = () => {
     }) ;
 
     return (
-        <Container>
-             <AsideMenuContainer>
-                <AsideMenu asideData={asideData} />
-            </AsideMenuContainer>
-            <MainContainer>
-                <Route exact path={DOCUMENT} component={Blog} />
-                <Route path={`${DOCUMENT}/:id`} component={BlogPage} />
-            </MainContainer>
-        </Container>
+        <>
+            <Helmet>
+                <title>Code beginners | Blog</title>
+            </Helmet>
+            <Container>
+                <AsideMenuContainer>
+                    <AsideMenu asideData={asideData} />
+                </AsideMenuContainer>
+                <MainContainer>
+                    <Route exact path={DOCUMENT} component={Blog} />
+                    <Route path={`${DOCUMENT}/:id`} component={BlogPage} />
+                </MainContainer>
+            </Container>
+        </>
     ) ; 
 } ;
 

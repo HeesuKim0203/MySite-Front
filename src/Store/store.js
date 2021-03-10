@@ -180,20 +180,25 @@ const contentReducer = (
                 pageSelect : action.select 
             }
         case SEARCH_TITLE : 
+                
+            contentsData = state.defaultData
+                        .filter(item => item.title.includes(action.searchValue, 0))
+                        .reduce((prev, item, index) => {
+                            if(index === num) {
+                                prev.push([]) ;
+                                num += numCounte ;
+                            }
+                            prev[num / numCounte - 1][index % numCounte] = item ;
+                    
+                            return prev ;
+                        }, [])
+
+            buttonsData = contentsData.map((__ , index) => index) ;
 
             return {
                 ...state,
-                contentsData : state.defaultData
-                            .filter(item => item.title.includes(action.searchValue, 0))
-                            .reduce((prev, item, index) => {
-                    if(index === num) {
-                        prev.push([]) ;
-                        num += numCounte ;
-                    }
-                    prev[num / numCounte - 1][index % numCounte] = item ;
-            
-                    return prev ;
-                }, [])
+                contentsData,
+                buttonsData
             }
         default :
             return state ;

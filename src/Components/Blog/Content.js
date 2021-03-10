@@ -3,12 +3,11 @@ import styled from 'styled-components' ;
 import { Link } from 'react-router-dom' ;
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome' ;
-import { fab } from '@fortawesome/free-brands-svg-icons' ;
 
 import {
     DOCUMENT
 } from '../../Util/routes' ;
-import { connect } from 'react-redux';
+import { searchCoreData } from '../../Util/util' ;
 
 const Title = styled.h5`
     font-size : 16px ;
@@ -100,7 +99,7 @@ const Img = styled.div`
     }
     @media ${props => props.theme.mobileS} {
 
-        width : 40% ;
+        width : 50% ;
 
         float : right ;
 
@@ -177,56 +176,28 @@ const StyleFontAwesomeIcon = styled(FontAwesomeIcon)`
 `;
 
 const Content = ({ content }) => {
-    const { id, title, image_url, updated_at } = content ;
+    const { id, title, image_url, updated_at, type } = content ;
 
-    function onClick(e) {
-        console.log(window) ;
-    }
- 
-    // index 찾는 코드
+    const core = searchCoreData.filter(data => data.text === type)[0] ;
+
     return (
-        <Container>
-            <Link to={`${DOCUMENT}/${id}`}>
+            <Container>
+                <Link to={`${DOCUMENT}/${id}`}>
                 <Img url={image_url} />
                 <TextContainer>
                     <HeadContainer>
                         <Date draggable="false">{updated_at && updated_at.substring(0, 10)}</Date>
                         <Code>
-                            <StyleFontAwesomeIcon icon={fab.faJsSquare} />
+                            <StyleFontAwesomeIcon icon={core.icon} />
                         </Code>
                     </HeadContainer>
                     <TitleContainer>
                         <Title draggable="false">{title}</Title>
                     </TitleContainer>
                 </TextContainer>
-            </Link>
-        </Container>
+                </Link>
+            </Container>
     );
 };
-
-function mapStateToProps(state) {
-    const { 
-        content : {
-            defaultData
-        } 
-    } = state ;
-
-    // const { 
-    //     content : { 
-    //         id : findId 
-    //     },
-    //     content
-    // } = oneToProp ;
-
-    // const id = defaultData.findIndex(content => content.id === findId) ;
-
-    return {
-        // content : {
-        //     ...content,
-        //     id : findId
-        // }
-    } ;
-} ;
   
-  
-export default  connect(mapStateToProps, null)(Content) ;
+export default  Content ; 

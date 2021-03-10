@@ -4,10 +4,11 @@ import styled from 'styled-components' ;
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome' ;
 import { faFacebookF, faGithub, faInstagram } from '@fortawesome/free-brands-svg-icons' ;
 
-import { axiosApi, api } from '../Util/api' ;
+import { axiosApi } from '../Util/api' ;
 import { withCookies } from 'react-cookie';
 
 import { size } from '../Util/theme' ;
+import Helmet from 'react-helmet' ;
 
 const Container = styled.div`
     width : 100% ;
@@ -332,73 +333,78 @@ const Profile = ({ cookies }) => {
     }
 
     return (
-        <Container>
-            <MyContainer>
-                <MainContainer>
-                    <Main1>
-                        <MyImg />
-                    </Main1>
-                    <Main2>
-                        <MyIntroduction>
-                            <MyIntroductionLi>
-                                <TitleText>김희수</TitleText><br/>
-                                <Content>Front Programer</Content>
-                            </MyIntroductionLi>
-                            <MyIntroductionLi>
-                                <Text>전화번호</Text><br/>
-                                <Content>010-5293-8620</Content>
-                            </MyIntroductionLi>
-                            <MyIntroductionLi>
-                                <Text>이메일</Text><br/>
-                                <Content>rlagmltn456@naver.com</Content>
-                            </MyIntroductionLi>
-                            <MyIntroductionLi>
-                                <Text>주소</Text><br/>
-                                <Content>대구 광역시 수성구</Content>
-                            </MyIntroductionLi>
-                            <MyIntroductionLi>
-                                <Text>홈페이지</Text><br/>
-                                <Content>http://127.0.0.1</Content>
-                            </MyIntroductionLi>
-                        </MyIntroduction>
-                    </Main2>
-                    <Footer>
-                        <IconBox>
-                            <Icon icon={faFacebookF} color="#111" />
-                        </IconBox>
-                        <IconBox>
-                            <Icon icon={faGithub} color="#111" />
-                        </IconBox>
-                        <IconBox>
-                            <Icon icon={faInstagram} color="#111" />
-                        </IconBox>
-                    </Footer>
-                </MainContainer>
-            </MyContainer>
-            <LoginContainer display={showLogin ? 'flex' : 'none'}>
-                <Form onSubmit={ login ? onLogout : onLogin} action="POST">
-                   {login ? null : ( 
-                        <>
-                            <Label name="email">아이디</Label>
-                            <Input 
-                                type="text"
-                                name="email" 
-                                value={email} 
-                                onChange={onChange}
-                            />
-                            <Label name="password">비밀번호</Label>
-                            <Input 
-                                type="password" 
-                                name="password"
-                                value={pw} 
-                                onChange={onChange}
-                            />
-                        </>
-                        ) }
-                    <LoginButton type="submit">{ login ? "로그아웃" : "로그인"}</LoginButton>
-                </Form> 
-            </LoginContainer>
-        </Container>
+        <>
+            <Helmet>
+                <title>Code beginners | Me</title>
+            </Helmet>
+            <Container>
+                <MyContainer>
+                    <MainContainer>
+                        <Main1>
+                            <MyImg />
+                        </Main1>
+                        <Main2>
+                            <MyIntroduction>
+                                <MyIntroductionLi>
+                                    <TitleText>김희수</TitleText><br/>
+                                    <Content>Front Programer</Content>
+                                </MyIntroductionLi>
+                                <MyIntroductionLi>
+                                    <Text>전화번호</Text><br/>
+                                    <Content>010-5293-8620</Content>
+                                </MyIntroductionLi>
+                                <MyIntroductionLi>
+                                    <Text>이메일</Text><br/>
+                                    <Content>rlagmltn456@naver.com</Content>
+                                </MyIntroductionLi>
+                                <MyIntroductionLi>
+                                    <Text>주소</Text><br/>
+                                    <Content>대구 광역시 수성구</Content>
+                                </MyIntroductionLi>
+                                <MyIntroductionLi>
+                                    <Text>홈페이지</Text><br/>
+                                    <Content>http://127.0.0.1</Content>
+                                </MyIntroductionLi>
+                            </MyIntroduction>
+                        </Main2>
+                        <Footer>
+                            <IconBox>
+                                <Icon icon={faFacebookF} color="#111" />
+                            </IconBox>
+                            <IconBox>
+                                <Icon icon={faGithub} color="#111" />
+                            </IconBox>
+                            <IconBox>
+                                <Icon icon={faInstagram} color="#111" />
+                            </IconBox>
+                        </Footer>
+                    </MainContainer>
+                </MyContainer>
+                <LoginContainer display={showLogin ? 'flex' : 'none'}>
+                    <Form onSubmit={ login ? onLogout : onLogin} action="POST">
+                    {login ? null : ( 
+                            <>
+                                <Label name="email">아이디</Label>
+                                <Input 
+                                    type="text"
+                                    name="email" 
+                                    value={email} 
+                                    onChange={onChange}
+                                />
+                                <Label name="password">비밀번호</Label>
+                                <Input 
+                                    type="password" 
+                                    name="password"
+                                    value={pw} 
+                                    onChange={onChange}
+                                />
+                            </>
+                            ) }
+                        <LoginButton type="submit">{ login ? "로그아웃" : "로그인"}</LoginButton>
+                    </Form> 
+                </LoginContainer>
+            </Container>
+        </>
     );
 };
 

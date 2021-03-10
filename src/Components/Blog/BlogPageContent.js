@@ -19,9 +19,9 @@ const Container = styled.div`
 
     cursor : pointer ;
 
-    @media(hover : hover) {
-        background-color : #f5f5f5 ;
-    }    
+    &:hover {
+        background-color : #999 ;
+    }
 
     @media ${props => props.theme.mobileS} {
         padding : 8px 10px ;

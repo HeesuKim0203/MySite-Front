@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react' ;
 import { withCookies } from 'react-cookie';
-import { withRouter } from 'react-router-dom' ;
+import { Link, withRouter } from 'react-router-dom' ;
 
 import styled, { css } from 'styled-components' ;
 import Typewriter from 'typewriter-effect' ;
@@ -24,7 +24,7 @@ const HeaderImgBright = css`
         height : 350px ;
     }
     @media ${props => props.theme.mobileS} {
-        height : 205px ;
+        height : 215px ;
     }
 `;
 
@@ -203,7 +203,7 @@ const Button = styled.button`
         width : 80px ;
         font-size : 9px ;
         height : 22px ;
-        margin-top : 20px ;
+        margin-top : 30px ;
     }
 `;
 
@@ -245,20 +245,7 @@ const Header = (props) => {
             setData([ ...data.slice(0, data.length - 1) ]) ;
         }
 
-    }, [ props ]) ;
-
-    useEffect(() => {
-        // const typeWriterSpan = document.querySelector('span.Typewriter__wrapper') ;
-        // const typeWriterCursor = document.querySelector('span.Typewriter__cursor') ;
-        
-        // typeWriterSpan.style.color = '#fff' ;
-        // typeWriterCursor.style.color = '#fff' ;
-
-        // typeWriterSpan.marginTop = '15px' ;
-        // typeWriterSpan.
-
-        // console.log(typeWriterSpan, typeWriterCursor)
-    }, [])
+    }, []) ;
     
     const checkPathName = pathname.includes(WRITE) ? false : true ;
 
@@ -287,7 +274,6 @@ const Header = (props) => {
                         <TitContainer>
                             <Title>Programer</Title>
                             <br />
-                            {/* <TitleMyName id="name" draggable="false" ></TitleMyName> */}
                             <Typewriter
                                 onInit={(typewriter) => {
                                     typewriter.typeString('Kim Hee su')
@@ -303,7 +289,11 @@ const Header = (props) => {
                                   }}
                                 />
                             <br/>
-                            <Button>Lean More</Button>
+                            <Link to={PROFILE}>
+                                <Button>
+                                    Lean More
+                                </Button>
+                            </Link>
                         </TitContainer>
                         <Bright/>
                     </>

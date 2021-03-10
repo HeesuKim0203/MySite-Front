@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react' ;
+import React from 'react' ;
 import { connect } from 'react-redux';
 import styled from 'styled-components' ;
 
@@ -32,12 +32,6 @@ const ContentContainer = styled.div`
 `;
 
 const Project = ({ projectsData }) => {
-
-    // const [ windowWidth, setWindowWidth ] = useState(window.innerWidth) ;
-
-    // useEffect(() => {
-        
-    // }, []) ;
 
     return (
         <Container>

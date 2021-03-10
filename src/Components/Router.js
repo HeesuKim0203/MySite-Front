@@ -1,11 +1,11 @@
 import React from 'react' ;
-import { BrowserRouter as Router, Route, Switch, Redirect, withRouter } from 'react-router-dom' ;
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom' ;
 
 import styled from 'styled-components' ;
 
 import Header from './Header' ;
 import Home from '../Routes/Home' ;
-import Blog from '../Routes/BlogRouter' ;
+import BlogRouter from '../Routes/BlogRouter' ;
 import Profile from '../Routes/Profile' ;
 import Write from '../Routes/Write' ;
 import Me from '../Routes/Me' ;
@@ -41,28 +41,25 @@ const Footer = styled.footer`
     height : 80px ;
 `;
 
-const Template = withCookies(withRouter(({ location : { pathname }}) => {
+const Template = () => {
     return (
-        <TemplateContainer position={pathname === HOME ? 'static' : 'absolute'} >
-            <Route path={HOME} exact component={Home} />
-            <Route path={DOCUMENT} component={Blog} />
-            <Route path={MY} component={Me} />
-            <Route path={PROFILE} component={Profile} />
-            <Route path={WRITE} component={Write} />
-            <Redirect path="*" to="/" />
-        </TemplateContainer>
+        <Container>
+            <Router>
+                <Header />
+                <TemplateContainer>
+                    <Switch>
+                        <Route path={HOME} exact component={Home} />
+                        <Route path={DOCUMENT} component={BlogRouter} />
+                        <Route path={MY} component={Me} />
+                        <Route path={PROFILE} component={Profile} />
+                        <Route path={WRITE} component={Write} />
+                        <Redirect path="*" to={HOME} />
+                    </Switch>
+                </TemplateContainer>
+            </Router>
+            <Footer />
+        </Container>
     ) ;
-})) ;
+} ;
 
-export default () => (
-    <Container>
-        <Router>
-            <Header />
-            <Switch>
-                <Template/>
-            </Switch>
-        </Router>
-        <Footer />
-    </Container>
-) ;
-
+export default withCookies(Template) ;

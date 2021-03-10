@@ -11,7 +11,7 @@ const Container = styled.div`
         margin-top : 15px ;
 
         @media ${props => props.theme.mobileS} {
-            margin-top : 5px ;
+            margin-top : 2px ;
         }
     }
 `;

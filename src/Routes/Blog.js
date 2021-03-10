@@ -1,4 +1,4 @@
-import React from 'react' ;
+import React, {useState, useEffect} from 'react' ;
 import styled from 'styled-components' ;
 
 import BlogContainer from '../Components/Blog/BlogContainer' ; 
@@ -28,10 +28,36 @@ const ContentContainer = styled.div`
         padding : 0 ;
     }
 `;
+const Message = styled.div`
+    width : 100% ;
+    
+    height : 50px ;
+    
+    display : flex ;
+    justify-content : center ;
+    align-items : center ;
+
+    font-size : 13px ;
+    color : red ;
+`;
 
 const Blog = ({ contentsData, select }) => {
+
+    const [ error, setError ] = useState(false)  ;
+
+    useEffect(() => {
+
+        if(contentsData.length === 0) {
+            setError("게시물이 존재하지 않습니다.") ;
+        }else {
+            setError(false) ;
+        }
+
+    }, [contentsData]) ;
+
     return (
         <Container>
+            { error && error ? (<Message>{error}</Message>) : null }
             <ContentContainer>
                 { contentsData && contentsData.map((content, index) => {
                     return select === index ? (
@@ -39,6 +65,7 @@ const Blog = ({ contentsData, select }) => {
                             key={index}
                             content={content}
                             select={true}
+                            error={error}
                         />
                     ) : (
                         <BlogContainer 

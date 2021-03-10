@@ -9,6 +9,7 @@ import {
 } from '../Util/routes' ;
 import Image from '../Components/Me/Image' ;
 import { connect } from 'react-redux';
+import Helmet from 'react-helmet' ;
 
 import {
     axiosApi
@@ -342,54 +343,59 @@ const Me = ({ contentType }) => {
     }
 
     return (
-        <Container>
-            <ButtonContainer>
-                <Link to={WRITE}>
-                    <Button>글쓰기</Button>
-                </Link>
-                <Button onClick={onClickImageView}>이미지 관리</Button>
-                <Button onClick={() => {}}>언어 관리</Button>
-            </ButtonContainer>
-            <ImageContainer display={imgDisplay ? 'flex' : 'none' }>
-                <Image />
-            </ImageContainer>
-            <DataContainer>
-                <ChartContainer>
-                    <Title>게시물 언어 현황</Title>
-                    <ChartDataContainer>
-                        <PieCanvasContainer>
-                            <canvas ref={chart_pie} width="400px" height={`${chartHeight}px`}/>
-                        </PieCanvasContainer>
-                        <ChartLabelUl>
-                            {contentType.map((typeData, index) => 
-                                <ChartLabelLi key={index}>
-                                    <Circle 
-                                        color={typeData.color}
-                                    />
-                                    <Text>{typeData.type}</Text>
-                                </ChartLabelLi>
-                            )}
-                        </ChartLabelUl>
-                </ChartDataContainer>
-                </ChartContainer>
-                <UserContainer>
-                    <Title>일일 접속자</Title>
-                    <LineCanvasContainer>
-                        <canvas ref={chart_line} width="400px" height="300px"/> 
-                    </LineCanvasContainer>
-                    <LineChartButtonContainer>
-                        { buttonData.map((data, index)=> 
-                            <DateButton 
-                                key={index} 
-                                value={data.data}
-                                onClick={dateButtonClick}
-                            >{data.text}
-                            </DateButton>
-                        ) }
-                    </LineChartButtonContainer>
-                </UserContainer>
-            </DataContainer>
-        </Container>
+        <>
+            <Helmet>
+                <title>Code beginners | Me</title>
+            </Helmet>
+            <Container>
+                <ButtonContainer>
+                    <Link to={WRITE}>
+                        <Button>글쓰기</Button>
+                    </Link>
+                    <Button onClick={onClickImageView}>이미지 관리</Button>
+                    <Button onClick={() => {}}>언어 관리</Button>
+                </ButtonContainer>
+                <ImageContainer display={imgDisplay ? 'flex' : 'none' }>
+                    <Image />
+                </ImageContainer>
+                <DataContainer>
+                    <ChartContainer>
+                        <Title>게시물 언어 현황</Title>
+                        <ChartDataContainer>
+                            <PieCanvasContainer>
+                                <canvas ref={chart_pie} width="400px" height={`${chartHeight}px`}/>
+                            </PieCanvasContainer>
+                            <ChartLabelUl>
+                                {contentType.map((typeData, index) => 
+                                    <ChartLabelLi key={index}>
+                                        <Circle 
+                                            color={typeData.color}
+                                        />
+                                        <Text>{typeData.type}</Text>
+                                    </ChartLabelLi>
+                                )}
+                            </ChartLabelUl>
+                    </ChartDataContainer>
+                    </ChartContainer>
+                    <UserContainer>
+                        <Title>일일 접속자</Title>
+                        <LineCanvasContainer>
+                            <canvas ref={chart_line} width="400px" height="300px"/> 
+                        </LineCanvasContainer>
+                        <LineChartButtonContainer>
+                            { buttonData.map((data, index)=> 
+                                <DateButton 
+                                    key={index} 
+                                    value={data.data}
+                                    onClick={dateButtonClick}
+                                >{data.text}
+                                </DateButton>
+                            ) }
+                        </LineChartButtonContainer>
+                    </UserContainer>
+                </DataContainer>
+            </Container>
+        </>
     );
 };
 

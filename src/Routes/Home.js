@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react' ;
 import styled, { css } from 'styled-components' ;
 import { withCookies } from 'react-cookie' ;
-
+import Helmet from 'react-helmet' ;
 import Project from './Project' ;
 import UseLanguage from '../Components/Home/UseLanguage' ;
 
@@ -36,7 +36,7 @@ const ContentContainer = styled.div`
         margin-top : 160px ;
 
         @media ${props => props.theme.mobileL} {
-            margin-top : 60px ;
+            margin-top : 140px ;
         }
 
     }
@@ -45,7 +45,6 @@ const ContentContainer = styled.div`
         padding : 10px ;
     }
     @media ${props => props.theme.mobileL} {
-        margin-top : 0 ;
         padding : 0 ;
     }
 `;
@@ -61,7 +60,7 @@ const SlideContainer = styled.div`
     margin-top : 200px ;
 
     @media ${props => props.theme.mobileL} {
-        margin-top : 60px ;
+        margin-top : 180px ;
     }
 `;
 
@@ -245,7 +244,7 @@ const Home = () => {
         window.scrollTo(0, 0) ;
       }
       function onClickScroll2(e) {
-        window.scrollTo(450, 450) ;
+        window.scrollTo(520, 520) ;
       }
       function onClickScroll3(e) {
         window.scrollTo(1300, 1300) ;
@@ -253,6 +252,9 @@ const Home = () => {
 
     return (
         <>
+            <Helmet>
+                <title>Code beginners | Home</title>
+            </Helmet>
             <FixMenu display={ showFixMenu ? 'flex' : 'none' }>
                 <Button onClick={onClickScroll1} />
                 <Button onClick={onClickScroll2} />

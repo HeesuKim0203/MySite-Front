@@ -10,6 +10,7 @@ import Image from '../Components/Me/Image' ;
 import { Redirect } from 'react-router-dom' ;
 
 import { DOCUMENT } from '../Util/routes' ;
+import Helmet from 'react-helmet' ;
 
 const Container = styled.div`
     
@@ -209,6 +210,9 @@ const Write = () => {
 
     return (
         <>
+            <Helmet>
+                <title>Code beginners | Write</title>
+            </Helmet>
         { pageState ? (
             <Container>
                 <Header display={preview ? 'flex' : 'none'}>

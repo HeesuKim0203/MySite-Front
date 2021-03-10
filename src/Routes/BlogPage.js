@@ -50,26 +50,13 @@ const CommentWrap= styled.div`
 
 const BlogPage = ({ pageContents, pageSelect, text, id, pageContentsPotition, updatePageSelect }) => {
 
-    const [ redirect, setRedirect ] = useState(false) ;
-
     useEffect(() => {
-
-        if(!text || !id) 
-            setRedirect(true) ;
-
-    }, [text, id]) ;
-
-    useEffect(() => {
-
         updatePageSelect(pageContentsPotition) ;
-
     }, []) ;
 
     return (
         <>
-            {redirect ? (
-                <Redirect to={DOCUMENT} />
-            ) : (<Container>
+            <Container>
                 <Main>
                     <MDEditor.Markdown source={ text } />
                 </Main>
@@ -97,7 +84,7 @@ const BlogPage = ({ pageContents, pageSelect, text, id, pageContentsPotition, up
                         <CommentContainer contentId={id} />
                     </CommentWrap>
                 </Footer>
-            </Container>)}
+            </Container>
         </>
     );
 };
