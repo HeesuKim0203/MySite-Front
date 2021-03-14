@@ -109,7 +109,7 @@ const TitContainer = styled.div`
         margin-top : 100px ;
     }
     @media ${props => props.theme.mobileS} {
-        margin-top : 70px ;
+        margin-top : 75px ;
     }
 `;
 
@@ -147,7 +147,7 @@ const TypewriterStyled = css`
         color : #fff ;
 
         font-weight : 500 ;
-        font-size : 26px ;
+        font-size : 30px ;
 
         margin-top : 15px ;
 
@@ -155,15 +155,15 @@ const TypewriterStyled = css`
     }
     @media (max-width : 1400px) {
         span.Typewriter__wrapper,
-        span.Typewriter__cursor { font-size : 22px ; }
+        span.Typewriter__cursor { font-size : 26px ; }
     } 
     @media (max-width : 768px) {
         span.Typewriter__wrapper,
-        span.Typewriter__cursor { font-size : 18px ; }
+        span.Typewriter__cursor { font-size : 24px ; }
     } 
     @media (max-width : 468px) {
         span.Typewriter__wrapper,
-        span.Typewriter__cursor { margin-top : 5px ; font-size : 14px ;}
+        span.Typewriter__cursor { margin-top : 5px ; font-size : 18px ;}
     } 
 `;
 
@@ -203,7 +203,7 @@ const Button = styled.button`
         width : 80px ;
         font-size : 9px ;
         height : 22px ;
-        margin-top : 30px ;
+        margin-top : 25px ;
     }
 `;
 
@@ -245,7 +245,7 @@ const Header = (props) => {
             setData([ ...data.slice(0, data.length - 1) ]) ;
         }
 
-    }, []) ;
+    }) ;
     
     const checkPathName = pathname.includes(WRITE) ? false : true ;
 

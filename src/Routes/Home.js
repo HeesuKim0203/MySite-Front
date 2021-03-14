@@ -253,7 +253,7 @@ const Home = () => {
     return (
         <>
             <Helmet>
-                <title>Code beginners | Home</title>
+                <title>Code beginner | Home</title>
             </Helmet>
             <FixMenu display={ showFixMenu ? 'flex' : 'none' }>
                 <Button onClick={onClickScroll1} />

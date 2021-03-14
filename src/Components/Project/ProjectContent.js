@@ -150,7 +150,7 @@ const DescriptionContainer  = styled.div`
 
     @media ${props => props.theme.mobileS} {
         padding : 5px 3px ;
-        font-size : 9px ;
+        font-size : 11px ;
         color : #111 ;
         
         background-color : #fff ;

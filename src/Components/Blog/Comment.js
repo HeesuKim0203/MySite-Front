@@ -36,10 +36,6 @@ const HeaderTool = styled.div`
     float : right ;
 
     text-align : right ;
-
-    /* @media ${props => props.theme.mobileS} {
-        width : 45% ;
-    } */
 `;
 
 const Button = styled.button`
@@ -54,25 +50,16 @@ const Button = styled.button`
     cursor : pointer ;
 
     @media ${props => props.theme.mobileS} {
-        font-size : 5px ;
         font-weight : 500 ;
     }
 `;
 
 const UpdateButton = styled(Button)`
     margin-right : 10px ;
-
-    @media ${props => props.theme.mobileS} {
-        margin-right : 5px ;
-    }
 `;
 
 const DeleteButton = styled(Button)`
     margin-right : 10px ;
-
-    @media ${props => props.theme.mobileS} {
-        margin-right : 5px ;
-    }
 `;
 
 const CommentCommentAdd = styled(Button)`
@@ -97,7 +84,7 @@ const UserName = styled.span`
     margin-left : 5px ;
 
     @media ${props => props.theme.mobileS} {
-        font-size : 12px ;
+        font-size : 13px ;
         margin-left : 4px ;
     }
 `;
@@ -117,8 +104,8 @@ const Date = styled.span`
 
 const Text = styled.p`
     @media ${props => props.theme.mobileS} {
-        font-size : 9px ;
-        margin-top : 3px ;
+        font-size : 12px ;
+        margin-top : 5px ;
     }
 `;
 
@@ -197,7 +184,7 @@ const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
     text-decoration : none ;
 
     @media ${props => props.theme.mobileS} {
-        font-size : 12px ;
+        font-size : 14px ;
     }
 `;
 

@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom' ;
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome' ;
 
+import { faSquareFull } from '@fortawesome/free-solid-svg-icons' ;
+
 import {
     DOCUMENT
 } from '../../Util/routes' ;
@@ -81,6 +83,13 @@ const Container = styled.div`
         &:nth-child(3n) {
             margin-left : 5% ;
         }
+
+        &:hover {
+            ${Title} { 
+                color : #111 ;
+                text-decoration : none ;
+            }
+        }
     }
 `;
 
@@ -90,6 +99,7 @@ const Img = styled.div`
     
     background-image : url(${props=>props.url}) ;
     background-repeat : no-repeat ;
+    background-position : center center ;
     background-size : cover ;
 
     float : left ; 
@@ -188,7 +198,7 @@ const Content = ({ content }) => {
                     <HeadContainer>
                         <Date draggable="false">{updated_at && updated_at.substring(0, 10)}</Date>
                         <Code>
-                            <StyleFontAwesomeIcon icon={core.icon} />
+                            <StyleFontAwesomeIcon icon={ core !== undefined ? core.icon : faSquareFull} />
                         </Code>
                     </HeadContainer>
                     <TitleContainer>

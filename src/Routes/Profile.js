@@ -160,7 +160,7 @@ const Text = styled.span`
     font-weight : 550 ;
 
     @media ${props => props.theme.mobileS} {
-        font-size : 8px ;
+        font-size : 10px ;
         padding-bottom : 3px ;
     }
 `;
@@ -335,7 +335,7 @@ const Profile = ({ cookies }) => {
     return (
         <>
             <Helmet>
-                <title>Code beginners | Me</title>
+                <title>Code beginner | Profile</title>
             </Helmet>
             <Container>
                 <MyContainer>

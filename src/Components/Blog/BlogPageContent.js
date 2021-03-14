@@ -25,6 +25,10 @@ const Container = styled.div`
 
     @media ${props => props.theme.mobileS} {
         padding : 8px 10px ;
+
+        &:hover {
+            background-color : #fff ;
+        }
     }
 `;
 

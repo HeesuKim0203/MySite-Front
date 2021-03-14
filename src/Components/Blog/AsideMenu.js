@@ -216,6 +216,11 @@ const AsideMenu = ({ asideData, searchContents, searchTitle }) => {
     }
 
     useEffect(() => {
+
+        const { innerWidth } = window ;
+
+        viewContentNumCheck(innerWidth) ;
+
         window.addEventListener('resize', onResize, false) ;
     
         return () => {
@@ -229,10 +234,14 @@ const AsideMenu = ({ asideData, searchContents, searchTitle }) => {
       }
 
       useEffect(() => {
-        if(menu)
+
+        const { innerWidth } = window ;
+
+        if(innerWidth <= mobileS && menu)
             window.onclick = onClickSideMenuEvent ;
         else
             window.onclick = null ;
+
       }, [ menu ])
  
     function onClickMenuContent(e, search) {

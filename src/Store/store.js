@@ -226,7 +226,9 @@ const reducer = combineReducers({
     project : projectReducer
 }) ;
 
-const store = createStore(reducer, applyMiddleware(logger)) ;
+const store = createStore(reducer) ;
+
+// applyMiddleware(logger)
 
 export const createAction = {
     setContents,

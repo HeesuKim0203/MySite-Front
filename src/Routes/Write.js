@@ -211,7 +211,7 @@ const Write = () => {
     return (
         <>
             <Helmet>
-                <title>Code beginners | Write</title>
+                <title>Code beginner | Write</title>
             </Helmet>
         { pageState ? (
             <Container>

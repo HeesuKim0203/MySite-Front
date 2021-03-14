@@ -185,7 +185,9 @@ const DateButton = styled.button`
     }
 `;
 
-const Me = ({ contentType }) => {
+const Me = ({ contentType, cookies }) => {
+
+    console.log(cookies) ;
 
     const chart_pie = useRef() ;
     const chart_line = useRef() ;
@@ -345,7 +347,7 @@ const Me = ({ contentType }) => {
     return (
         <>
             <Helmet>
-                <title>Code beginners | Me</title>
+                <title>Code beginner | Me</title>
             </Helmet>
             <Container>
                 <ButtonContainer>
