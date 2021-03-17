@@ -160,14 +160,14 @@ const Text = styled.span`
     font-weight : 550 ;
 
     @media ${props => props.theme.mobileS} {
-        font-size : 10px ;
+        font-size : 12px ;
         padding-bottom : 3px ;
     }
 `;
 
 const Content = styled.span`
     @media ${props => props.theme.mobileS} {
-        font-size : 6px ;
+        font-size : 10px ;
     }
 `;
 
@@ -222,7 +222,7 @@ const LoginButton = styled.button`
     text-align : center ; 
 `;
 
-const Profile = ({ cookies }) => {
+const Profile = (props) => {
 
     const [ email, setEmail ] = useState('') ;
     const [ pw, setPw ] = useState('') ;
@@ -259,14 +259,28 @@ const Profile = ({ cookies }) => {
     }, [])
 
     useEffect(() => {
-        const token = cookies.get('token') ;
+        const token = props.cookies.get('token') ;
 
-        if(token) {
-            setLogin(true) ;
-        }else {
-            setLogin(false) ;
+        async function checkUser(token) {
+
+            const { 
+                data : {
+                    status
+                }
+            } = await axiosApi.check(token) ;
+
+            if(status === 'success') {
+                if(!token) {
+                    setLogin(false) ;
+                }else {
+                    setLogin(true) ;
+                }
+            }
         }
-    }) ;
+
+        if(token) checkUser(token) ;
+
+    }, [ login, setLogin, props ]) ;
 
     function onChange(e) {
         switch(e.target.name) {
@@ -294,7 +308,7 @@ const Profile = ({ cookies }) => {
             } = await axiosApi.login(userData) ;
 
             if(Authorization) {
-                cookies.set('token', Authorization) ;
+                props.cookies.set('token', Authorization) 
                 setLogin(true) ;
             }
 
@@ -308,7 +322,7 @@ const Profile = ({ cookies }) => {
     async function onLogout(e) {
         e.preventDefault() ;
 
-        const token = cookies.get('token') ;
+        const token = props.cookies.get('token') ;
 
         const logoutData = new FormData() ;
 
@@ -320,7 +334,7 @@ const Profile = ({ cookies }) => {
             } = await axiosApi.logout(logoutData, token) ;
 
             if(status === "success") {
-                cookies.remove('token') ;
+                props.cookies.remove('token') ;
                 setLogin(false) ;
                 setEmail('') ;
                 setPw('') ;

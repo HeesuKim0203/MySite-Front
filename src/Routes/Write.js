@@ -12,6 +12,8 @@ import { Redirect } from 'react-router-dom' ;
 import { DOCUMENT } from '../Util/routes' ;
 import Helmet from 'react-helmet' ;
 
+import { typeChartData } from '../Util/util' ;
+
 const Container = styled.div`
     
 `;
@@ -236,13 +238,9 @@ const Write = () => {
                             url={require("../assets/select_arrow.PNG").default}
                         >
                             <LanguageOption value="">--Select Type--</LanguageOption>
-                            <LanguageOption value="JS">JS</LanguageOption>
-                            <LanguageOption value="HTML">HTML</LanguageOption>
-                            <LanguageOption value="CSS3">CSS</LanguageOption>
-                            <LanguageOption value="React">React</LanguageOption>
-                            <LanguageOption value="일상">일상</LanguageOption>
-                            <LanguageOption value="이모저모">이모저모</LanguageOption>
-                            <LanguageOption value="여행기">여행기</LanguageOption>
+                            {typeChartData.map((data, index) => (
+                                <LanguageOption key={index} value={data.type}>{data.type}</LanguageOption>
+                            ))}
                         </Language>
                         <Label name="file">이미지 파일</Label>
                         <ImgInput 

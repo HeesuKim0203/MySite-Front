@@ -13,6 +13,10 @@ const Container = styled.div`
     flex-direction : column ;
     align-items : center ;
 
+    @media ${props => props.theme.laptop} {
+        width : 90% ;
+    }
+
     @media ${props => props.theme.mobileL} {
         width : 100% ;
     }

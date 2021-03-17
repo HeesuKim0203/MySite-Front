@@ -80,13 +80,11 @@ const SlideTextContainer = styled.div`
 const flexLanguageWidth = css`
     width : 40% ;
     @media ${props => props.theme.laptop} {
+        height : 220px ;
         width : 100% ;
     }
-    @media ${props => props.theme.mobileL} {
-        height : 200px ;
-    }
     @media ${props => props.theme.mobileS} {
-        height : 120px ;
+        height : 170px ;
     }
 `;
 
@@ -240,14 +238,21 @@ const Home = () => {
         }
       }, []) ;
 
+      function moveScroll(x) {
+        window.scroll({
+            behavior : 'smooth',
+            top : x
+        }) ;
+      }
+
       function onClickScroll1(e) {
-        window.scrollTo(0, 0) ;
+        moveScroll(0) ;
       }
       function onClickScroll2(e) {
-        window.scrollTo(520, 520) ;
+        moveScroll(670) ;
       }
       function onClickScroll3(e) {
-        window.scrollTo(1300, 1300) ;
+        moveScroll(1300) ;
       }
 
     return (

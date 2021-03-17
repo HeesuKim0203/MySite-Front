@@ -2,7 +2,7 @@ import React, { useState } from 'react' ;
 import styled from 'styled-components' ;
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome' ;
-import { fas } from '@fortawesome/free-solid-svg-icons'
+import { faUser } from '@fortawesome/free-solid-svg-icons'
 
 const Container = styled.div`
     width : 100% ;
@@ -213,7 +213,7 @@ const Comment = ({ comment, deleteCommnet, onUpdateComment, onCheckUser }) => {
     return (
         <Container>
             <Header>
-                <StyledFontAwesomeIcon icon={fas.faUser} />
+                <StyledFontAwesomeIcon icon={ faUser } />
                 <UserName>
                     {user_name}
                 </UserName>

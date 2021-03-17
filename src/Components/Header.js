@@ -14,6 +14,10 @@ import {
 } from '../Util/routes' ;
 import MenuContent from './Menu' ;
 
+import {
+    axiosApi
+} from '../Util/api' ;
+
 const HeaderImgBright = css`
     height : 550px ;
 
@@ -24,7 +28,7 @@ const HeaderImgBright = css`
         height : 350px ;
     }
     @media ${props => props.theme.mobileS} {
-        height : 215px ;
+        height : 240px ;
     }
 `;
 
@@ -109,7 +113,7 @@ const TitContainer = styled.div`
         margin-top : 100px ;
     }
     @media ${props => props.theme.mobileS} {
-        margin-top : 75px ;
+        margin-top : 80px ;
     }
 `;
 
@@ -132,7 +136,7 @@ const Title = styled.h1`
         font-size : 58px ;
     }
     @media ${props => props.theme.mobileS} {
-        font-size : 28px ;
+        font-size : 38px ;
     }
 `;
 
@@ -233,19 +237,35 @@ const Header = (props) => {
 
     useEffect(() => {
         const token = props.cookies.get('token') ;
-        if(token && data.length === 3) {
-            setData([
-                ...data,
-                {
-                    path : MY,
-                    text : 'MY'
-                }    
-            ]) ;
-        }else if( !token && data.length >= 4) {
+
+        if(!token && data.length !== 3) {
             setData([ ...data.slice(0, data.length - 1) ]) ;
+        }else if(token) {
+            checkUser(token) ;
         }
 
-    }) ;
+        async function checkUser(token) {
+
+            const { 
+                data : {
+                    status
+                }
+            } = await axiosApi.check(token) ;
+
+            if(status === 'success') {
+                if(token && data.length === 3) {
+                    setData([
+                        ...data,
+                        {
+                            path : MY,
+                            text : 'MY'
+                        }    
+                    ]) ;
+                }
+            }
+        }
+
+    }, [ props ]) ;
     
     const checkPathName = pathname.includes(WRITE) ? false : true ;
 

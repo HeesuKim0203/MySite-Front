@@ -16,6 +16,7 @@ const Title = styled.h5`
     font-weight : 550 ;
 
     width : 100% ;
+    height : 40px ;
 
     margin-top : 15px ;
 
@@ -28,11 +29,11 @@ const Title = styled.h5`
     font-family : 'Montserrat', sans-serif ;
 
     @media ${props => props.theme.laptop} {
-        font-size : 15px ;
+        font-size : 16px ;
         margin-top : 10px ;
     }
     @media ${props => props.theme.mobileS} {
-        font-size : 12px ;
+        font-size : 14px ;
     }
 `;
 
@@ -53,36 +54,26 @@ const Container = styled.div`
 
     &:nth-child(3n-2) {
         margin-left : 10% ;
-        @media ${props => props.theme.laptop} {
-            margin-left : 12% ;
-        }
         @media ${props => props.theme.mobileS} {
-            margin-left : 5% ;
+            margin-left : 0 ;
         }
     }
     &:nth-child(3n - 1) {
         margin-left : 5% ;
-        @media ${props => props.theme.laptop} {
-            margin-left : 7% ;
-        }
         @media ${props => props.theme.mobileS} {
-            margin-left : 5% ;
+            margin-left : 0 ;
         }
     }
 
-    @media ${props => props.theme.laptop} {
-        width : 70% ;
-    }
     @media ${props => props.theme.mobileS} {
-        width : 90% ;
+        width : 100% ;
+        height : 140px ;
 
-        box-shadow: 0 3px 4px rgba(0,0,0,0.19), 0 3px 3px rgba(0,0,0,0.23);
-
-        border-radius : 10px ;
-
-        &:nth-child(3n) {
-            margin-left : 5% ;
-        }
+        box-shadow: none ;
+        padding : 8px 8px 0 5px ;
+       
+        border-bottom : 1px solid #999 ;
+        border-top : 1px solid #999 ;
 
         &:hover {
             ${Title} { 
@@ -96,7 +87,7 @@ const Container = styled.div`
 const Img = styled.div`
     width : 100% ;
     height : 220px ;
-    
+
     background-image : url(${props=>props.url}) ;
     background-repeat : no-repeat ;
     background-position : center center ;
@@ -108,12 +99,14 @@ const Img = styled.div`
         height : 160px ;
     }
     @media ${props => props.theme.mobileS} {
-
-        width : 50% ;
+        border : 1px solid #eeeeee ;
+        border-radius : 7px ;
+        
+        width : 40% ;
 
         float : right ;
 
-        height : 140px ;
+        height : 120px ;
     }
 `;
 

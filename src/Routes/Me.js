@@ -1,16 +1,18 @@
-import React, { useEffect, useRef, useState } from 'react' ;
+import React, { useEffect, useState } from 'react' ;
 import styled, { css } from 'styled-components' ;
 import { Link } from 'react-router-dom' ;
 import { withCookies } from 'react-cookie' ;
-import Chart from 'chart.js' ;
+import { Line, Doughnut } from 'react-chartjs-2' ;
+
+import { connect } from 'react-redux';
+import Helmet from 'react-helmet' ;
+
+import Image from '../Components/Me/Image' ;
+import ContentEditer from '../Components/Me/ContentEditer' ;
 
 import {
     WRITE
 } from '../Util/routes' ;
-import Image from '../Components/Me/Image' ;
-import { connect } from 'react-redux';
-import Helmet from 'react-helmet' ;
-
 import {
     axiosApi
 } from '../Util/api' ;
@@ -55,6 +57,12 @@ const ImageContainer = styled.div`
 
     justify-content : center ;
 `;
+
+const ContentContainer = styled.div`
+    display : ${props => props.display} ;
+
+    justify-content : center ;
+` ;
 
 const DataContainer = styled.div`
     width : 100% ;
@@ -187,12 +195,8 @@ const DateButton = styled.button`
 
 const Me = ({ contentType, cookies }) => {
 
-    console.log(cookies) ;
-
-    const chart_pie = useRef() ;
-    const chart_line = useRef() ;
-
     const [ imgDisplay, setImgDisplay ] = useState(false) ;
+    const [ updateContentDisplay, setUpdateContentDisplay ] = useState(false) ;
     const [ lineData, setLineData ] = useState([]) ;
     const [ dateData, setDateData ] = useState([]) ;
     const [ selectLineChartMode, setSelectLineChartMode ] = useState(7) ;
@@ -219,38 +223,27 @@ const Me = ({ contentType, cookies }) => {
     
         return date_array.join('-')
     }
-    
-    function onClickImageView(e) {
-        
-        setImgDisplay(imgDisplay ? false : true) ;
-    }
-
-    useEffect(() => {
-
-        const ctx = chart_pie.current.getContext('2d') ;
-
-        const chartData = {
-            datasets: [{
-                data : contentType.map(typeData => typeData.num),
-                backgroundColor : contentType.map(typeData => typeData.color)
-            }],
-            labels : contentType.map(typeData => typeData.type)
-        };
-
-        new Chart(ctx, {
-            type: 'doughnut',
-            data: chartData,
-            options : {
-                legend : {
-                    display : false
-                },
-            }
-        }) ;
-
-    }, [ contentType ]) ;
-
 
     useEffect(()=> {
+
+        const token = cookies.get('token') ;
+
+        async function checkUser(token) {
+
+            const { 
+                data : {
+                    status
+                }
+            } = await axiosApi.check(token) ;
+
+            if(status === 'success') {
+                return 
+            }else {
+                window.location('/') ;
+            }
+        }
+
+        checkUser(token) ;
 
         async function geVisitorNumData() {
             const { 
@@ -294,47 +287,6 @@ const Me = ({ contentType, cookies }) => {
         }, arr) ;
 
         setLineData(arr) ;
-        
-        const ctx = chart_line.current.getContext('2d') ;
-
-        const chartData = {
-            datasets: [{
-                data : arr.map(date => date.data),
-                borderColor: '#4db6ac',
-                fill: true,
-                lineTension: 0
-            }],
-            labels : arr.map(date => date.date.substring(5, date.date.length)),
-        };
-
-        new Chart(ctx, {
-            type: 'line',
-            data: chartData,
-            options : {
-                legend : {
-                    display : false
-                },
-                scales: {
-                    xAxes: [{
-                        display: true,
-                        scaleLabel: {
-                            display: true,
-                        }
-                    }],
-                    yAxes: [{
-                        display: true,
-                        ticks: {
-                            max : 10,
-                            min : 0
-                        },
-                        scaleLabel: {
-                            display: true,
-                        }
-                    }]
-                }
-            }
-        }) ;
-
         return () => {
             setLineData([]) ;
         }
@@ -342,6 +294,15 @@ const Me = ({ contentType, cookies }) => {
 
     function dateButtonClick(e) {
         setSelectLineChartMode(e.target.value) ;
+    }
+
+    function onClickContentUpdate(e) {
+        setUpdateContentDisplay(!updateContentDisplay) ;
+    }
+
+    function onClickImageView(e) {
+        
+        setImgDisplay(!imgDisplay) ;
     }
 
     return (
@@ -354,18 +315,36 @@ const Me = ({ contentType, cookies }) => {
                     <Link to={WRITE}>
                         <Button>글쓰기</Button>
                     </Link>
+                    <Button onClick={onClickContentUpdate}>글수정</Button>
                     <Button onClick={onClickImageView}>이미지 관리</Button>
-                    <Button onClick={() => {}}>언어 관리</Button>
                 </ButtonContainer>
                 <ImageContainer display={imgDisplay ? 'flex' : 'none' }>
                     <Image />
                 </ImageContainer>
+                <ContentContainer display={updateContentDisplay ? 'flex' : 'none'}>
+                    <ContentEditer />
+                </ContentContainer>
                 <DataContainer>
                     <ChartContainer>
                         <Title>게시물 언어 현황</Title>
                         <ChartDataContainer>
                             <PieCanvasContainer>
-                                <canvas ref={chart_pie} width="400px" height={`${chartHeight}px`}/>
+                                <Doughnut
+                                    width={400}
+                                    height={chartHeight}
+                                    data={ {
+                                        datasets: [{
+                                            data : contentType.map(typeData => typeData.num),
+                                            backgroundColor : contentType.map(typeData => typeData.color)
+                                        }],
+                                        labels : contentType.map(typeData => typeData.type)
+                                    }}
+                                    options={{
+                                        legend : {
+                                            display : false
+                                        },
+                                    }}
+                                />
                             </PieCanvasContainer>
                             <ChartLabelUl>
                                 {contentType.map((typeData, index) => 
@@ -382,7 +361,42 @@ const Me = ({ contentType, cookies }) => {
                     <UserContainer>
                         <Title>일일 접속자</Title>
                         <LineCanvasContainer>
-                            <canvas ref={chart_line} width="400px" height="300px"/> 
+                            <Line 
+                                width={400}
+                                height={chartHeight}
+                                data={{
+                                    datasets: [{
+                                        data : lineData.map(date => date.data),
+                                        borderColor: '#4db6ac',
+                                        fill: true,
+                                        lineTension: 0
+                                    }],
+                                    labels : lineData.map(date => date.date.substring(5, date.date.length)),
+                                }}
+                                options={{
+                                    legend : {
+                                        display : false
+                                    },
+                                    scales: {
+                                        xAxes: [{
+                                            display: true,
+                                            scaleLabel: {
+                                                display: true,
+                                            }
+                                        }],
+                                        yAxes: [{
+                                            display: true,
+                                            ticks: {
+                                                max : 10,
+                                                min : 0
+                                            },
+                                            scaleLabel: {
+                                                display: true,
+                                            }
+                                        }]
+                                    }
+                                }}
+                            />
                         </LineCanvasContainer>
                         <LineChartButtonContainer>
                             { buttonData.map((data, index)=> 
@@ -404,12 +418,12 @@ const Me = ({ contentType, cookies }) => {
 function mapStateToProps(state) {
     const { 
         content : { 
-            contentType 
+            contentType
         } 
     } = state ;
   
     return {
-        contentType : contentType.filter(typeData => typeData.num !== 0)
+        contentType : contentType.filter(typeData => typeData.num !== 0),
     } ;
 } ;
 

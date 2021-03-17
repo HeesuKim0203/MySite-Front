@@ -2,15 +2,13 @@ import { createGlobalStyle } from 'styled-components' ;
 import reset from 'styled-reset' ;
 
 const GlobalStyled = createGlobalStyle`
-    /* @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&family=Roboto:wght@300&display=swap');
-    @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
-    @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap'); */
     ${reset}
     * {
         padding : 0 ;
         margin : 0 ;
         box-sizing : border-box ;
+    }
+    body {
         font-family : --apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif ;
     }
     body::-webkit-scrollbar {

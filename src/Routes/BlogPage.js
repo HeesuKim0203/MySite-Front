@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react' ;
+import React, { useEffect } from 'react' ;
 import styled from 'styled-components' ;
 
 import MDEditor from '@uiw/react-md-editor' ;
@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import ButtonContainer from '../Components/Blog/ButtonContainer' ;
 import BlogPageContainer from '../Components/Blog/BlogPageContainer' ;
 
-import { Redirect, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 import {
     DOCUMENT
