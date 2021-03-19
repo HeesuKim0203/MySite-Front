@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react' ;
+import React, { useState } from 'react' ;
 import { connect } from 'react-redux';
 import styled from 'styled-components' ;
 
@@ -75,13 +75,6 @@ const ContentEditer = ({ defaultData }) => {
     const [ id, setId ] = useState(null) ;
     const [ text, setText ] = useState('') ;
 
-    useEffect(() => {
-     
-        return () => {
-            setText('') ;
-        }
-    }, []) ;
-
     function onClickContentTitle(e, text, id) {
         setText(text) ;
         setId(id) ;
@@ -96,15 +89,11 @@ const ContentEditer = ({ defaultData }) => {
 
         const formData = new FormData() ;
 
-        console.log(text) ;
-
         formData.append('text', text) ;
         formData.append('ds', 'asdasd') ;
         formData.append('_method', 'PUT') ;
 
-        const data = await axiosApi.updateContent(id, formData) ;
-
-        console.log('update result : ', data) ;
+        axiosApi.updateContent(id, formData) ;
     }
 
     return (
@@ -127,20 +116,13 @@ const ContentEditer = ({ defaultData }) => {
     );
 };
 
-function mapStateToProps(state) {
-    const { 
+export default  connect(
+    ({ 
         content : { 
             defaultData 
         } 
-    } = state ;
-    return {
+    }) => ({
         defaultData
-    } ;
-} ;
-
-function mapDispatchToProps(dispatch) {
-    return {
-    }
-} ;
-
-export default  connect(mapStateToProps, mapDispatchToProps)(ContentEditer);
+    }), 
+    null
+    )(ContentEditer);

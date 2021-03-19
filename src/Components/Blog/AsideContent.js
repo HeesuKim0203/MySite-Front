@@ -12,7 +12,7 @@ const Title = styled.h6`
     font-size : 20px ;
     font-weight : 700 ;
 
-    color : #424242 ;
+    color : #111 ;
 
     user-select : none ;
 
@@ -43,9 +43,7 @@ const BigAisdeMenu = styled.li`
 `;
 
 const AsideMenu = styled.ul`
-
     margin-top : 20px ;
-
     @media ${props => props.theme.mobileS} {
         margin-top : 5px ;
     }
@@ -119,7 +117,7 @@ const Text = styled.span`
     @media ${props => props.theme.mobileS} {
         font-size : 8px ;
         margin-left : 2px ;
-        color : #f5f5f5 ;
+        color : #e0e0e0 ;
     }
 `;
 
@@ -144,21 +142,10 @@ const AsideContent = ({ title, menu, onClickMenuContent }) => {
     );
 };
 
-function mapStateToProps(state) {
-    const { 
-        content : { 
-            defaultData 
-        } 
-    } = state ;
-    return {
-        defaultData
-    } ;
-} ;
-
-function mapDispatchToProps(dispatch) {
-    return {
-        searchContents : (defaultData, search) => dispatch(createAction.searchContents(defaultData, search))
-    }
-} ;
-
-export default connect( mapStateToProps, mapDispatchToProps )(AsideContent);
+export default connect(
+    null,
+    dispatch => (
+        {
+            searchContents : (defaultData, search) => dispatch(createAction.searchContents(defaultData, search))
+        }
+    ))(AsideContent) ;

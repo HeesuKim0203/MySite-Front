@@ -44,6 +44,8 @@ const MainContainer = styled.div`
 
 const BlogRouter = (props) => {
 
+    console.log(props) ;
+
     const asideData = asideTitle.map((asideData, index) => {
         return {
             title : asideData,

@@ -9,13 +9,13 @@ import theme from './Util/theme' ;
 import store from './Store/store' ;
 
 ReactDOM.render(
-  <Provider store={store}>
-    <ThemeProvider theme={theme}>
-      <CookiesProvider>
-          <App />
-      </CookiesProvider>
-    </ThemeProvider>
-  </Provider>,
+  <ThemeProvider theme={theme}>
+    <Provider store={store}>
+        <CookiesProvider>
+            <App />
+        </CookiesProvider>
+    </Provider>
+  </ThemeProvider>,
   document.getElementById('root')
 );
 

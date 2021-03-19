@@ -48,6 +48,7 @@ const Button = styled.button`
     font-size : 11px ;
     
     cursor : pointer ;
+    margin-right : 10px ;
 
     @media ${props => props.theme.mobileS} {
         font-weight : 500 ;
@@ -55,15 +56,13 @@ const Button = styled.button`
 `;
 
 const UpdateButton = styled(Button)`
-    margin-right : 10px ;
 `;
 
 const DeleteButton = styled(Button)`
-    margin-right : 10px ;
 `;
 
 const CommentCommentAdd = styled(Button)`
-
+    margin-right : 0px ;
 `;
 
 const Main = styled.div`
@@ -119,7 +118,7 @@ const Input = styled.input`
     width : 100px ;
     height : 20px ;
     
-    border : 1px solid #999 ;
+    border : 1px solid ${props => props.status} ;
 
     padding-left : 2px ;
 
@@ -236,10 +235,10 @@ const Comment = ({ comment, deleteCommnet, onUpdateComment, onCheckUser }) => {
                     ) : (
                     <Form onSubmit={async (e) => {
                             const result = await onCheckUser(e, comment, password) ;
-                            
                             return result ? setCheckUser(!checkUser) : null ;
                         }}>
                         <Input 
+                            status={checkUser ? '#999' : 'red'}
                             type="text" 
                             value={password}
                             onChange={onChangePassword} 

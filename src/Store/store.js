@@ -151,7 +151,7 @@ const contentReducer = (
             }
         case SET_PAGE_CONTENTS_DATA :
 
-            const pageData = action.contents.map((content, index) => ({ 
+            const pageData = action.contents.map(content => ({ 
                 id : content.id,
                 title : content.title, 
                 updated_at : content.updated_at.substring(0, 10) 
@@ -215,7 +215,7 @@ const projectReducer = (
         case PROJECT_DEFAULT_DATA :
             return {
                 projectsData : action.defaultData
-            }
+            } ;
         default : 
             return state ;
     }
@@ -226,7 +226,7 @@ const reducer = combineReducers({
     project : projectReducer
 }) ;
 
-const store = createStore(reducer) ;
+const store = createStore(reducer, applyMiddleware(logger)) ;
 
 // applyMiddleware(logger)
 

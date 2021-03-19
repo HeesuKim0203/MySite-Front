@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react' ;
-import { connect } from 'react-redux';
+import React from 'react' ;
 import styled from 'styled-components' ;
 
 import Content from './BlogPageContent' ;

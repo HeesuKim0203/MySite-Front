@@ -9,15 +9,11 @@ import { createAction } from './Store/store';
 function App({ setContents, setPageContents, setDefaultData, setProjectContents }) {
 
   useEffect(() => {
-
     function checkVisitor() {
       axiosApi.checkVisitor() ;
-
       return ;
     }
-
     checkVisitor() ;
-
     async function fetchData() {
         try {
             const { 
@@ -43,12 +39,9 @@ function App({ setContents, setPageContents, setDefaultData, setProjectContents 
         }finally {
 
         }
-    
     }
-
     fetchData() ;
-
-}, []) ;
+  }, [ setDefaultData, setContents, setPageContents, setProjectContents ]) ;
 
   return (
     <>

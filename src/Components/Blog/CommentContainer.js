@@ -156,7 +156,6 @@ const CommentContainer = ({ contentId }) => {
                     ...commentsList.slice(findId + 1, commentsList.length)
                 ]) ;
             }
-
         }catch {
 
         }finally {

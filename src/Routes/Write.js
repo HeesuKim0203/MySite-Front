@@ -181,7 +181,7 @@ const Write = () => {
         contentFormData.append('type', type) ;
         contentFormData.append('image_url', imageUrl) ;
 
-        const data = await axiosApi.createContent(contentFormData) ;
+        axiosApi.createContent(contentFormData) ;
 
         setPageState(!pageState) ;
     }

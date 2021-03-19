@@ -232,7 +232,7 @@ const Profile = (props) => {
 
     const { mobileS } = size ;
 
-    const viewContentNumCheck = innerWidth => {
+    let viewContentNumCheck = innerWidth => {
         if( innerWidth <= mobileS ) {
             setShowLogin(false) ;
         }else if( innerWidth > mobileS ) {
@@ -240,7 +240,7 @@ const Profile = (props) => {
         }
       }
 
-    const onResize = (e) => {
+      let onResize = (e) => {
         const { currentTarget : { innerWidth } } = e ;
 
         viewContentNumCheck(innerWidth) ;
@@ -254,7 +254,7 @@ const Profile = (props) => {
         window.addEventListener('resize', onResize, false) ;
     
         return () => {
-          window.removeEventListener('resize', onResize, false) ;
+            window.removeEventListener('resize', onResize, false) ;
         }
     }, [])
 

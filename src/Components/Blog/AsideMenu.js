@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react' ;
+import React, { useEffect, useState, memo } from 'react' ;
 import { connect } from 'react-redux';
 import styled from 'styled-components' ;
 
@@ -228,38 +228,47 @@ const AsideMenu = ({ asideData, searchContents, searchTitle }) => {
         }
       }, []) ;
 
-      function onClickSideMenuEvent(e) {
-        e.stopImmediatePropagation() ;
-        setMenu(false) ;
-      }
-
       useEffect(() => {
 
         const { innerWidth } = window ;
 
         if(innerWidth <= mobileS && menu)
-            window.onclick = onClickSideMenuEvent ;
+            window.onclick = (e) => {
+                e.stopImmediatePropagation() 
+                setMenu(false) ;
+            } ;
         else
             window.onclick = null ;
 
-      }, [ menu ])
- 
-    function onClickMenuContent(e, search) {
+        return () => {
+            window.onclick = null ;
+        }
+
+    }, [ menu, mobileS ])
+
+    function eventMiddleWare(e) {
         e.nativeEvent.stopImmediatePropagation() ;
-        searchContents(search) ;
+    }
+ 
+    function onClickMenuContent(e) {
+        eventMiddleWare(e) ;
+        const {
+            childNodes : {
+                "1" : node
+            }
+        } = e.currentTarget ;
+        
+        searchContents(node.innerHTML) ;
     }
 
     function onSearchTitle(e) {
-        e.nativeEvent.stopImmediatePropagation() ;
-        e.preventDefault() ;
-
+        eventMiddleWare(e) ;
         searchTitle(search) ;
-
         setSearch('') ;
     }
 
     function onChangeSearchValue(e) {
-        e.nativeEvent.stopImmediatePropagation() ;
+        eventMiddleWare(e) ;
         setSearch(e.target.value) ;
     }
 
@@ -270,7 +279,11 @@ const AsideMenu = ({ asideData, searchContents, searchTitle }) => {
 
     return (
         <>
-            <StyledFontAwesomeIconMenu icon={faAlignJustify} display={show ? 'block' : 'none'} onClick={onClickMenu}/>
+            <StyledFontAwesomeIconMenu 
+                icon={faAlignJustify} 
+                display={show ? 'block' : 'none'} 
+                onClick={onClickMenu}
+            />
                 <Container display={menu ? 'block' : 'none'}>
                     <SearchContainer>
                         <Form onSubmit={onSearchTitle}>
@@ -297,7 +310,7 @@ const AsideMenu = ({ asideData, searchContents, searchTitle }) => {
                         })}
                     </BigAsideMenuContainer>
                     <Link to={DOCUMENT}>
-                        <AllDataViewButton onClick={(e) => onClickMenuContent(e)}>
+                        <AllDataViewButton onClick={onClickMenuContent}>
                             전체 보기
                         </AllDataViewButton>
                     </Link>
@@ -306,12 +319,11 @@ const AsideMenu = ({ asideData, searchContents, searchTitle }) => {
     );
 };
 
-function mapDispatchToProps(dispatch) {
-    return {
-        searchContents : search => dispatch(createAction.searchContents(search)),
-        searchTitle : search => dispatch(createAction.searchTitle(search))
-    }
-} ;
-
-
-export default connect(null, mapDispatchToProps)(AsideMenu) ;
+export default connect(
+    null, 
+    dispatch => (
+        {
+            searchContents : search => dispatch(createAction.searchContents(search)),
+            searchTitle : search => dispatch(createAction.searchTitle(search))
+        }
+    ))(memo(AsideMenu)) ;

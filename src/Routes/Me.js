@@ -261,7 +261,7 @@ const Me = ({ contentType, cookies }) => {
             setDateData([]) ;
         }
 
-    }, []) ;
+    }, [ cookies ]) ;
 
     useEffect(() => {
 

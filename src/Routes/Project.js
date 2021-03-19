@@ -52,14 +52,11 @@ const Project = ({ projectsData }) => {
     );
 };
 
-function mapStateToProps(state) {
-    const { 
+export default connect(
+    ({ 
         project : { projectsData }
-    } = state ;
-  
-    return {
+    }) => ({
         projectsData
-    } ;
-  } ;
-
-export default connect(mapStateToProps, null)(Project) ;
+    }), 
+    null
+)(Project) ;

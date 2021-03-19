@@ -80,18 +80,14 @@ const Blog = ({ contentsData, select }) => {
     );
 };
 
-function mapStateToProps(state) {
-    const { 
+export default  connect(
+    ({ 
         content : {
              contentsData, select
         } 
-    } = state ;
-
-    return {
+    }) => ({
         contentsData,
         select
-    } ;
-} ;
-
-
-export default  connect(mapStateToProps, null)(Blog);
+    }), 
+    null
+)(Blog);

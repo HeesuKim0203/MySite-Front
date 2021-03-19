@@ -42,10 +42,19 @@ const Container = styled.div`
     align-items : center ;
 `;
 
-const ButtonContainer = ({ location : { pathname },  buttonsData, updateSelect, select, updatePageSelect, pageButtonsData, pageSelect }) => {
+const ButtonContainer = ({ 
+    location : { 
+        pathname 
+    },  
+    buttonsData, 
+    updateSelect, 
+    select, 
+    updatePageSelect, 
+    pageButtonsData, 
+    pageSelect 
+}) => {
 
     const [ documentState, setDocumentState ] = useState(false) ;
-
 
     useEffect(() => {
         
@@ -87,26 +96,23 @@ const ButtonContainer = ({ location : { pathname },  buttonsData, updateSelect, 
     );
 };
 
-function mapStateToProps(state) {
-
-    const { 
-        content : {
-            buttonsData, select, pageButtonsData, pageSelect
+export default withRouter(connect(
+    ({ 
+        content : { 
+            buttonsData, 
+            select, 
+            pageButtonsData, 
+            pageSelect 
         } 
-    } = state ;
-    return {
+    }) => ({
         buttonsData,
         select,
         pageButtonsData, 
         pageSelect
-    } ;
-} ;
-
-function mapDispatchToProps(dispatch) {
-    return {
-        updateSelect : select => dispatch(createAction.updateSelect(select)),
-        updatePageSelect : select => dispatch(createAction.updatePageSelect(select))
-    }
-} ;
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ButtonContainer)) ;
+    }), 
+    dispatch => (
+        {
+            updateSelect : select => dispatch(createAction.updateSelect(select)),
+            updatePageSelect : select => dispatch(createAction.updatePageSelect(select))
+        }
+    ))(ButtonContainer)) ;

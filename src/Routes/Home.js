@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react' ;
+import React, { useEffect, useRef, useState } from 'react' ;
 import styled, { css } from 'styled-components' ;
 import { withCookies } from 'react-cookie' ;
 import Helmet from 'react-helmet' ;
@@ -8,6 +8,8 @@ import UseLanguage from '../Components/Home/UseLanguage' ;
 import Slide from '../Components/Slide' ;
 
 import { size } from '../Util/theme' ;
+import AOS from 'aos' ;
+import "aos/dist/aos.css" ;
 
 const Container = styled.div`
     width : 90% ;
@@ -209,6 +211,7 @@ const Button = styled.div`
 const Home = () => {
 
     const { mobileS } = size ;
+    let aosObj = useRef(AOS.init()) ;
 
     const [ showFixMenu, setShowFixMenu ] = useState(false) ;
 
@@ -230,18 +233,19 @@ const Home = () => {
         const { innerWidth } = window ;
 
         viewContentNumCheck(innerWidth) ;
-    
+        
         window.addEventListener('resize', onResize, false) ;
-    
+        
         return () => {
           window.removeEventListener('resize', onResize, false) ;
+          aosObj = null ;
         }
       }, []) ;
 
-      function moveScroll(x) {
+      function moveScroll(y) {
         window.scroll({
             behavior : 'smooth',
-            top : x
+            top : y
         }) ;
       }
 
@@ -277,23 +281,47 @@ const Home = () => {
                     </LanguageDataContainer>
                 </ContentContainer>
                 <ContentContainer>
-                    <ProjectTextContainer>
+                    <ProjectTextContainer
+                        data-aos="fade-up" 
+                        data-aos-offset="100" 
+                        data-aos-easing="ease-in-out" 
+                        data-aos-duration="600"
+                        data-aos-once="true"
+                    >
                         <Title>Project</Title>
                         <Text>제가 현재까지 진행한 개인 프로젝트 입니다.</Text>
                         <Text>마우스를 올리면 설명이 나옵니다.</Text>
                         <Text>클릭 시 Git으로 이동합니다.</Text>
                     </ProjectTextContainer>
-                    <ProjectDataContainer>
+                    <ProjectDataContainer
+                        data-aos="fade-up" 
+                        data-aos-offset="120" 
+                        data-aos-easing="ease-in-out" 
+                        data-aos-duration="600"
+                        data-aos-once="true"
+                    >
                         <Project />
                     </ProjectDataContainer>
                 </ContentContainer>
                 <SlideContainer>
-                    <SlideTextContainer>
+                    <SlideTextContainer
+                        data-aos="fade-up" 
+                        data-aos-offset="80" 
+                        data-aos-easing="ease-in-out" 
+                        data-aos-duration="600"
+                        data-aos-once="true"
+                    >
                             <Title>Blog</Title>
                             <Text>저의 게시물 입니다.</Text>
                             <Text>정보 공유와 저의 성장을 기록하기 위해서 만들었습니다.</Text>
                     </SlideTextContainer>
-                    <SlideDataContainer>
+                    <SlideDataContainer
+                        data-aos="fade-up" 
+                        data-aos-offset="100" 
+                        data-aos-easing="ease-in-out" 
+                        data-aos-duration="600"
+                        data-aos-once="true"
+                    >
                         <Slide />
                     </SlideDataContainer>
                 </SlideContainer>

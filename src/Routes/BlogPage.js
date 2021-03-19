@@ -52,7 +52,7 @@ const BlogPage = ({ pageContents, pageSelect, text, id, pageContentsPotition, up
 
     useEffect(() => {
         updatePageSelect(pageContentsPotition) ;
-    }, []) ;
+    }, [ updatePageSelect, pageContentsPotition ]) ;
 
     return (
         <>
@@ -89,46 +89,37 @@ const BlogPage = ({ pageContents, pageSelect, text, id, pageContentsPotition, up
     );
 };
 
-function mapStateToProps(state, stateAll) {
-
-    const { 
+export default withRouter(connect(
+    ({ 
         content : {
             pageContents, pageSelect, defaultData, pageButtonsData
         }
-    } = state ;
-
-    const {
+    },
+    {
         location : {
             pathname
         }
-    } = stateAll ;
+    }) => {
+        const findId = pathname.replace(`${DOCUMENT}/`, "") ;
 
-    const findId = pathname.replace(`${DOCUMENT}/`, "") ;
+        const id = defaultData.findIndex(content => content.id === Number(findId)) ;
+        const content = defaultData[id] ;
 
-    const id = defaultData.findIndex(content => content.id === Number(findId)) ;
-    const content = defaultData[id] ;
+        let position ;
 
-    let position ;
-
-    pageButtonsData.forEach(buttons => {
-        if(buttons * blogPageContentNum <= id && id <= (buttons + 1) * blogPageContentNum)
-            position = buttons ;
-    }) ;
-
-    return {
-        pageContents,
-        pageSelect,
-        text : content ? content.text : "",
-        id : content ? content.id : -1,
-        pageContentsPotition : position 
-    } ;
-} ;
-
-function mapDispatchToProps(dispatch) {
-    return {
-        updatePageSelect : select => dispatch(createAction.updatePageSelect(select))
-    }
-} ;
-
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(BlogPage)) ;
+        pageButtonsData.forEach(buttons => {
+            if(buttons * blogPageContentNum <= id && id <= (buttons + 1) * blogPageContentNum)
+                position = buttons ;
+        }) ;
+        return {
+            pageContents,
+            pageSelect,
+            text : content ? content.text : "",
+            id : content ? content.id : -1,
+            pageContentsPotition : position 
+        } ;
+    }, 
+    dispatch => ({
+        updatePageSelect : (select = 0) => dispatch(createAction.updatePageSelect(select))
+    })
+)(BlogPage)) ;

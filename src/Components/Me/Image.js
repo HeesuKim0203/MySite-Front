@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react' ;
 import styled from 'styled-components' ;
 import { axiosApi } from '../../Util/api';
 
-import { useInputImg } from '../../Util/fucntion' ;
-
 const Container = styled.div`
     
     width : 600px ;
@@ -110,6 +108,26 @@ const Msg = styled.div`
     
 `;
 
+const useInputImg = (initialValue) => {
+    const [ file, setFile ] = useState(initialValue) ;
+    const [ url, setUrl ] = useState('') ;
+
+    const onChange = e => {
+        let reader = new FileReader() ;
+        const {
+            target : {
+                files : [ fileData ]
+            }
+        } = e ;
+        reader.onloadend = () => {
+            setFile(fileData) ;
+            setUrl(reader.result) ;
+        }
+        reader.readAsDataURL(fileData) ;
+    }
+    return { file, url, onChange } ;
+} ;
+
 const Image = () => {
 
     const [ imageList, setImageList ] = useState([]) ;
@@ -117,7 +135,6 @@ const Image = () => {
 
     const { 
         file : img, 
-        url : imgUrl, 
         onChange : imgOnChange 
     } = useInputImg('') ; 
 
