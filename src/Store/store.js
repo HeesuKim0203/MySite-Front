@@ -1,5 +1,4 @@
-import { createStore, applyMiddleware, combineReducers } from 'redux' ;
-import logger from 'redux-logger' ;
+import { createStore, combineReducers } from 'redux' ;
 
 import { 
     blogContentNum,
@@ -226,7 +225,7 @@ const reducer = combineReducers({
     project : projectReducer
 }) ;
 
-const store = createStore(reducer, applyMiddleware(logger)) ;
+const store = createStore(reducer) ;
 
 // applyMiddleware(logger)
 

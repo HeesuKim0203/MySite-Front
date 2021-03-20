@@ -38,7 +38,7 @@ const Title = styled.h5`
 `;
 
 const Container = styled.div`
-    width : 78% ;
+    width : 70% ;
     overflow : hidden ;
 
     box-shadow: 0 5px 10px rgba(0,0,0,0.19), 0 3px 3px rgba(0,0,0,0.23);

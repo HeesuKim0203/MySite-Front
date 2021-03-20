@@ -193,7 +193,7 @@ const DateButton = styled.button`
     }
 `;
 
-const Me = ({ contentType, cookies }) => {
+const Me = ({ contentType, cookies : { cookies : { token } } }) => {
 
     const [ imgDisplay, setImgDisplay ] = useState(false) ;
     const [ updateContentDisplay, setUpdateContentDisplay ] = useState(false) ;
@@ -224,44 +224,40 @@ const Me = ({ contentType, cookies }) => {
         return date_array.join('-')
     }
 
+    async function checkUser(token) {
+
+        const { 
+            data : {
+                status
+            }
+        } = await axiosApi.check(token) ;
+
+        if(status === 'success') {
+            return 
+        }else {
+            window.location('/') ;
+        }
+    }
+    async function geVisitorNumData() {
+        const { 
+            data : {
+                 result 
+                } 
+        } = await axiosApi.visitorNum() ;
+        
+        setDateData(result.map((date) => ({ date : date.created_at.substring(0, 10) }))) ;
+    }
+
     useEffect(()=> {
 
-        const token = cookies.get('token') ;
-
-        async function checkUser(token) {
-
-            const { 
-                data : {
-                    status
-                }
-            } = await axiosApi.check(token) ;
-
-            if(status === 'success') {
-                return 
-            }else {
-                window.location('/') ;
-            }
-        }
-
         checkUser(token) ;
-
-        async function geVisitorNumData() {
-            const { 
-                data : {
-                     result 
-                    } 
-            } = await axiosApi.visitorNum() ;
-            
-            setDateData(result.map((date) => ({ date : date.created_at.substring(0, 10) }))) ;
-        }
-
         geVisitorNumData()
 
         return () => {
             setDateData([]) ;
         }
 
-    }, [ cookies ]) ;
+    }, [ token ]) ;
 
     useEffect(() => {
 

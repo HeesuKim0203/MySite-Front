@@ -73,7 +73,7 @@ const BlogPageContent = ({ content, location : { pathname } }) => {
 
     return (
         <Link to={`${DOCUMENT}/${id}`}>
-            <Container select={select ? '#f1f8e9' : ''}>
+            <Container select={select ? '#f1f8e9' : '#fff'}>
                 <Title>{title}</Title>
                 <Date>{updated_at}</Date>
             </Container>

@@ -216,9 +216,9 @@ const NullContainer = styled.div`
     height : 70px ;
 `;
 
-const Header = (props) => {
+const Header = ({ location, cookies : { cookies : { token } } }) => {
 
-    const { location : { pathname } } = props ;
+    const { pathname } = location ;
 
     const [ data, setData ] = useState([
         {
@@ -235,8 +235,28 @@ const Header = (props) => {
         },
     ]) ;
 
+    async function checkUser(token) {
+
+        const { 
+            data : {
+                status
+            }
+        } = await axiosApi.check(token) ;
+
+        if(status === 'success') {
+            if(token && data.length === 3) {
+                setData([
+                    ...data,
+                    {
+                        path : MY,
+                        text : 'MY'
+                    }    
+                ]) ;
+            }
+        }
+    }
+
     useEffect(() => {
-        const token = props.cookies.get('token') ;
 
         if(!token && data.length !== 3) {
             setData([ ...data.slice(0, data.length - 1) ]) ;
@@ -244,28 +264,7 @@ const Header = (props) => {
             checkUser(token) ;
         }
 
-        async function checkUser(token) {
-
-            const { 
-                data : {
-                    status
-                }
-            } = await axiosApi.check(token) ;
-
-            if(status === 'success') {
-                if(token && data.length === 3) {
-                    setData([
-                        ...data,
-                        {
-                            path : MY,
-                            text : 'MY'
-                        }    
-                    ]) ;
-                }
-            }
-        }
-
-    }, [ props ]) ;
+    }, [ token, setData, data ]) ;
     
     const checkPathName = pathname.includes(WRITE) ? false : true ;
 

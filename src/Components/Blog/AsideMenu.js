@@ -1,4 +1,4 @@
-import React, { useEffect, useState, memo } from 'react' ;
+import React, { useState, memo, useEffect } from 'react' ;
 import { connect } from 'react-redux';
 import styled from 'styled-components' ;
 
@@ -10,33 +10,36 @@ import { faSearch, faAlignJustify } from '@fortawesome/free-solid-svg-icons' ;
 import { Link } from 'react-router-dom';
 import { DOCUMENT } from '../../Util/routes';
 
-import { size } from '../../Util/theme' ;
-
 const Container = styled.div`
     width : 100% ;
 
-    display : ${props => props.display} ;
+    display : block ;
 
     font-family: 'Ubuntu', sans-serif ;
 
     padding : 15px 5px ;
 
-    @media ${props => props.theme.mobileS} {
+    @media ${props => props.theme.tabletS} {
+
+        display : ${props => props.display} ;
+
         position : fixed ;
         width : 30% ;
         top : 40px ;
         left : 0 ;
 
-        z-index : 99 ;
+        z-index : 800 ;
+
+        background-color : #111 ;
+
+        opacity : 0.9 ;
+    }
+    @media ${props => props.theme.mobileS} {
 
         padding : 3px 0 3px 5px ;
 
         border-top-right-radius : 20px ;
         border-bottom-right-radius : 20px ;
-
-        background-color : #111 ;
-
-        opacity : 0.9 ;
     }
 `;
 
@@ -108,16 +111,33 @@ const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
 
 const StyledFontAwesomeIconMenu = styled(FontAwesomeIcon)`
 
-    display : ${props => props.display} ;
+    display : none ;
     position : fixed ;
 
     font-size : 18px ;
-    
-    z-index : 100;
-    top : 11px ;
-    left : 11px ;
 
-    color : #fff ;
+    z-index : 100;
+
+    color : #fff ; 
+
+    user-select : none ;
+
+    @media ${props => props.theme.tabletS} {
+
+        display : block ;
+
+        font-size : 24px ;
+
+        top : 18px ;
+        left : 16px ;
+    }
+    @media ${props => props.theme.mobileS} {
+
+        font-size : 16px ;
+
+        top : 13px ;
+        left : 12px ;
+    }
 `;
 
 const FontAwesomeIconContainer = styled.div`
@@ -136,8 +156,8 @@ const FontAwesomeIconContainer = styled.div`
     }
 
     @media ${props => props.theme.mobileS} {
-        top : 0px ;
-        right : 0px ;
+        top : 0 ;
+        right : 10px ;
     }
 `;
 
@@ -151,10 +171,6 @@ const Form = styled.form`
 
     font-family: 'Ubuntu', sans-serif ;
 
-    @media ${props => props.theme.mobileS} {
-        width : 80px ;
-        height : 20px ;
-    }
 `;
 
 const SearhInput = styled.input`
@@ -179,8 +195,8 @@ const SearhInput = styled.input`
         color : #888 ;
     }
     @media ${props => props.theme.mobileS} {
-        font-size : 8px ;
-        height : 18px ;
+        font-size : 11px ;
+        height : 20px ;
         padding-left : 0px ;
         color : #fff ;
 
@@ -192,63 +208,27 @@ const SearhInput = styled.input`
 
 const AsideMenu = ({ asideData, searchContents, searchTitle }) => {
 
-    const { mobileS } = size ;
-
     const [ search, setSearch ] = useState('') ;
 
-    const [ show, setShow ] = useState(window.innerWidth <= mobileS ? true : false) ;
-    const [ menu, setMenu ] = useState(window.innerWidth <= mobileS ? false : true) ;
-
-    const viewContentNumCheck = innerWidth => {
-        if( innerWidth <= mobileS ) {
-            setShow(true) ;
-            setMenu(false) ;
-        }else if( innerWidth > mobileS ) {
-            setShow(false) ;
-            setMenu(true) ;
-        }
-    }
-
-    const onResize = (e) => {
-        const { currentTarget : { innerWidth } } = e ;
-
-        viewContentNumCheck(innerWidth) ;
-    }
-
-    useEffect(() => {
-
-        const { innerWidth } = window ;
-
-        viewContentNumCheck(innerWidth) ;
-
-        window.addEventListener('resize', onResize, false) ;
-    
-        return () => {
-          window.removeEventListener('resize', onResize, false) ;
-        }
-      }, []) ;
-
-      useEffect(() => {
-
-        const { innerWidth } = window ;
-
-        if(innerWidth <= mobileS && menu)
-            window.onclick = (e) => {
-                e.stopImmediatePropagation() 
-                setMenu(false) ;
-            } ;
-        else
-            window.onclick = null ;
-
-        return () => {
-            window.onclick = null ;
-        }
-
-    }, [ menu, mobileS ])
+    const [ menu, setMenu ] = useState(false) ;
 
     function eventMiddleWare(e) {
         e.nativeEvent.stopImmediatePropagation() ;
     }
+
+    function onClickMenuUnDisplay() {
+        setMenu(false) ;
+    }
+    
+    useEffect(() => {
+        window.addEventListener('click', onClickMenuUnDisplay, false) ;
+
+        return () => {
+            window.removeEventListener('click', onClickMenuUnDisplay, false) ;
+        }
+
+    }, []) ;
+
  
     function onClickMenuContent(e) {
         eventMiddleWare(e) ;
@@ -263,6 +243,7 @@ const AsideMenu = ({ asideData, searchContents, searchTitle }) => {
 
     function onSearchTitle(e) {
         eventMiddleWare(e) ;
+        e.preventDefault() ;
         searchTitle(search) ;
         setSearch('') ;
     }
@@ -277,11 +258,15 @@ const AsideMenu = ({ asideData, searchContents, searchTitle }) => {
         setMenu(!menu) ;
     }
 
+    function onKeyPress(e) {
+        if (e.keyCode === 13)
+            setSearch(e.target.value) ;
+    }
+
     return (
         <>
             <StyledFontAwesomeIconMenu 
                 icon={faAlignJustify} 
-                display={show ? 'block' : 'none'} 
                 onClick={onClickMenu}
             />
                 <Container display={menu ? 'block' : 'none'}>
@@ -291,6 +276,7 @@ const AsideMenu = ({ asideData, searchContents, searchTitle }) => {
                                 <StyledFontAwesomeIcon icon={faSearch} onClick={onSearchTitle} />
                             </FontAwesomeIconContainer>
                             <SearhInput 
+                                onKeyPress={onKeyPress}
                                 onClick={(e) => e.nativeEvent.stopImmediatePropagation()} 
                                 onChange={onChangeSearchValue} value={search} 
                                 placeholder="게시물 검색.." 

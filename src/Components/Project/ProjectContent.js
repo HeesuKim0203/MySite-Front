@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from 'react' ;
+import React from 'react' ;
 import styled from 'styled-components' ;
-
-import { size } from '../../Util/theme' ;
 
 const Container = styled.div`
 
@@ -40,10 +38,45 @@ const Container = styled.div`
     }
 `;
 
+const DescriptionContainer  = styled.div`
+    width : inherit ;
+    height : inherit ;
+    
+    display : flex ;
+    color : #fff ;
+
+    background-color : rgba(0, 0, 0, 0.85) ;
+
+    font-size : 13px ;
+
+    padding : 20px 10px ;
+
+    align-items : center ;
+
+    opacity : 0 ;
+
+    @media ${props => props.theme.mobileS} {
+        height : 80px ;
+        opacity : 1 ;
+
+        padding : 5px 3px ;
+        font-size : 11px ;
+        color : #111 ;
+        
+        background-color : #fff ;
+
+        position : absolute ;
+
+        z-index : 100 ;
+        top : 140px ;
+    }
+`;
+
 const Img = styled.div`
     width : 100% ;
     height : 270px ;
 
+    position : relative ;
     float : left ;
 
     background-image : url(${props => props.src}) ;
@@ -52,14 +85,28 @@ const Img = styled.div`
     background-repeat : no-repeat ;
     background-position : 0 0 ;
 
+    &:hover { 
+        ${DescriptionContainer} {
+            opacity : 0.9 ;
+        }
+    }
+
     @media ${props => props.theme.laptop} {
         height : 260px ;
+    }
+    @media ${props => props.theme.tabletS} {
+        &:hover {
+            ${DescriptionContainer} {
+                opacity : 1 ;
+            }
+        }
     }
     @media ${props => props.theme.mobileL} {
         height : 180px ;
     }
     @media ${props => props.theme.mobileS} {
-        height : 140px ;
+        height : 120px ;
+        margin-bottom : 120px ;
     }
 `;
 
@@ -69,6 +116,8 @@ const TextContainer = styled.div`
 
     float : left ;
     overflow : hidden ;
+
+    margin-bottom : 20px ;
 `;
 
 const TitleContainer = styled.div`
@@ -127,116 +176,44 @@ const Description = styled.p`
 
     line-height : 18px ;
 
+    @media ${props => props.theme.tabletS} {
+        padding : 5px 10px ;
+        line-height : 15px ;
+    }
+
     @media ${props => props.theme.mobileS} {
         padding : 5px 10px ;
         line-height : 15px ;
     }
 `;
 
-const DescriptionContainer  = styled.div`
-    width : inherit ;
-    height : inherit ;
-    
-    display : ${props => props.display} ;
-    color : #fff ;
-
-    background-color : rgba(0, 0, 0, 0.85) ;
-
-    font-size : 13px ;
-
-    padding : 20px 10px ;
-
-    align-items : center ;
-
-    @media ${props => props.theme.mobileS} {
-        padding : 5px 3px ;
-        font-size : 11px ;
-        color : #111 ;
-        
-        background-color : #fff ;
-    }
-`;
-
 const ProjectContent = ({ content }) => {
     
-    const { mobileS } = size ;
     const { image, period, title, url, description } = content ;
 
-    const [ display, setDisplay ] = useState(false) ;
-    const [ showDescription, setShowDescription ] = useState(false) ;
-
-    const viewContentNumCheck = innerWidth => {
-        if(innerWidth <= mobileS) {
-            setShowDescription(true) ;       
-        }else if( innerWidth > mobileS ) {
-            setShowDescription(false) ;
-        }
-      }
-    
-      const onResize = (e) => {
-        const { currentTarget : { innerWidth } } = e ;
-    
-        viewContentNumCheck(innerWidth) ;
-      }
-    
-      useEffect(() => {
-    
-        const { innerWidth } = window ;
-    
-        viewContentNumCheck(innerWidth) ;
-    
-        window.addEventListener('resize', onResize, false) ;
-    
-        return () => {
-          window.removeEventListener('resize', onResize, false) ;
-        }
-      }, [])
-
     function onClickContent() {
-        window.location.href = url ;
-    }
-
-    function imgMouseOver(e) {
-
-        return display ? null :  setDisplay(true) ;
-    }
-
-    function descriptionContainerMouseLeave(e) {
-
-        return display ? setDisplay(false) : null ;
+        window.open(url, '_blank') ;
     }
 
     return (
         <Container onClick={onClickContent}>
-            <Img 
-                src={image} 
-                onMouseOver={ showDescription ? null : imgMouseOver} 
-            >
-                {showDescription ? null : (<DescriptionContainer
-                    display={display || showDescription ? 'flex' : 'none' } 
-                    onMouseLeave={ showDescription ? null :descriptionContainerMouseLeave}
-                >
-                    <Description>
-                        { description }
-                    </Description>
-                </DescriptionContainer>)}
-            </Img>
             <TextContainer>
-                <TitleContainer>
-                    <Title draggable="false">{title}</Title>
-                </TitleContainer>
                 <DateContainer>
                     <Date draggable="false">{period}</Date>
                 </DateContainer>
+                <TitleContainer>
+                    <Title draggable="false">{title}</Title>
+                </TitleContainer>
             </TextContainer>
-            {showDescription ? (<DescriptionContainer
-                    display={display || showDescription ? 'flex' : 'none' } 
-                    onMouseLeave={ showDescription ? null :descriptionContainerMouseLeave}
-                >
+            <Img 
+                src={image} 
+            >
+             <DescriptionContainer>
                     <Description>
                         { description }
                     </Description>
-                </DescriptionContainer>) : null}
+                </DescriptionContainer>
+            </Img>
         </Container>
     );
 };

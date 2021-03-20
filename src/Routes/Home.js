@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react' ;
+import React, { useEffect, useState, memo } from 'react' ;
 import styled, { css } from 'styled-components' ;
 import { withCookies } from 'react-cookie' ;
 import Helmet from 'react-helmet' ;
@@ -176,7 +176,7 @@ const Text = styled.p`
 `;
 
 const FixMenu = styled.div`
-    display : ${props => props.display} ;
+    display : none ;
     position : fixed ;
 
     bottom : 300px ;
@@ -192,6 +192,10 @@ const FixMenu = styled.div`
     flex-direction : column ;
     justify-content : center ;
     align-items : center ;
+
+    @media ${props => props.theme.mobileS} {
+        display : block ;
+    }
 `;
 
 const Button = styled.div`
@@ -210,36 +214,8 @@ const Button = styled.div`
 
 const Home = () => {
 
-    const { mobileS } = size ;
-    let aosObj = useRef(AOS.init()) ;
-
-    const [ showFixMenu, setShowFixMenu ] = useState(false) ;
-
-    const viewContentNumCheck = innerWidth => {
-        if( innerWidth <= mobileS ) {
-            setShowFixMenu(true) ;
-        }else if( innerWidth > mobileS ) {
-            setShowFixMenu(false) ;
-        }
-      }
-
-    const onResize = (e) => {
-        const { currentTarget : { innerWidth } } = e ;
-
-        viewContentNumCheck(innerWidth) ;
-    }
-
     useEffect(() => {
-        const { innerWidth } = window ;
-
-        viewContentNumCheck(innerWidth) ;
-        
-        window.addEventListener('resize', onResize, false) ;
-        
-        return () => {
-          window.removeEventListener('resize', onResize, false) ;
-          aosObj = null ;
-        }
+        AOS.init() ;
       }, []) ;
 
       function moveScroll(y) {
@@ -264,7 +240,7 @@ const Home = () => {
             <Helmet>
                 <title>Code beginner | Home</title>
             </Helmet>
-            <FixMenu display={ showFixMenu ? 'flex' : 'none' }>
+            <FixMenu>
                 <Button onClick={onClickScroll1} />
                 <Button onClick={onClickScroll2} />
                 <Button onClick={onClickScroll3} />
@@ -306,7 +282,7 @@ const Home = () => {
                 <SlideContainer>
                     <SlideTextContainer
                         data-aos="fade-up" 
-                        data-aos-offset="80" 
+                        data-aos-offset="70" 
                         data-aos-easing="ease-in-out" 
                         data-aos-duration="600"
                         data-aos-once="true"
@@ -317,7 +293,7 @@ const Home = () => {
                     </SlideTextContainer>
                     <SlideDataContainer
                         data-aos="fade-up" 
-                        data-aos-offset="100" 
+                        data-aos-offset="110" 
                         data-aos-easing="ease-in-out" 
                         data-aos-duration="600"
                         data-aos-once="true"
@@ -330,4 +306,4 @@ const Home = () => {
     );
 };
 
-export default withCookies(Home) ;
+export default withCookies(memo(Home)) ;

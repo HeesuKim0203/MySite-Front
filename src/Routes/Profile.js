@@ -7,7 +7,6 @@ import { faFacebookF, faGithub, faInstagram } from '@fortawesome/free-brands-svg
 import { axiosApi } from '../Util/api' ;
 import { withCookies } from 'react-cookie';
 
-import { size } from '../Util/theme' ;
 import Helmet from 'react-helmet' ;
 
 const Container = styled.div`
@@ -179,9 +178,14 @@ const LoginContainer = styled.div`
 
     margin-top : 100px ;
 
-    display : ${props => props.display} ;
+    display : flex ;
     justify-content : center ;
     align-items : center ;
+
+
+    @media ${props => props.theme.tabletS} {
+        display : none ;
+    }
 `;
 
 const Form = styled.form`
@@ -222,65 +226,34 @@ const LoginButton = styled.button`
     text-align : center ; 
 `;
 
-const Profile = (props) => {
+const Profile = ({ cookies, cookies : { cookies : { token } } }) => {
 
     const [ email, setEmail ] = useState('') ;
     const [ pw, setPw ] = useState('') ;
     const [ login, setLogin ] = useState(false) ;
 
-    const [ showLogin, setShowLogin ] = useState(true) ;
+    async function checkUser(token) {
 
-    const { mobileS } = size ;
+        const { 
+            data : {
+                status
+            }
+        } = await axiosApi.check(token) ;
 
-    let viewContentNumCheck = innerWidth => {
-        if( innerWidth <= mobileS ) {
-            setShowLogin(false) ;
-        }else if( innerWidth > mobileS ) {
-            setShowLogin(true) ;
+        if(status === 'success') {
+            if(!token) {
+                setLogin(false) ;
+            }else {
+                setLogin(true) ;
+            }
         }
-      }
-
-      let onResize = (e) => {
-        const { currentTarget : { innerWidth } } = e ;
-
-        viewContentNumCheck(innerWidth) ;
     }
 
     useEffect(() => {
-        const { innerWidth } = window ;
-
-        viewContentNumCheck(innerWidth) ;
-    
-        window.addEventListener('resize', onResize, false) ;
-    
-        return () => {
-            window.removeEventListener('resize', onResize, false) ;
-        }
-    }, [])
-
-    useEffect(() => {
-        const token = props.cookies.get('token') ;
-
-        async function checkUser(token) {
-
-            const { 
-                data : {
-                    status
-                }
-            } = await axiosApi.check(token) ;
-
-            if(status === 'success') {
-                if(!token) {
-                    setLogin(false) ;
-                }else {
-                    setLogin(true) ;
-                }
-            }
-        }
 
         if(token) checkUser(token) ;
 
-    }, [ login, setLogin, props ]) ;
+    }, [ login, setLogin, token, cookies ]) ;
 
     function onChange(e) {
         switch(e.target.name) {
@@ -308,7 +281,7 @@ const Profile = (props) => {
             } = await axiosApi.login(userData) ;
 
             if(Authorization) {
-                props.cookies.set('token', Authorization) 
+                cookies.set('token', Authorization) 
                 setLogin(true) ;
             }
 
@@ -322,7 +295,7 @@ const Profile = (props) => {
     async function onLogout(e) {
         e.preventDefault() ;
 
-        const token = props.cookies.get('token') ;
+        const token = cookies.get('token') ;
 
         const logoutData = new FormData() ;
 
@@ -334,7 +307,7 @@ const Profile = (props) => {
             } = await axiosApi.logout(logoutData, token) ;
 
             if(status === "success") {
-                props.cookies.remove('token') ;
+                cookies.remove('token') ;
                 setLogin(false) ;
                 setEmail('') ;
                 setPw('') ;
@@ -394,7 +367,7 @@ const Profile = (props) => {
                         </Footer>
                     </MainContainer>
                 </MyContainer>
-                <LoginContainer display={showLogin ? 'flex' : 'none'}>
+                <LoginContainer>
                     <Form onSubmit={ login ? onLogout : onLogin} action="POST">
                     {login ? null : ( 
                             <>

@@ -1,3 +1,18 @@
-# https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Disallow:
+Disallow: /
+
+# Google Search
+User-agent: Googlebot
+Allow : / 
+Disallow: /api*/
+Disallow: /oauth*/
+Disallow: /userprofile*/
+
+# Naver Search
+User-agent: Yeti
+Allow: /
+Disallow: /api*/
+Disallow: /oauth*/
+Disallow: /userprofile*/
+
+Sitemap: https://www.cineps.net/sitemap.xml
