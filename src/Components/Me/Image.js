@@ -25,18 +25,6 @@ const ImageListContainer = styled.div`
     padding : 15px 10px ;
 
     background-color : #fff ;
-
-    /* &::-webkit-scrollbar {
-        width : 0.4em ;  
-    }
-    &::-webkit-scrollbar,
-    &::-webkit-scrollbar-thumb {
-        overflow : visible ;
-        border-radius : 4px ;
-    }
-    &::-webkit-scrollbar-thumb {
-        background: rgba(0, 0, 0, 0.2) ; 
-    } */
 `;
 
 const InputContainer = styled.div`
@@ -128,7 +116,7 @@ const useInputImg = (initialValue) => {
     return { file, url, onChange } ;
 } ;
 
-const Image = () => {
+const ImageJSX = () =>{
 
     const [ imageList, setImageList ] = useState([]) ;
     const [ selectUrl, setSelectUrl ] = useState('') ;
@@ -155,7 +143,6 @@ const Image = () => {
         }
 
         getImgList() ;
-
 
         return () => {
             setSelectUrl('') ;
@@ -259,4 +246,4 @@ const Image = () => {
     );
 };
 
-export default Image ;
+export default ImageJSX ;

@@ -179,7 +179,7 @@ const StyleFontAwesomeIcon = styled(FontAwesomeIcon)`
 `;
 
 const Content = ({ content }) => {
-    const { id, title, image_url, updated_at, type } = content ;
+    const { id, title, image_url, created_at, type } = content ;
 
     const core = searchCoreData.filter(data => data.text === type)[0] ;
 
@@ -189,7 +189,7 @@ const Content = ({ content }) => {
                 <Img url={image_url} />
                 <TextContainer>
                     <HeadContainer>
-                        <Date draggable="false">{updated_at && updated_at.substring(0, 10)}</Date>
+                        <Date draggable="false">{created_at && created_at.substring(0, 10)}</Date>
                         <Code>
                             <StyleFontAwesomeIcon icon={ core !== undefined ? core.icon : faSquareFull} />
                         </Code>

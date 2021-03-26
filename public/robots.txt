@@ -15,4 +15,4 @@ Disallow: /api*/
 Disallow: /oauth*/
 Disallow: /userprofile*/
 
-Sitemap: https://www.cineps.net/sitemap.xml
+Sitemap: http://heesu.com.s3-website-us-east-1.amazonaws.com/sitemap.xml

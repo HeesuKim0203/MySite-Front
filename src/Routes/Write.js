@@ -278,10 +278,10 @@ const Write = () => {
                     <MDEditor.Markdown source={html || null} />
                 </Main>
                 <FixdMenu>
-                    <Menu onClick={onViewPreview}>개시글 컨텐츠</Menu>
-                    <Menu onClick={onViewHtml}>HTML</Menu>
-                    <Menu onClick={onViewImage}>이미지</Menu>
-                    <Menu onClick={onSubmitImage}>작성</Menu>
+                    <Menu onClick={onViewPreview}>Title and Type</Menu>
+                    <Menu onClick={onViewHtml}>Mark Down</Menu>
+                    <Menu onClick={onViewImage}>Image</Menu>
+                    <Menu onClick={onSubmitImage}>Write</Menu>
                 </FixdMenu>
             </Container>) : (
                 <Redirect to={DOCUMENT} />

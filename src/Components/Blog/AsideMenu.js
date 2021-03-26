@@ -241,6 +241,11 @@ const AsideMenu = ({ asideData, searchContents, searchTitle }) => {
         searchContents(node.innerHTML) ;
     }
 
+    function onClickAll(e) {
+        e.nativeEvent.stopImmediatePropagation() ;
+        searchTitle('') ;
+    }
+
     function onSearchTitle(e) {
         eventMiddleWare(e) ;
         e.preventDefault() ;
@@ -296,7 +301,7 @@ const AsideMenu = ({ asideData, searchContents, searchTitle }) => {
                         })}
                     </BigAsideMenuContainer>
                     <Link to={DOCUMENT}>
-                        <AllDataViewButton onClick={onClickMenuContent}>
+                        <AllDataViewButton onClick={onClickAll}>
                             전체 보기
                         </AllDataViewButton>
                     </Link>

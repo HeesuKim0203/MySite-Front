@@ -1,4 +1,3 @@
-// Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react' ;
 
 import SwiperCore, { Autoplay } from 'swiper'

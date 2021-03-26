@@ -51,8 +51,15 @@ const CommentWrap= styled.div`
 const BlogPage = ({ pageContents, pageSelect, text, id, pageContentsPotition, updatePageSelect }) => {
 
     useEffect(() => {
+
+        window.scroll({
+            behavior : 'smooth',
+            top : 0
+        }) ;
+        
         updatePageSelect(pageContentsPotition) ;
-    }, [ updatePageSelect, pageContentsPotition ]) ;
+
+    }, [ updatePageSelect, pageContentsPotition, id ]) ;
 
     return (
         <>
@@ -120,6 +127,6 @@ export default withRouter(connect(
         } ;
     }, 
     dispatch => ({
-        updatePageSelect : (select = 0) => dispatch(createAction.updatePageSelect(select))
+        updatePageSelect : (select) => dispatch(createAction.updatePageSelect(select))
     })
 )(BlogPage)) ;

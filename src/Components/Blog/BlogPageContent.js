@@ -7,13 +7,14 @@ import {
 } from '../../Util/routes' ;
 
 const Container = styled.div`
+
     padding : 10px 20px ;
 
     display : flex ;
     justify-content : center ;
     align-items : center ;
 
-    background-color : ${props => props.select} ;
+    background-color : ${props => props.backColor} ;
 
     border-bottom : 1px solid #999 ;
 
@@ -68,12 +69,14 @@ const BlogPageContent = ({ content, location : { pathname } }) => {
         }else {
             setSelect(false) ;
         }
-
-    }, [pathname, select, setSelect, id]) ;
+        return () => {
+            setSelect(false) ;
+        }
+    }, [pathname, id]) ;
 
     return (
         <Link to={`${DOCUMENT}/${id}`}>
-            <Container select={select ? '#f1f8e9' : '#fff'}>
+            <Container backColor={select ? '#f1f8e9' : '#fff'}>
                 <Title>{title}</Title>
                 <Date>{updated_at}</Date>
             </Container>
