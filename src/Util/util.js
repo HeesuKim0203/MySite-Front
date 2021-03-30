@@ -1,4 +1,4 @@
-import { faReact, faJsSquare, faHtml5, faCss3Alt, faLaravel, faNode } from '@fortawesome/free-brands-svg-icons' ;
+import { faReact, faJsSquare, faHtml5, faCss3Alt, faLaravel, faNode, faLinux } from '@fortawesome/free-brands-svg-icons' ;
 import { faWalking, faComment, faHiking } from '@fortawesome/free-solid-svg-icons' ;
 
 export const blogContentNum = 9 ;
@@ -12,7 +12,8 @@ export const language = [
     { text : 'HTML' , icon : faHtml5, color : '#e65100 ' },
     { text : 'CSS3' , icon : faCss3Alt, color : '#01579b' },
     { text : 'Laravel', icon : faLaravel, color : '#d32f2f' },
-    { text : 'NodeJs', icon : faNode, color : '#43a047' }
+    { text : 'NodeJs', icon : faNode, color : '#43a047' },
+    { text : 'linux', icon : faLinux, color : '#e65100'  }
 ] ;
 
 export const otherType = [

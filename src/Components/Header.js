@@ -301,7 +301,6 @@ const Header = ({ location, cookies : { cookies : { token } } }) => {
                                       .deleteAll()
                                       .start()
                                   }}
-
                                   options={{
                                       autoStart : true,
                                       loop : true,

@@ -25,6 +25,8 @@ const ImageListContainer = styled.div`
     padding : 15px 10px ;
 
     background-color : #fff ;
+
+    overflow-x : scroll ;
 `;
 
 const InputContainer = styled.div`

@@ -7,7 +7,6 @@ import UseLanguage from '../Components/Home/UseLanguage' ;
 
 import Slide from '../Components/Slide' ;
 
-import { size } from '../Util/theme' ;
 import AOS from 'aos' ;
 import "aos/dist/aos.css" ;
 
