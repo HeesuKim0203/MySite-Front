@@ -1,12 +1,11 @@
-import React, { memo } from 'react' ;
-import styled, { css } from 'styled-components' ;
+import { memo } from 'react' ;
+import styled from 'styled-components' ;
 import { withCookies } from 'react-cookie' ;
 import Helmet from 'react-helmet' ;
 import Project from './Project' ;
 import UseLanguage from '../Components/Home/UseLanguage' ;
 
 import Slide from '../Components/Slide' ;
-import "aos/dist/aos.css" ;
 
 const Container = styled.div`
     width : 90% ;

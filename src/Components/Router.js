@@ -7,15 +7,11 @@ import Header from './Header' ;
 import Home from '../Routes/Home' ;
 import BlogRouter from '../Routes/BlogRouter' ;
 import Profile from '../Routes/Profile' ;
-import Write from '../Routes/Write' ;
-import Me from '../Routes/Me' ;
 
 import { 
     HOME,
     DOCUMENT,
     PROFILE,
-    MY,
-    WRITE
 } from '../Util/routes' ;
 import { withCookies } from 'react-cookie' ;
 
@@ -50,9 +46,7 @@ const Template = () => {
                     <Switch>
                         <Route path={HOME} exact component={Home} />
                         <Route path={DOCUMENT} component={BlogRouter} />
-                        <Route path={MY} component={Me} />
                         <Route path={PROFILE} component={Profile} />
-                        <Route path={WRITE} component={Write} />
                         <Redirect path="*" to={HOME} />
                     </Switch>
                 </TemplateContainer>

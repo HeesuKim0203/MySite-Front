@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react' ;
+import { useEffect, useState } from 'react' ;
 import { Link, withRouter } from 'react-router-dom';
 import styled from 'styled-components' ;
 

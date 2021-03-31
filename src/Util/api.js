@@ -6,8 +6,6 @@ const api = axios.create({
 
 export const axiosApi = {
     getContents : () => api.get('/api/contents'),
-    createContent : data => api.post('/api/contents', data),
-    updateContent : (id, data) => api.post(`api/contents/${id}`, data),
     addImg : (file) => api.post('/api/images', file, { 
         headers : { 'Content-Type' : 'multipart/form-data' }
     }),
