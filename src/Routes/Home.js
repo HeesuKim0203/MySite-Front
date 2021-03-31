@@ -1,4 +1,4 @@
-import React, { useEffect, useState, memo } from 'react' ;
+import React, { memo } from 'react' ;
 import styled, { css } from 'styled-components' ;
 import { withCookies } from 'react-cookie' ;
 import Helmet from 'react-helmet' ;
@@ -6,8 +6,6 @@ import Project from './Project' ;
 import UseLanguage from '../Components/Home/UseLanguage' ;
 
 import Slide from '../Components/Slide' ;
-
-import AOS from 'aos' ;
 import "aos/dist/aos.css" ;
 
 const Container = styled.div`
@@ -76,23 +74,18 @@ const SlideDataContainer = styled.div`
 const SlideTextContainer = styled.div`
     width : 100% ;
     float : left  ;
-`;
 
-const flexLanguageWidth = css`
-    width : 40% ;
-    @media ${props => props.theme.laptop} {
-        height : 220px ;
-        width : 100% ;
-    }
-    @media ${props => props.theme.mobileS} {
-        height : 170px ;
+    margin-bottom : 80px ;
+
+    @media ${props => props.theme.mobileL} {
+        margin-bottom : 40px ;
     }
 `;
 
 const LanguageDataContainer = styled.div`
     float : left ;
-    ${flexLanguageWidth}
-    height : 300px ;
+    width : 40% ;
+    height : 350px ;
 
     margin-left : 10% ;
 
@@ -101,7 +94,11 @@ const LanguageDataContainer = styled.div`
     align-items : center ;
 
     @media ${props => props.theme.laptop} {
+        width : 100% ;
         margin-left : 0 ;
+    }
+    @media ${props => props.theme.mobileS} {
+        height : 260px ;
     }
 `;
 
@@ -113,7 +110,7 @@ const ProjectDataContainer = styled.div`
 const LanguageTextContainer = styled.div`
     float : left ;
 
-    ${flexLanguageWidth}
+    width : 40% ;
     height : 300px ;
     margin-left : 5% ;
 
@@ -126,7 +123,11 @@ const LanguageTextContainer = styled.div`
     align-items : center ;
 
     @media ${props => props.theme.laptop} {
+        width : 100% ;
         margin-left : 0 ;
+    }
+    @media ${props => props.theme.mobileS} {
+        height : 220px ;
     }
 `;
 
@@ -213,10 +214,6 @@ const Button = styled.div`
 
 const Home = () => {
 
-    useEffect(() => {
-        AOS.init() ;
-      }, []) ;
-
       function moveScroll(y) {
         window.scroll({
             behavior : 'smooth',
@@ -225,19 +222,19 @@ const Home = () => {
       }
 
       function onClickScroll1(e) {
-        moveScroll(0) ;
+        moveScroll(260) ;
       }
       function onClickScroll2(e) {
-        moveScroll(670) ;
+        moveScroll(810) ;
       }
       function onClickScroll3(e) {
-        moveScroll(1300) ;
+        moveScroll(2800) ;
       }
 
     return (
         <>
             <Helmet>
-                <title>Code beginner | Home</title>
+                <title>Home  | Beginner</title>
             </Helmet>
             <FixMenu>
                 <Button onClick={onClickScroll1} />
@@ -256,50 +253,26 @@ const Home = () => {
                     </LanguageDataContainer>
                 </ContentContainer>
                 <ContentContainer>
-                    <ProjectTextContainer
-                        data-aos="fade-up" 
-                        data-aos-offset="100" 
-                        data-aos-easing="ease-in-out" 
-                        data-aos-duration="600"
-                        data-aos-once="true"
-                    >
+                    <ProjectTextContainer>
                         <Title>Project</Title>
                         <Text>제가 현재까지 진행한 개인 프로젝트 입니다.</Text>
                         <Text>마우스를 올리면 설명이 나옵니다.</Text>
-                        <Text>클릭 시 Git으로 이동합니다.</Text>
+                        <Text>각 면을 좌클릭 시 상세 설명이 나옵니다.</Text>
                     </ProjectTextContainer>
-                    <ProjectDataContainer
-                        data-aos="fade-up" 
-                        data-aos-offset="120" 
-                        data-aos-easing="ease-in-out" 
-                        data-aos-duration="600"
-                        data-aos-once="true"
-                    >
+                    <ProjectDataContainer>
                         <Project />
                     </ProjectDataContainer>
                 </ContentContainer>
-                <SlideContainer>
-                    <SlideTextContainer
-                        data-aos="fade-up" 
-                        data-aos-offset="70" 
-                        data-aos-easing="ease-in-out" 
-                        data-aos-duration="600"
-                        data-aos-once="true"
-                    >
-                            <Title>Blog</Title>
-                            <Text>저의 게시물 입니다.</Text>
-                            <Text>정보 공유와 저의 성장을 기록하기 위해서 만들었습니다.</Text>
-                    </SlideTextContainer>
-                    <SlideDataContainer
-                        data-aos="fade-up" 
-                        data-aos-offset="110" 
-                        data-aos-easing="ease-in-out" 
-                        data-aos-duration="600"
-                        data-aos-once="true"
-                    >
-                        <Slide />
-                    </SlideDataContainer>
-                </SlideContainer>
+                    <SlideContainer>
+                        <SlideTextContainer>
+                                <Title>Blog</Title>
+                                <Text>저의 게시물 입니다.</Text>
+                                <Text>정보 공유와 저의 성장을 기록하기 위해서 만들었습니다.</Text>
+                        </SlideTextContainer>
+                        <SlideDataContainer>
+                            <Slide />
+                        </SlideDataContainer>
+                    </SlideContainer>
             </Container>
         </>
     );

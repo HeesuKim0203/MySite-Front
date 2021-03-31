@@ -304,7 +304,7 @@ const Me = ({ contentType, cookies : { cookies : { token } } }) => {
     return (
         <>
             <Helmet>
-                <title>Code beginner | Me</title>
+                <title>Me  | Beginner</title>
             </Helmet>
             <Container>
                 <ButtonContainer>

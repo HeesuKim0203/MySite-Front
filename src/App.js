@@ -13,9 +13,9 @@ function App({ setContents, setPageContents, setDefaultData, setProjectContents 
       axiosApi.checkVisitor() ;
       return ;
     }
-    checkVisitor() ;
+
     async function fetchData() {
-        try {
+      try {
             const { 
                 data : { 
                     contents 
@@ -25,22 +25,14 @@ function App({ setContents, setPageContents, setDefaultData, setProjectContents 
             setDefaultData(contents) ;
             setContents() ;
             setPageContents(contents) ;
-
-            const {
-              data : { 
-                  projects
-              }
-          } = await axiosApi.getProjectList() ;
-    
-          setProjectContents(projects) ;
-
         }catch {
             console.log('error') ;
         }finally {
-
+            
         }
     }
     fetchData() ;
+    checkVisitor() ;
   }, [ setDefaultData, setContents, setPageContents, setProjectContents ]) ;
 
   return (
@@ -59,8 +51,6 @@ function mapDispatchToProps(dispatch) {
           dispatch(createAction.setPageContents(contents)),
       setDefaultData : defaultData =>
           dispatch(createAction.setDefaultData(defaultData)),
-      setProjectContents : defaultData =>
-          dispatch(createAction.setProjectContents(defaultData))
   }
 } ;
 

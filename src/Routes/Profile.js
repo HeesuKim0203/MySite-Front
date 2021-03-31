@@ -322,7 +322,7 @@ const Profile = ({ cookies, cookies : { cookies : { token } } }) => {
     return (
         <>
             <Helmet>
-                <title>Code beginner | Profile</title>
+                <title>Profile | Beginner</title>
             </Helmet>
             <Container>
                 <MyContainer>

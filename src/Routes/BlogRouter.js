@@ -56,7 +56,7 @@ const BlogRouter = (props) => {
     return (
         <>
             <Helmet>
-                <title>Code beginner | Blog</title>
+                <title>Blog | Beginner</title>
             </Helmet>
             <Container>
                 <AsideMenuContainer>

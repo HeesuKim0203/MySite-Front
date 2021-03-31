@@ -56,7 +56,7 @@ const DescriptionContainer  = styled.div`
     opacity : 0 ;
 
     @media ${props => props.theme.mobileS} {
-        height : 80px ;
+        height  : 100px ;
         opacity : 1 ;
 
         padding : 5px 3px ;
@@ -67,8 +67,8 @@ const DescriptionContainer  = styled.div`
 
         position : absolute ;
 
-        z-index : 100 ;
-        top : 140px ;
+        z-index : 2 ;
+        top : 240px ;
     }
 `;
 
@@ -81,7 +81,7 @@ const Img = styled.div`
 
     background-image : url(${props => props.src}) ;
 
-    background-size : cover ;
+    background-size : 100% 270px ;
     background-repeat : no-repeat ;
     background-position : 0 0 ;
 
@@ -102,11 +102,10 @@ const Img = styled.div`
         }
     }
     @media ${props => props.theme.mobileL} {
-        height : 180px ;
+        height : 250px ;
     }
     @media ${props => props.theme.mobileS} {
-        height : 120px ;
-        margin-bottom : 120px ;
+        margin-bottom : 80px ;
     }
 `;
 
@@ -127,6 +126,8 @@ const TitleContainer = styled.div`
 
 const Title = styled.h5`
     box-sizing : content-box ;
+
+    height : 23px ;
 
     font-size : 17px ;
 
@@ -206,7 +207,7 @@ const ProjectContent = ({ content }) => {
                 </TitleContainer>
             </TextContainer>
             <Img 
-                src={image} 
+                src={image.split(' ')[0]} 
             >
              <DescriptionContainer>
                     <Description>
