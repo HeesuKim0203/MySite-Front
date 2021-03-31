@@ -1,5 +1,3 @@
-import React, { useEffect, useState } from 'react' ;
-import { withCookies } from 'react-cookie';
 import { Link, withRouter } from 'react-router-dom' ;
 
 import styled, { css } from 'styled-components' ;
@@ -9,14 +7,8 @@ import {
     HOME,
     DOCUMENT,
     PROFILE,
-    MY,
-    WRITE
 } from '../Util/routes' ;
 import MenuContent from './Menu' ;
-
-import {
-    axiosApi
-} from '../Util/api' ;
 
 const HeaderImgBright = css`
     height : 550px ;
@@ -211,16 +203,11 @@ const Button = styled.button`
     }
 `;
 
-const NullContainer = styled.div`
-    width : 100% ;
-    height : 70px ;
-`;
-
-const Header = ({ location, cookies : { cookies : { token } } }) => {
+const Header = ({ location }) => {
 
     const { pathname } = location ;
 
-    const [ data, setData ] = useState([
+    const data= [
         {
             path : HOME,
             text : 'HOME',
@@ -233,41 +220,8 @@ const Header = ({ location, cookies : { cookies : { token } } }) => {
             path : PROFILE,
             text : 'PROFILE',
         },
-    ]) ;
-
-    async function checkUser(token) {
-
-        const { 
-            data : {
-                status
-            }
-        } = await axiosApi.check(token) ;
-
-        if(status === 'success') {
-            if(token && data.length === 3) {
-                setData([
-                    ...data,
-                    {
-                        path : MY,
-                        text : 'MY'
-                    }    
-                ]) ;
-            }
-        }
-    }
-
-    useEffect(() => {
-
-        if(!token && data.length !== 3) {
-            setData([ ...data.slice(0, data.length - 1) ]) ;
-        }else if(token) {
-            checkUser(token) ;
-        }
-
-    }, [ token, setData, data ]) ;
+    ]
     
-    const checkPathName = pathname.includes(WRITE) ? false : true ;
-
     return (
         <Container>
             <style>
@@ -287,7 +241,6 @@ const Header = ({ location, cookies : { cookies : { token } } }) => {
                 })}
             </Menu>
             <ImgContainer>
-                {checkPathName ? (
                     <>
                         <Img imgUrl={require("../assets/header_image.jpg").default}/>
                         <TitContainer>
@@ -315,10 +268,9 @@ const Header = ({ location, cookies : { cookies : { token } } }) => {
                         </TitContainer>
                         <Bright/>
                     </>
-                ) : <NullContainer />}
             </ImgContainer>
         </Container>
     );
 };
 
-export default withCookies(withRouter(Header)) ;
+export default withRouter(Header) ;

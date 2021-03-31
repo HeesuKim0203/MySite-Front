@@ -1,11 +1,7 @@
-import React, { useState, useEffect } from 'react' ;
 import styled from 'styled-components' ;
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome' ;
 import { faFacebookF, faGithub, faInstagram } from '@fortawesome/free-brands-svg-icons' ;
-
-import { axiosApi } from '../Util/api' ;
-import { withCookies } from 'react-cookie';
 
 import Helmet from 'react-helmet' ;
 
@@ -170,154 +166,7 @@ const Content = styled.span`
     }
 `;
 
-const LoginContainer = styled.div`
-    
-    width : 60% ;
-    
-    margin : 0 auto ;
-
-    margin-top : 100px ;
-
-    display : flex ;
-    justify-content : center ;
-    align-items : center ;
-
-
-    @media ${props => props.theme.tabletS} {
-        display : none ;
-    }
-`;
-
-const Form = styled.form`
-    display : flex ;
-
-    flex-direction : column ;
-`;
-
-const Input = styled.input`
-    all : unset ;
-
-    width : 250px ;
-    height : 35px ;
-
-    border : 1px solid #111 ;
-    border-radius : 10px ;
-
-    padding-left : 5px ; 
-    
-`;
-
-const Label = styled.label`
-    padding : 10px 0 10px 5px ;
-`;
-
-const LoginButton = styled.button`
-    all : unset ;
-
-    margin-top : 50px ;
-    margin-left : 50px ;
-
-    width : 150px ;
-    height : 30px ;
-
-    border : 1px solid #111 ;
-    border-radius : 10px ;
-
-    text-align : center ; 
-`;
-
-const Profile = ({ cookies, cookies : { cookies : { token } } }) => {
-
-    const [ email, setEmail ] = useState('') ;
-    const [ pw, setPw ] = useState('') ;
-    const [ login, setLogin ] = useState(false) ;
-
-    async function checkUser(token) {
-
-        const { 
-            data : {
-                status
-            }
-        } = await axiosApi.check(token) ;
-
-        if(status === 'success') {
-            if(!token) {
-                setLogin(false) ;
-            }else {
-                setLogin(true) ;
-            }
-        }
-    }
-
-    useEffect(() => {
-
-        if(token) checkUser(token) ;
-
-    }, [ login, setLogin, token, cookies ]) ;
-
-    function onChange(e) {
-        switch(e.target.name) {
-            case 'email' :
-                return setEmail(e.target.value) ;
-            case 'password' :
-                return setPw(e.target.value) ;
-            default :
-                return console.log('onChange 함수를 변경하세요') ;
-        }
-    }
-
-    async function onLogin(e) {
-        e.preventDefault() ;
-
-        const userData = new FormData() ;
-        userData.append('email', email) ;
-        userData.append('password', pw) ;
-
-        try {
-            const { 
-                data : { 
-                    Authorization 
-                } 
-            } = await axiosApi.login(userData) ;
-
-            if(Authorization) {
-                cookies.set('token', Authorization) 
-                setLogin(true) ;
-            }
-
-        }catch {
-
-        }
-
-        return ;
-    }
-
-    async function onLogout(e) {
-        e.preventDefault() ;
-
-        const token = cookies.get('token') ;
-
-        const logoutData = new FormData() ;
-
-        try {
-            const { 
-                data : { 
-                    status 
-                } 
-            } = await axiosApi.logout(logoutData, token) ;
-
-            if(status === "success") {
-                cookies.remove('token') ;
-                setLogin(false) ;
-                setEmail('') ;
-                setPw('') ;
-            }
-        }catch {
-            
-        }
-
-        return ;
-    }
+const Profile = () => {
 
     return (
         <>
@@ -367,32 +216,9 @@ const Profile = ({ cookies, cookies : { cookies : { token } } }) => {
                         </Footer>
                     </MainContainer>
                 </MyContainer>
-                <LoginContainer>
-                    <Form onSubmit={ login ? onLogout : onLogin} action="POST">
-                    {login ? null : ( 
-                            <>
-                                <Label name="email">아이디</Label>
-                                <Input 
-                                    type="text"
-                                    name="email" 
-                                    value={email} 
-                                    onChange={onChange}
-                                />
-                                <Label name="password">비밀번호</Label>
-                                <Input 
-                                    type="password" 
-                                    name="password"
-                                    value={pw} 
-                                    onChange={onChange}
-                                />
-                            </>
-                            ) }
-                        <LoginButton type="submit">{ login ? "로그아웃" : "로그인"}</LoginButton>
-                    </Form> 
-                </LoginContainer>
             </Container>
         </>
     );
 };
 
-export default withCookies(Profile) ;
+export default Profile ;

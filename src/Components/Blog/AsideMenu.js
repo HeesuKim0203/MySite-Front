@@ -1,4 +1,4 @@
-import React, { useState, memo, useEffect } from 'react' ;
+import { useState, memo, useEffect } from 'react' ;
 import { connect } from 'react-redux';
 import styled from 'styled-components' ;
 
