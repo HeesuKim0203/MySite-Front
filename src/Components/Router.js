@@ -1,19 +1,15 @@
 import React from 'react' ;
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom' ;
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom' ;
 
 import styled from 'styled-components' ;
 
 import Header from './Header' ;
-import Home from '../Routes/Home' ;
-import BlogRouter from '../Routes/BlogRouter' ;
 import Profile from '../Routes/Profile' ;
 import Write from '../Routes/Write' ;
 import Me from '../Routes/Me' ;
 
 import { 
     HOME,
-    DOCUMENT,
-    PROFILE,
     MY,
     WRITE
 } from '../Util/routes' ;
@@ -48,12 +44,9 @@ const Template = () => {
                 <Header />
                 <TemplateContainer>
                     <Switch>
-                        <Route path={HOME} exact component={Home} />
-                        <Route path={DOCUMENT} component={BlogRouter} />
                         <Route path={MY} component={Me} />
-                        <Route path={PROFILE} component={Profile} />
+                        <Route path={HOME} exact component={Profile} />
                         <Route path={WRITE} component={Write} />
-                        <Redirect path="*" to={HOME} />
                     </Switch>
                 </TemplateContainer>
             </Router>

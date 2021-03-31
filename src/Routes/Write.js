@@ -7,9 +7,6 @@ import MDEditor from '@uiw/react-md-editor' ;
 import { axiosApi } from '../Util/api' ;
 
 import Image from '../Components/Me/Image' ;
-import { Redirect } from 'react-router-dom' ;
-
-import { DOCUMENT } from '../Util/routes' ;
 import Helmet from 'react-helmet' ;
 
 import { typeChartData } from '../Util/util' ;
@@ -215,7 +212,6 @@ const Write = () => {
             <Helmet>
                 <title>Write | Beginner</title>
             </Helmet>
-        { pageState ? (
             <Container>
                 <Header display={preview ? 'flex' : 'none'}>
                     <InputContainer>
@@ -283,9 +279,7 @@ const Write = () => {
                     <Menu onClick={onViewImage}>Image</Menu>
                     <Menu onClick={onSubmitImage}>Write</Menu>
                 </FixdMenu>
-            </Container>) : (
-                <Redirect to={DOCUMENT} />
-            )}
+            </Container>
         </>
     );
 };

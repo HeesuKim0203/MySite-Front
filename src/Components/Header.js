@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react' ;
 import { withCookies } from 'react-cookie';
-import { Link, withRouter } from 'react-router-dom' ;
+import { withRouter } from 'react-router-dom' ;
 
 import styled, { css } from 'styled-components' ;
 import Typewriter from 'typewriter-effect' ;
 
 import { 
     HOME,
-    DOCUMENT,
-    PROFILE,
     MY,
     WRITE
 } from '../Util/routes' ;
@@ -171,50 +169,11 @@ const TypewriterStyled = css`
     } 
 `;
 
-const Button = styled.button`
-    all : unset ;
-    
-    display : inline-block ;
-
-    width : 210px ;
-    height : 50px ;
-
-    margin-top : 150px ;
-
-    border-radius : 38px ;
-
-    background : linear-gradient(to right, rgb(29, 247, 135), rgb(138, 37, 255)) ;
-
-    font-size : 22px ;
-    font-weight : 600 ;
-
-    color : #fff ;
-
-    @media ${props => props.theme.laptop} {
-        font-size : 18px ;
-        width : 160px ;
-        height : 45px ;
-        margin-top : 100px ;
-    } 
-    @media ${props => props.theme.mobileL} {
-        width : 140px ;
-        font-size : 15px ;
-        height : 40px ;
-        margin-top : 70px ;
-    }
-    @media ${props => props.theme.mobileS} {
-        font-weight : 0 ;
-        width : 80px ;
-        font-size : 9px ;
-        height : 22px ;
-        margin-top : 25px ;
-    }
-`;
-
 const NullContainer = styled.div`
     width : 100% ;
     height : 70px ;
 `;
+
 
 const Header = ({ location, cookies : { cookies : { token } } }) => {
 
@@ -225,15 +184,9 @@ const Header = ({ location, cookies : { cookies : { token } } }) => {
             path : HOME,
             text : 'HOME',
         },
-        {
-            path : DOCUMENT,
-            text : 'DOCUMENT',
-        },
-        {
-            path : PROFILE,
-            text : 'PROFILE',
-        },
     ]) ;
+
+    console.log(data) ;
 
     async function checkUser(token) {
 
@@ -244,9 +197,12 @@ const Header = ({ location, cookies : { cookies : { token } } }) => {
         } = await axiosApi.check(token) ;
 
         if(status === 'success') {
-            if(token && data.length === 3) {
+            if(token && data.length === 1) {
                 setData([
-                    ...data,
+                    {
+                        path : HOME,
+                        text : 'HOME',
+                    },
                     {
                         path : MY,
                         text : 'MY'
@@ -258,13 +214,16 @@ const Header = ({ location, cookies : { cookies : { token } } }) => {
 
     useEffect(() => {
 
+        console.log(token) ;
+
         if(!token && data.length !== 3) {
-            setData([ ...data.slice(0, data.length - 1) ]) ;
+            setData([ ...data.slice(0, data.length) ]) ;
         }else if(token) {
             checkUser(token) ;
         }
 
-    }, [ token, setData, data ]) ;
+    }) ;
+
     
     const checkPathName = pathname.includes(WRITE) ? false : true ;
 
@@ -279,7 +238,6 @@ const Header = ({ location, cookies : { cookies : { token } } }) => {
                         <MenuContent 
                             key={index}
                             path={menu.path}
-                            active={menu.path === pathname}
                         >
                             {menu.text}
                         </MenuContent>
@@ -287,7 +245,7 @@ const Header = ({ location, cookies : { cookies : { token } } }) => {
                 })}
             </Menu>
             <ImgContainer>
-                {checkPathName ? (
+            {checkPathName ? (
                     <>
                         <Img imgUrl={require("../assets/header_image.jpg").default}/>
                         <TitContainer>
@@ -307,11 +265,6 @@ const Header = ({ location, cookies : { cookies : { token } } }) => {
                                   }}
                                 />
                             <br/>
-                            <Link to={PROFILE}>
-                                <Button>
-                                    Lean More
-                                </Button>
-                            </Link>
                         </TitContainer>
                         <Bright/>
                     </>

@@ -35,17 +35,18 @@ const Container = styled.li`
 const StyledLinked = styled(Link)`
     text-align : center ;
 
-    color : ${props => props.active} ;
+
     user-select : none ;
+
+    color : #fff ;
 `;
 
-const Menu = ({ children, active, path }) => {
+const Menu = ({ children, path }) => {
 
     return (
         <Container>
             <StyledLinked 
                 to={path}
-                active={active? GRAY_1 : '#fff' }
                 draggable="false"
             >
                 {children}

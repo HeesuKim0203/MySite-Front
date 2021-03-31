@@ -6,9 +6,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome' ;
 
 import { faSquareFull } from '@fortawesome/free-solid-svg-icons' ;
 
-import {
-    DOCUMENT
-} from '../../Util/routes' ;
 import { searchCoreData } from '../../Util/util' ;
 
 const Title = styled.h5`
@@ -185,7 +182,6 @@ const Content = ({ content }) => {
 
     return (
             <Container>
-                <Link to={`${DOCUMENT}/${id}`}>
                 <Img url={image_url} />
                 <TextContainer>
                     <HeadContainer>
@@ -198,7 +194,6 @@ const Content = ({ content }) => {
                         <Title draggable="false">{title}</Title>
                     </TitleContainer>
                 </TextContainer>
-                </Link>
             </Container>
     );
 };
