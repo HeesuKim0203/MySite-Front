@@ -186,8 +186,6 @@ const Header = ({ location, cookies : { cookies : { token } } }) => {
         },
     ]) ;
 
-    console.log(data) ;
-
     async function checkUser(token) {
 
         const { 
@@ -213,8 +211,6 @@ const Header = ({ location, cookies : { cookies : { token } } }) => {
     }
 
     useEffect(() => {
-
-        console.log(token) ;
 
         if(!token && data.length !== 3) {
             setData([ ...data.slice(0, data.length) ]) ;

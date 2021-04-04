@@ -322,51 +322,9 @@ const Profile = ({ cookies, cookies : { cookies : { token } } }) => {
     return (
         <>
             <Helmet>
-                <title>Profile | Beginner</title>
+                <title>Login | Beginner</title>
             </Helmet>
             <Container>
-                <MyContainer>
-                    <MainContainer>
-                        <Main1>
-                            <MyImg />
-                        </Main1>
-                        <Main2>
-                            <MyIntroduction>
-                                <MyIntroductionLi>
-                                    <TitleText>김희수</TitleText><br/>
-                                    <Content>Front Programer</Content>
-                                </MyIntroductionLi>
-                                <MyIntroductionLi>
-                                    <Text>전화번호</Text><br/>
-                                    <Content>010-5293-8620</Content>
-                                </MyIntroductionLi>
-                                <MyIntroductionLi>
-                                    <Text>이메일</Text><br/>
-                                    <Content>rlagmltn456@naver.com</Content>
-                                </MyIntroductionLi>
-                                <MyIntroductionLi>
-                                    <Text>주소</Text><br/>
-                                    <Content>대구 광역시 수성구</Content>
-                                </MyIntroductionLi>
-                                <MyIntroductionLi>
-                                    <Text>홈페이지</Text><br/>
-                                    <Content>http://127.0.0.1</Content>
-                                </MyIntroductionLi>
-                            </MyIntroduction>
-                        </Main2>
-                        <Footer>
-                            <IconBox>
-                                <Icon icon={faFacebookF} color="#111" />
-                            </IconBox>
-                            <IconBox>
-                                <Icon icon={faGithub} color="#111" />
-                            </IconBox>
-                            <IconBox>
-                                <Icon icon={faInstagram} color="#111" />
-                            </IconBox>
-                        </Footer>
-                    </MainContainer>
-                </MyContainer>
                 <LoginContainer>
                     <Form onSubmit={ login ? onLogout : onLogin} action="POST">
                     {login ? null : ( 

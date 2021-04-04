@@ -183,6 +183,10 @@ const ImageJSX = () =>{
 
     async function onDeleteImg(e) {
 
+        // const formData = new FormData() ;
+        
+        // formData.append('_method', 'DELETE') ;
+
         if(selectUrl !== null) {
             try {
                 const { data } = await axiosApi.deleteImg(selectUrl.id) ;
