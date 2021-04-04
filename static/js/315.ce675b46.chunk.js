@@ -1,0 +1,2 @@
+(this.webpackJsonplaravel_project_view=this.webpackJsonplaravel_project_view||[]).push([[315],{436:function(t,e){Prism.languages.properties={comment:/^[ \t]*[#!].*$/m,"attr-value":{pattern:/(^[ \t]*(?:\\(?:\r\n|[\s\S])|[^\\\s:=])+?(?: *[=:] *| ))(?:\\(?:\r\n|[\s\S])|[^\\\r\n])+/m,lookbehind:!0},"attr-name":/^[ \t]*(?:\\(?:\r\n|[\s\S])|[^\\\s:=])+?(?= *[=:] *| )/m,punctuation:/[=:]/}}}]);
+//# sourceMappingURL=315.ce675b46.chunk.js.map

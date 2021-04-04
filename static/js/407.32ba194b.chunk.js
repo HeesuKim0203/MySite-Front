@@ -1,0 +1,2 @@
+(this.webpackJsonplaravel_project_view=this.webpackJsonplaravel_project_view||[]).push([[407],{528:function(e,s){var a=Prism.util.clone(Prism.languages.typescript);Prism.languages.tsx=Prism.languages.extend("jsx",a)}}]);
+//# sourceMappingURL=407.32ba194b.chunk.js.map

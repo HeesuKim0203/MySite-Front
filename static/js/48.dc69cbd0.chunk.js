@@ -1,0 +1,2 @@
+(this.webpackJsonplaravel_project_view=this.webpackJsonplaravel_project_view||[]).push([[48],{169:function(e,a){Prism.languages.brainfuck={pointer:{pattern:/<|>/,alias:"keyword"},increment:{pattern:/\+/,alias:"inserted"},decrement:{pattern:/-/,alias:"deleted"},branching:{pattern:/\[|\]/,alias:"important"},operator:/[.,]/,comment:/\S+/}}}]);
+//# sourceMappingURL=48.dc69cbd0.chunk.js.map
