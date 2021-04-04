@@ -1,4 +1,10 @@
-## 해야 할 일
+react-scripts
 
-# a 태그 다시 수정하기
+webpack.config.js
+
+alias에 추가
+
+```
+'Chart.js$' : 'chart.js/Chart.bundle.min.js'
+```
 
