@@ -5,8 +5,6 @@ import {
     HOME,
     DOCUMENT,
     PROFILE,
-    MY,
-    WRITE
 } from './src/Util/routes' ;
 
 const Template = () => {
@@ -15,9 +13,7 @@ const Template = () => {
                     <Switch>
                         <Route path={HOME} />
                         <Route path={DOCUMENT}  />
-                        <Route path={MY} />
                         <Route path={PROFILE}  />
-                        <Route path={WRITE} />
                         <Redirect path="*" to={HOME} />
                     </Switch>
             </Router>

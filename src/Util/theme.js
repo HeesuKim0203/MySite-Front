@@ -6,7 +6,30 @@ export const size = {
     mobileS : 468  
 }
 
-const theme = {} ;
+const WHITE = '#eeeeee' ; 
+const BLACK = '#222' ;
+const SELECTCOLOR = '#3949ab' ;
+
+const theme = { selectColor : SELECTCOLOR } ;
+ 
+export const darkMode = {
+    backgroundColor : BLACK,
+    fontColor : WHITE,
+    aisdeMenuColor : WHITE,
+    contentBorderRadius : '15px',
+    buttonFontColor : WHITE,
+    profileBorderColor : WHITE,
+    mobileContentColor : BLACK
+} ;
+export const lightMode = {
+    backgroundColor : WHITE,
+    fontColor : BLACK,
+    aisdeMenuColor : '#9e9e9e',
+    contentBorderRadius : '0px',
+    buttonFontColor : '#cfd8dc',
+    profileBorderColor : BLACK,
+    mobileContentColor : WHITE
+} ;
 
 for( const key in size ) {
     theme[key] = `(max-width : ${size[key]}px)` ;

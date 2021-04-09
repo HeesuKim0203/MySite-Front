@@ -19,8 +19,8 @@ const SEARCH_CONTENTS = 'SEARCH_CONTENTS' ;
 const SEARCH_TITLE = 'SEARCH_TITLE' ;
 
 const setDefaultData = defaultData => ({
-        type : STORE_DEFAULT_DATA,
-        defaultData
+    type : STORE_DEFAULT_DATA,
+    defaultData
 }) ;
 
 const setContents = () => ({
@@ -181,7 +181,7 @@ const contentReducer = (
         case SEARCH_TITLE : 
                 
             contentsData = state.defaultData
-                        .filter(item => item.title.includes(action.searchValue, 0))
+                        .filter(item => item.title.includes(action.searchValue, 0) || item.title.toUpperCase().includes(action.searchValue.toUpperCase(), 0))
                         .reduce((prev, item, index) => {
                             if(index === num) {
                                 prev.push([]) ;

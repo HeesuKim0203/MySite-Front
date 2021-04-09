@@ -11,16 +11,19 @@ const Title = styled.h6`
     font-size : 20px ;
     font-weight : 700 ;
 
-    color : #111 ;
+    color : ${props => props.theme.color.fontColor} ;
 
     user-select : none ;
+    cursor : default ;
 
     @media ${props => props.theme.laptop} {
         font-size : 16px ;
     }
+    @media ${props => props.theme.tabletL} {
+        color : #fff ;
+    }
     @media ${props => props.theme.mobileS} {
         font-size : 10px ;
-        color : #fff ;
     }
 
 `;
@@ -31,11 +34,9 @@ const BigAisdeMenu = styled.li`
 
     float : left ;
 
-    color : #9e9e9e ;
-
     user-select : none ;
+    cursor : pointer ;
 
-    cursor : pointer ; 
     @media ${props => props.theme.mobileS} {
         margin-top : 15px ;
     }
@@ -57,21 +58,14 @@ const Menu = styled.li`
 
     align-items : center ;
 
-    color : #9e9e9e ;
+    color : ${props => props.theme.color.aisdeMenuColor} ;
 
-    &:hover {
-        background-color : #e8eaf6 ;
-        color : #3949ab ;
+    @media ${props => props.theme.tabletL} {
+        color : #e0e0e0  ;
     }
 
     @media ${props => props.theme.mobileS} {
         padding : 5px 0 ;
-        color : #e0e0e0  ;
-
-        &:hover {
-            background-color : inherit ;
-            color : #e0e0e0 ;
-        }
     }
 `;
 

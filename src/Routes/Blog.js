@@ -1,10 +1,10 @@
-import React, {useState, useEffect} from 'react' ;
+import { useState, useEffect } from 'react' ;
 import styled from 'styled-components' ;
 
 import BlogContainer from '../Components/Blog/BlogContainer' ; 
 import { connect } from 'react-redux';
 import ButtonContainer from '../Components/Blog/ButtonContainer' ;
-
+import Message from '../Components/Message' ;
 
 const Container = styled.div`
     width : 100% ;
@@ -28,18 +28,6 @@ const ContentContainer = styled.div`
         padding : 0 ;
     }
 `;
-const Message = styled.div`
-    width : 100% ;
-    
-    height : 50px ;
-    
-    display : flex ;
-    justify-content : center ;
-    align-items : center ;
-
-    font-size : 13px ;
-    color : red ;
-`;
 
 const Blog = ({ contentsData, select }) => {
 
@@ -53,11 +41,11 @@ const Blog = ({ contentsData, select }) => {
             setError(false) ;
         }
 
-    }, [contentsData]) ;
+    }, [ contentsData ]) ;
 
     return (
         <Container>
-            { error && error ? (<Message>{error}</Message>) : null }
+            { error && error ? (<Message mode="error" text={error} />) : null }
             <ContentContainer>
                 { contentsData && contentsData.map((content, index) => {
                     return select === index ? (

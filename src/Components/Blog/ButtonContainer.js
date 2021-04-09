@@ -12,18 +12,14 @@ import {
 const Button = styled.button`
     all : unset ;
 
-    padding : 15px 20px ;
+    padding : 10px 20px ;
 
     font-size : 18px ;
     font-weight : 900 ;
 
-    color : ${props => props.select ? '#3949ab' : '#cfd8dc'} ;
-    background-color : ${props => props.select ? '#e8eaf6' : '#fff'} ;
-
-    &:hover {
-        background-color : #e8eaf6 ;
-        color : #3949ab ;
-    }
+    border-radius : ${props => props.theme.color.contentBorderRadius} ;
+    
+    color : ${props => props.select ? props.theme.selectColor : props.theme.color.buttonFontColor} ;
 
     @media ${props => props.theme.mobileL} {
         padding : 8px 10px ;

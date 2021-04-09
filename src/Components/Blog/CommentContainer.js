@@ -7,6 +7,8 @@ const Container = styled.div`
     width : 100% ;
     
     overflow : hidden ;
+
+    color : ${props => props.theme.color.fontColor} ;
 `;
 
 const CommetsWrap = styled.div`
@@ -36,7 +38,7 @@ const Input = styled.input`
     width : 180px ;
     height : 30px ;
     
-    border : 1px solid #999 ;
+    border : 1px solid ${props => props.theme.color.fontColor} ; ;
 
     padding-left : 5px ;
 
@@ -62,7 +64,7 @@ const Text = styled.textarea`
 
     all : unset ;
     
-    border : 1px solid #999 ;
+    border : 1px solid ${props => props.theme.color.fontColor} ;
 
     width : 90% ;
 
@@ -132,9 +134,10 @@ const CommentContainer = ({ contentId }) => {
                 setPassword('') ;
                 setText('') ;
                 setCommentsList([ ...commentsList, result ]) ;
+                alert('댓글을 입력 하였습니다.') ;
             }
         }catch {
-            
+            alert('댓글 입력 실패하였습니다.') ;
         }finally {
 
         }
@@ -155,9 +158,10 @@ const CommentContainer = ({ contentId }) => {
                     ...commentsList.slice(0, findId),
                     ...commentsList.slice(findId + 1, commentsList.length)
                 ]) ;
+                alert('댓글을 삭제 하였습니다.') ;
             }
         }catch {
-
+            alert('삭제 실패하였습니다.') ;
         }finally {
         }
     }
@@ -189,10 +193,11 @@ const CommentContainer = ({ contentId }) => {
                     },
                     ...commentsList.slice(findId + 1, commentsList.length)
                 ]) ;
+                alert('댓글을 수정 하였습니다.') ;
             }
             
         }catch {
-
+            alert('수정 실패하였습니다.') ;
         }finally {
 
         }

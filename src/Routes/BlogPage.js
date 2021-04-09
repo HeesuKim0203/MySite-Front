@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react' ;
-import styled from 'styled-components' ;
+import { useEffect } from 'react' ;
+import styled, { css } from 'styled-components' ;
 
 import MDEditor from '@uiw/react-md-editor' ;
 import { connect } from 'react-redux';
@@ -13,8 +13,9 @@ import {
     DOCUMENT
 } from '../Util/routes' ;
 import CommentContainer from '../Components/Blog/CommentContainer';
-import { blogPageContentNum } from '../Util/util';
+import { blogPageContentNum, mode } from '../Util/util';
 import { createAction } from '../Store/store';
+import Message from '../Components/Message';
 
 const Container = styled.div`
     width : 100% ;
@@ -48,7 +49,16 @@ const CommentWrap= styled.div`
     width : 100% ;
 `;
 
-const BlogPage = ({ pageContents, pageSelect, text, id, pageContentsPotition, updatePageSelect }) => {
+const cssText = css`
+    h1, h2, h3, h4, h5, h6, a, p {
+        color : #e0e0e0 ;
+    }
+    code {
+        background-color : #e0e0e0  !important ;
+    }
+`;
+
+const BlogPage = ({ pageContents, pageSelect, text, id, pageContentsPotition, updatePageSelect, modeState }) => {
 
     useEffect(() => {
 
@@ -63,34 +73,44 @@ const BlogPage = ({ pageContents, pageSelect, text, id, pageContentsPotition, up
 
     return (
         <>
+            {modeState === mode.dark ? (
+            <style>
+                {cssText}
+            </style>) : null }
             <Container>
-                <Main>
-                    <MDEditor.Markdown source={ text } />
-                </Main>
-                <Footer>
-                    <ContentBox>
-                    { pageContents && pageContents.map((content, index) => {
-                        return pageSelect === index ? (
-                            <BlogPageContainer 
-                                key={index}
-                                pageContents={content}
-                                pageSelect={true}
-                            />
-                        ) : (
-                            <BlogPageContainer 
-                                key={index}
-                                pageContents={content}
-                            />
-                        )
-                    })}
-                    </ContentBox>
-                    <ButtonWrap>
-                        <ButtonContainer />
-                    </ButtonWrap>
-                    <CommentWrap>
-                        <CommentContainer contentId={id} />
-                    </CommentWrap>
-                </Footer>
+                    {
+                        id !== -1 ? (
+                        <>
+                            <Main>
+                                <MDEditor.Markdown id="content" source={ text } />
+                            </Main>
+                            <Footer>
+                                <ContentBox>
+                                { pageContents && pageContents.map((content, index) => {
+                                    return pageSelect === index ? (
+                                        <BlogPageContainer 
+                                            key={index}
+                                            pageContents={content}
+                                            pageSelect={true}
+                                        />
+                                    ) : (
+                                        <BlogPageContainer 
+                                            key={index}
+                                            pageContents={content}
+                                        />
+                                    )
+                                })}
+                                </ContentBox>
+                                <ButtonWrap>
+                                    <ButtonContainer />
+                                </ButtonWrap>
+                                <CommentWrap>
+                                    <CommentContainer contentId={id} />
+                                </CommentWrap>
+                            </Footer>
+                        </>
+                        ) : <Message mode={'error'} text={"게시물이 없습니다."}/>
+                    }
             </Container>
         </>
     );

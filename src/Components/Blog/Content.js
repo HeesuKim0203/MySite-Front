@@ -39,47 +39,38 @@ const Title = styled.h5`
 const Container = styled.div`
     width : 70% ;
     overflow : hidden ;
+    border-radius : ${props => props.theme.color.contentBorderRadius} ;
 
-    box-shadow: 0 5px 10px rgba(0,0,0,0.19), 0 3px 3px rgba(0,0,0,0.23);
+    box-shadow: 0 5px 10px rgba(0,0,0,0.19), 0 3px 3px rgba(0,0,0,0.23) ;
 
     cursor : pointer ;
 
-    &:hover {
-        ${Title} { 
-            color : rgb(138, 37, 255) ;
-            text-decoration : underline ;
-        }
-    }
-
     &:nth-child(3n-2) {
         margin-left : 10% ;
-        @media ${props => props.theme.mobileS} {
+        @media ${props => props.theme.tabletL} {
             margin-left : 0 ;
         }
     }
     &:nth-child(3n - 1) {
         margin-left : 5% ;
-        @media ${props => props.theme.mobileS} {
+        @media ${props => props.theme.tabletL} {
             margin-left : 0 ;
         }
     }
 
-    @media ${props => props.theme.mobileS} {
+    @media ${props => props.theme.tabletL} {
         width : 100% ;
-        height : 140px ;
+        height : 200px ;
 
         box-shadow: none ;
         padding : 8px 8px 0 5px ;
-       
-        border-bottom : 1px solid #999 ;
-        border-top : 1px solid #999 ;
 
-        &:hover {
-            ${Title} { 
-                color : #111 ;
-                text-decoration : none ;
-            }
-        }
+        border-bottom : 1px solid #999 ;
+        border-radius : 0 ;
+    }
+
+    @media ${props => props.theme.mobileS} {
+        height : 140px ;
     }
 `;
 
@@ -97,15 +88,20 @@ const Img = styled.div`
     @media ${props => props.theme.laptop} {
         height : 160px ;
     }
-    @media ${props => props.theme.mobileS} {
+    @media ${props => props.theme.tabletL} {
         border : 1px solid #eeeeee ;
         border-radius : 7px ;
         
-        width : 40% ;
+        height : 180px ;
+
+        width : 35% ;
 
         float : right ;
-
+    }
+    @media ${props => props.theme.mobileS} {
         height : 120px ;
+
+        width : 40% ;
     }
 `;
 
@@ -114,10 +110,13 @@ const Code = styled.div`
     top : 0 ;
     right : 0 ;
 
-    @media ${props => props.theme.mobileS} {
-
-        top : 45px ;
+    @media ${props => props.theme.tabletL} {
+        top : 50px ;
         left : 2px ;
+    }
+
+    @media ${props => props.theme.mobileS} {
+        top : 45px ;
     }
 `;
 
@@ -126,17 +125,19 @@ const TextContainer = styled.div`
 
     padding : 12px ;
 
+    background-color : #fff ;
+
     float : left ;
 
     @media ${props => props.theme.laptop} {
         padding : 10px 7px ;
     }
-    @media ${props => props.theme.mobileS} {
+    @media ${props => props.theme.tabletL} {
+        background-color : ${props => props.theme.color.mobileContentColor} ;
+        color : ${props => props.theme.color.fontColor} ;
         padding : 8px 7px ;
-
         width : 50% ;
     }
-
 `;
 
 const HeadContainer = styled.div`
@@ -170,10 +171,10 @@ const TitleContainer = styled.div`
 
 
 const StyleFontAwesomeIcon = styled(FontAwesomeIcon)`
-    font-size : 20px ;
+    font-size : 24px ;
 
-    @media ${props => props.theme.laptop} {
-        font-size : 18px ;
+    @media ${props => props.theme.mobileS} {
+        font-size : 20px ;
     }
 `;
 

@@ -12,16 +12,14 @@ SwiperCore.use([Autoplay]) ;
 
 const Slide = ({ defaultData }) => {
 
-  const { tabletS, mobileL } = size ;
+  const { tabletL } = size ;
 
   const [ viewContentNum, setViewContentNum ] = useState(3) ;
 
   const viewContentNumCheck = innerWidth => {
-    if(innerWidth <= tabletS && innerWidth >= mobileL ) {
-      setViewContentNum(2) ;
-    }else if( innerWidth <= mobileL ) {
+    if(innerWidth <= tabletL) {
       setViewContentNum(1) ;
-    }else if(innerWidth >= tabletS ) {
+    }else if(innerWidth >= tabletL ) {
       setViewContentNum(3) ;
     }
   }
@@ -39,7 +37,6 @@ const Slide = ({ defaultData }) => {
     const swiperContainer = document.querySelector('div.swiper-container') ;
     swiperContainer.style.padding = "10px 0 10px 0" ;
 
-
     viewContentNumCheck(innerWidth) ;
 
     window.addEventListener('resize', onResize, false) ;
@@ -47,7 +44,7 @@ const Slide = ({ defaultData }) => {
     return () => {
       window.removeEventListener('resize', onResize, false) ;
     }
-  }, [])
+  }, []) ;
 
   return (
       <Swiper
@@ -65,6 +62,7 @@ const Slide = ({ defaultData }) => {
 };
 
 function mapStateToProps(state) {
+
     const { 
         content : { 
             defaultData 

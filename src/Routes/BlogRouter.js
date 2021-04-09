@@ -1,11 +1,10 @@
-import React from 'react';
 import { Route } from 'react-router-dom' ;
 import styled from 'styled-components' ;
 import Helmet from 'react-helmet' ;
 
 import AsideMenu from '../Components/Blog/AsideMenu' ;
 import {
-    DOCUMENT
+    DOCUMENT,
 } from '../Util/routes' ;
 
 import Blog from './Blog' ;
@@ -14,7 +13,7 @@ import BlogPage from './BlogPage' ;
 import { 
     coreData, 
     asideTitle 
-} from '../Util/util' ;  
+} from '../Util/util' ; 
 
 const Container = styled.div`
     width : 100% ;
@@ -26,10 +25,6 @@ const AsideMenuContainer = styled.div`
     float : left ;
 
     width : 18% ;
-
-    @media ${props => props.theme.tabletL} {
-        width : 100% ;
-    }
 `;
 
 const MainContainer = styled.div`
@@ -42,9 +37,7 @@ const MainContainer = styled.div`
     }
 `;
 
-const BlogRouter = (props) => {
-
-    console.log(props) ;
+const BlogRouter = ({ modeState }) => {
 
     const asideData = asideTitle.map((asideData, index) => {
         return {
@@ -64,7 +57,7 @@ const BlogRouter = (props) => {
                 </AsideMenuContainer>
                 <MainContainer>
                     <Route exact path={DOCUMENT} component={Blog} />
-                    <Route path={`${DOCUMENT}/:id`} component={BlogPage} />
+                    <Route path={`${DOCUMENT}/:id`} render={() => <BlogPage modeState={modeState} />} /> 
                 </MainContainer>
             </Container>
         </>

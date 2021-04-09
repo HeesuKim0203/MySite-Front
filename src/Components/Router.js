@@ -1,5 +1,6 @@
-import React from 'react' ;
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom' ;
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome' ;
+import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons' ;
 
 import styled from 'styled-components' ;
 
@@ -7,13 +8,18 @@ import Header from './Header' ;
 import Home from '../Routes/Home' ;
 import BlogRouter from '../Routes/BlogRouter' ;
 import Profile from '../Routes/Profile' ;
+import Page404 from '../Routes/Page404' ;
 
 import { 
     HOME,
     DOCUMENT,
     PROFILE,
+    PAGE404
 } from '../Util/routes' ;
-import { withCookies } from 'react-cookie' ;
+import { darkMode, lightMode } from '../Util/theme' ;
+import { mode } from '../Util/util' ;
+
+const { light } = mode ;
 
 const Container = styled.div`
     width : 100% ;
@@ -24,9 +30,7 @@ const TemplateContainer = styled.main`
     width : 80% ;
     margin : 0 auto ;
 
-    background-color : #fff ;
-
-    @media ${props => props.theme.mobileS} {
+    @media ${props => props.theme.tabletS} {
         width : 100% ;
     }
 `;
@@ -37,23 +41,53 @@ const Footer = styled.footer`
     height : 80px ;
 `;
 
-const Template = () => {
+const ModeButton = styled.div`
+
+    width : 35px ;
+    height : 35px ;
+    
+    border-radius : 35px ;
+
+    display : flex ;
+    align-items : center ;
+    justify-content  : center ;
+
+    position : fixed ;
+
+    z-index : 50 ;
+    
+    right : 10px ;  
+    bottom : 10px ;
+
+    transition : 0.5s all ease-in-out ;
+
+    background-color : ${props => props.modeState === light ? darkMode.backgroundColor : lightMode.backgroundColor} ;
+    color : ${props => props.modeState === light ? darkMode.fontColor : lightMode.fontColor} ;
+
+    font-size : 1.3rem ;
+`;
+
+const Template = ({ modeChange, modeState }) => {
     return (
         <Container>
             <Router>
                 <Header />
                 <TemplateContainer>
                     <Switch>
-                        <Route path={HOME} exact component={Home} />
-                        <Route path={DOCUMENT} component={BlogRouter} />
+                        <Route path={HOME} exact render={() => <Home modeState={modeState} />} />
+                        <Route path={DOCUMENT} render={() => <BlogRouter modeState={modeState} />} />
                         <Route path={PROFILE} component={Profile} />
-                        <Redirect path="*" to={HOME} />
+                        <Route path={PAGE404} component={Page404} />
+                        <Redirect path="*" to={PAGE404} />
                     </Switch>
                 </TemplateContainer>
             </Router>
+            <ModeButton onClick={modeChange} modeState={modeState}>
+                <FontAwesomeIcon icon={modeState === light ? faMoon : faSun } color={ modeState === light ? '#ffee58' : '#ff9800' } />
+            </ModeButton>
             <Footer />
         </Container>
     ) ;
 } ;
 
-export default withCookies(Template) ;
+export default Template ;
