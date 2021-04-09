@@ -7,6 +7,9 @@ const Container = styled.div`
     width : 80% ;
     overflow : hidden ;
 
+    background-color : ${props => props.theme.color.backgroundColor} ;
+    color : ${props => props.theme.color.fontColor} ;
+
     &:nth-child(2n) {
         margin-left : 9.5% ;
 
@@ -38,37 +41,18 @@ const Container = styled.div`
 `;
 
 const DescriptionContainer  = styled.div`
-    width : inherit ;
-    height : inherit ;
+    width : 100% ;
     
     display : flex ;
-    color : #fff ;
 
-    background-color : rgba(0, 0, 0, 0.85) ;
+    background-color : ${props => props.theme.color.backgroundColor} ;
+    color : ${props => props.theme.color.fontColor} ;
 
     font-size : 13px ;
 
-    padding : 20px 10px ;
+    padding : 15px 0px ;
 
     align-items : center ;
-
-    opacity : 0 ;
-
-    @media ${props => props.theme.mobileS} {
-        height  : 100px ;
-        opacity : 1 ;
-
-        padding : 5px 3px ;
-        font-size : 11px ;
-        color : #111 ;
-        
-        background-color : #fff ;
-
-        position : absolute ;
-
-        z-index : 2 ;
-        top : 240px ;
-    }
 `;
 
 const Img = styled.div`
@@ -84,27 +68,11 @@ const Img = styled.div`
     background-repeat : no-repeat ;
     background-position : 0 0 ;
 
-    &:hover { 
-        ${DescriptionContainer} {
-            opacity : 0.9 ;
-        }
-    }
-
     @media ${props => props.theme.laptop} {
         height : 260px ;
     }
-    @media ${props => props.theme.tabletS} {
-        &:hover {
-            ${DescriptionContainer} {
-                opacity : 1 ;
-            }
-        }
-    }
     @media ${props => props.theme.mobileL} {
         height : 250px ;
-    }
-    @media ${props => props.theme.mobileS} {
-        margin-bottom : 80px ;
     }
 `;
 
@@ -172,19 +140,9 @@ const Date = styled.span`
 const Description = styled.p`
     display : inline-block ;
     
-    padding : 30px 5px 0 5px ;
-
+    padding : 5px 10px ;
     line-height : 18px ;
 
-    @media ${props => props.theme.tabletS} {
-        padding : 5px 10px ;
-        line-height : 15px ;
-    }
-
-    @media ${props => props.theme.mobileS} {
-        padding : 5px 10px ;
-        line-height : 15px ;
-    }
 `;
 
 const ProjectContent = ({ content }) => {
@@ -207,13 +165,12 @@ const ProjectContent = ({ content }) => {
             </TextContainer>
             <Img 
                 src={image.split(' ')[0]} 
-            >
-             <DescriptionContainer>
+            />
+            <DescriptionContainer>
                     <Description>
                         { description }
                     </Description>
                 </DescriptionContainer>
-            </Img>
         </Container>
     );
 };

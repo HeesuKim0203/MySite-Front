@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react' ;
+import { useEffect, useState } from 'react' ;
 
 import Router from './Components/Router' ;
 import GlobalStyle from './Components/GlobalStyle' ;
@@ -6,9 +6,22 @@ import { axiosApi } from './Util/api';
 import { connect } from 'react-redux';
 import { createAction } from './Store/store';
 
+import { ThemeProvider } from 'styled-components' ;
+import theme, { darkMode, lightMode } from './Util/theme' ;
+import { mode } from './Util/util' ;
+
 function App({ setContents, setPageContents, setDefaultData, setProjectContents }) {
 
+  const { dark, light } = mode ;
+
+  const [ modeState, setModeState ] = useState(light) ;
+
+  function modeChange(e) {
+    setModeState(modeState === light ? dark : light) ;
+  }
+
   useEffect(() => {
+
     function checkVisitor() {
       axiosApi.checkVisitor() ;
       return ;
@@ -36,10 +49,14 @@ function App({ setContents, setPageContents, setDefaultData, setProjectContents 
   }, [ setDefaultData, setContents, setPageContents, setProjectContents ]) ;
 
   return (
-    <>
-      <GlobalStyle />
-      <Router />
-    </>
+    <ThemeProvider theme={
+        (modeState === light ? 
+          () => {theme.color=lightMode ; return theme} : 
+          () => {theme.color=darkMode ; return theme}
+        )()}>
+      <GlobalStyle modeState={modeState} />
+      <Router modeChange={modeChange} modeState={modeState} />
+    </ThemeProvider>
   );
 }
 

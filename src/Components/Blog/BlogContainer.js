@@ -10,7 +10,7 @@ const Container = styled.div`
     grid-template-columns : repeat(3, 33.33%) ;
     grid-row-gap : 50px ;
 
-    @media ${props => props.theme.mobileS} {
+    @media ${props => props.theme.tabletL} {
         grid-template-columns : repeat(1, 100%) ;
         grid-row-gap : 0 ;
         margin-bottom : 30px ;

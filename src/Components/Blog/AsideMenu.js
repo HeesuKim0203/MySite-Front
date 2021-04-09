@@ -16,17 +16,22 @@ const Container = styled.div`
     display : block ;
 
     font-family: 'Ubuntu', sans-serif ;
+    background-color : ${props => props.theme.color.backgroundColor} ;
 
     padding : 15px 5px ;
 
-    @media ${props => props.theme.tabletS} {
+    @media ${props => props.theme.tabletL} {
 
         display : ${props => props.display} ;
 
         position : fixed ;
-        width : 30% ;
-        top : 40px ;
+        width : 20% ;
+        top : 58px ;
         left : 0 ;
+
+        border-top-right-radius : 20px ;
+        border-bottom-right-radius : 20px ;
+        padding : 3px 0 3px 5px ;
 
         z-index : 800 ;
 
@@ -34,17 +39,18 @@ const Container = styled.div`
 
         opacity : 0.9 ;
     }
+    @media ${props => props.theme.mobileL} {
+        top : 45px ;
+        width : 30% ;
+    }
     @media ${props => props.theme.mobileS} {
-
-        padding : 3px 0 3px 5px ;
-
-        border-top-right-radius : 20px ;
-        border-bottom-right-radius : 20px ;
+        top : 40px ;
     }
 `;
 
 const BigAsideMenuContainer = styled.ul`
     width : 100% ;
+
     float : left ;
 `;
 
@@ -60,15 +66,10 @@ const AllDataViewButton = styled.div`
 
     padding : 20px 10px 20px 10px ;
 
-    color : #9e9e9e ;
+    color : ${props => props.theme.color.aisdeMenuColor} ;
 
     user-select : none ;
     cursor : pointer ;
-
-    &:hover { 
-        background-color : #e8eaf6 ;
-        color : #3949ab ;
-    }
 
     @media ${props => props.theme.laptop} {
         font-size : 12px ;
@@ -80,11 +81,6 @@ const AllDataViewButton = styled.div`
         padding : 10px 6px 10px 6px ;
         margin-top : 10px ;
         color : #e0e0e0 ;
-
-        &:hover {
-            background-color : inherit ;
-            color : #e0e0e0 ;
-        }
     }
 `;
 
@@ -122,7 +118,7 @@ const StyledFontAwesomeIconMenu = styled(FontAwesomeIcon)`
 
     user-select : none ;
 
-    @media ${props => props.theme.tabletS} {
+    @media ${props => props.theme.tabletL} {
 
         display : block ;
 
@@ -131,12 +127,16 @@ const StyledFontAwesomeIconMenu = styled(FontAwesomeIcon)`
         top : 18px ;
         left : 16px ;
     }
-    @media ${props => props.theme.mobileS} {
+    @media ${props => props.theme.mobileL} {
 
-        font-size : 16px ;
+        font-size : 18px ;
 
         top : 13px ;
         left : 12px ;
+    }
+    @media ${props => props.theme.mobileS} {
+
+        font-size : 16px 
     }
 `;
 
@@ -194,15 +194,17 @@ const SearhInput = styled.input`
     &::placeholder {
         color : #888 ;
     }
-    @media ${props => props.theme.mobileS} {
-        font-size : 11px ;
-        height : 20px ;
-        padding-left : 0px ;
+    @media ${props => props.theme.tabletL} {
         color : #fff ;
 
         &::placeholder {
             color : #fff ;
         }
+    }
+    @media ${props => props.theme.mobileS} {
+        font-size : 11px ;
+        height : 20px ;
+        padding-left : 0px ;
     }
 `;
 

@@ -7,12 +7,11 @@ import { CSS3DRenderer, CSS3DObject } from '../../node_modules/three/examples/js
 import { TrackballControls } from '../../node_modules/three/examples/jsm/controls/TrackballControls'
 
 import { axiosApi } from '../Util/api' ;
-import { size } from '../Util/theme'
 import { language } from '../Util/util' ;
 import ProjectContent from '../Components/Project/ProjectContent' ;
 
 const Container = styled.div`
-    width : 70% ;
+    width : 80% ;
     margin : 0 auto ;
     @media ${props => props.theme.laptop} {
         width : 90% ;
@@ -24,11 +23,12 @@ const Container = styled.div`
 
 const ContentContainer = styled.div`
     width : 100% ;
-    display : grid ;
+    display : none ;
     
     grid-template-columns : repeat(2, 50%) ;
     grid-row-gap : 30px ;
     @media ${props => props.theme.tabletS} {
+        display : grid ;
         grid-template-columns : repeat(1, 100%) ;
     }
 `;
@@ -37,7 +37,7 @@ const ContentContainer = styled.div`
 const Container3D = styled.div`
 
     display : block ;
-    width : 80% ;
+    width : 100% ;
 
     display : flex ;
 
@@ -47,6 +47,10 @@ const Container3D = styled.div`
     position : relative ;
 
     margin : 0 auto ;
+
+    @media ${props => props.theme.tabletS} {
+        display : none ;
+    }
 `;
 
 const Button = styled.div`
@@ -62,11 +66,11 @@ const Button = styled.div`
   
   left : 50% - 15px ;
   top : 50% - 15px ;
-  z-index : 20 ;
+  z-index : 5 ;
 `;
 
 const ProjectContentContainer = styled.div`
-    width : 100% ;
+    width : 80% ;
     height : 100% ;
 
     background-color : #111 ;
@@ -79,7 +83,7 @@ const ProjectContentContainer = styled.div`
 
     overflow : hidden ;
 
-    z-index : 10 ;
+    z-index : 5 ;
 `;
 
 const ProjectContentButton = styled.button`
@@ -89,7 +93,7 @@ const ProjectContentButton = styled.button`
     
     background-color : #fff ;
 
-    z-index : 11 ;
+    z-index : 10 ;
 
     right : 3px ;
     bottom : 3px ;
@@ -103,8 +107,6 @@ const ProjectContentButton = styled.button`
 const LeftContainer = styled.div`
     width : 40% ;
     height : 100% ;
-    
-    border-left : 3px solid #fff ;
 
     float : left ;
 
@@ -179,7 +181,6 @@ const Language = styled(FontAwesomeIcon)`
 const RightContainer = styled.div`
     width : 60% ;
     height : 100% ;
-    border-left : 3px solid #fff ;
 
     float : left ;
 
@@ -197,14 +198,17 @@ const FACEWIDTH = 480 ;
 const FACEHEIGHT = 310 ;
 
 let mouseEvent = false ;
+let animateStop ;
 
 const Project = () => {
 
-    const { tabletS } = size ;
     const [ projectContentData, setProjectContents ] = useState([]) ;
     const [ selectData, setSelectData ] = useState(0) ;
 
     useEffect(() => {
+
+        let windowReSize ;
+        let animatOn ;
 
         async function fetchData() {
             try {
@@ -217,7 +221,6 @@ const Project = () => {
 
                 setProjectContents(projects) ;
 
-                if(window.innerWidth >= tabletS) {
                 const container = document.getElementById('container') ;
 
                 let scene = new Scene() ;
@@ -237,9 +240,7 @@ const Project = () => {
                 const group = new Group() ;
 
                 function animate() {
-                    
-                    requestAnimationFrame( animate ) ;
-
+                    animateStop = requestAnimationFrame( animate ) ;
                     if ( mouseEvent === true ) controls.update() ;
                     else {
                         group.rotation.x += 0.001 ;
@@ -251,6 +252,16 @@ const Project = () => {
 
                 function render() {
                     renderer.render( scene, camera );
+                }
+
+                windowReSize = ()=> {
+                        if (window.innerWidth > 1024 && !animatOn) {
+                            animatOn = true ;
+                            requestAnimationFrame( animate ) ;
+                        }else if (window.innerWidth < 1024 && animatOn)  {
+                            animatOn = false ;
+                            cancelAnimationFrame(animateStop) ;
+                        }
                 }
 
                 function Element(id, x, y, z, ry, css, child = '') {
@@ -331,19 +342,26 @@ const Project = () => {
                         width : `20px`,
                         height : `20px`,
                         overflow : 'hidden',
-                        backgroundColor : '#111',
+                        backgroundColor : '#333',
                         display : 'flex',
                         justifyContent : 'center'
                     },
                     `<img width="180px" height="100%" src="${projects[1].image || ''}" />`) ) ;
 
                     scene.add(group) ;
-                
-                    requestAnimationFrame( animate ) ;
+
+                    if (window.innerWidth > 1024) {
+                        animatOn = true ;
+                        requestAnimationFrame( animate ) ;
+                    }else  {
+                        animatOn = false ;
+                        cancelAnimationFrame(animateStop) ;
+                    }
+
+                    window.addEventListener('resize', windowReSize, false) ;
                 }
       
                 get3dData() ;
-            }
     
             }catch {
                 console.log('error') ;
@@ -354,7 +372,9 @@ const Project = () => {
 
         fetchData() ;
 
-        return ;
+        return () => {
+            window.removeEventListener('resize', windowReSize, false) ;
+        } ;
     }, []) ;
 
     function startAnimateControll(e) {
@@ -402,7 +422,7 @@ const Project = () => {
 
     return (
         <>
-            {window.innerWidth <= tabletS ? (<Container>     
+            <Container>     
                 <ContentContainer>
                     {projectContentData && projectContentData.map((content, index) => (
                         <ProjectContent 
@@ -411,34 +431,34 @@ const Project = () => {
                         />
                     ))}
                 </ContentContainer>
-            </Container>) : (
+            </Container>
             <Container3D id="container">
                 <Button onClick={startButtonClick} image={require('../assets/me.png').default}/>
                 {projectContentData[selectData] &&
                     <ProjectContentContainer id="projectContent">
                         <ProjectContentButton onClick={projectContentOutButton} />
-                            <LeftContainer>
-                                <Title>{projectContentData[selectData].title}</Title>
-                                <Date>{projectContentData[selectData].period}</Date>
-                                <GitHub onClick={() => onClickContent(projectContentData[selectData].url)}>{projectContentData[selectData].url}</GitHub>
-                                <LanguageContainer>
-                                    <Text>사용언어</Text>
-                                    { language.map((data, index) => {
-                                        const arr = projectContentData[selectData].language.split(' ') ;
-                                        for(let i = 0 ; i < arr.length ; i++) {
-                                            if(arr[i] === data.text)
-                                                return <Language icon={data.icon} color={data.color} key={index}/>
-                                        }
-                                        return null ;
-                                    })}
-                                </LanguageContainer>
-                                <Description>{projectContentData[selectData].description}</Description>
-                            </LeftContainer>
-                            <RightContainer id="imageContainer" >
-                            </RightContainer>
+                        <LeftContainer>
+                            <Title>{projectContentData[selectData].title}</Title>
+                            <Date>{projectContentData[selectData].period}</Date>
+                            <GitHub onClick={() => onClickContent(projectContentData[selectData].url)}>{projectContentData[selectData].url}</GitHub>
+                            <LanguageContainer>
+                                <Text>사용언어</Text>
+                                { language.map((data, index) => {
+                                    const arr = projectContentData[selectData].language.split(' ') ;
+                                    for(let i = 0 ; i < arr.length ; i++) {
+                                        if(arr[i] === data.text)
+                                            return <Language icon={data.icon} color={data.color} key={index}/>
+                                    }
+                                    return null ;
+                                })}
+                            </LanguageContainer>
+                            <Description>{projectContentData[selectData].description}</Description>
+                        </LeftContainer>
+                        <RightContainer id="imageContainer" >
+                        </RightContainer>
                     </ProjectContentContainer>
                 }
-            </Container3D>)}
+            </Container3D>
         </>
     );
 };

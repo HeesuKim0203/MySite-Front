@@ -1,11 +1,14 @@
 import { memo } from 'react' ;
 import styled from 'styled-components' ;
-import { withCookies } from 'react-cookie' ;
 import Helmet from 'react-helmet' ;
 import Project from './Project' ;
 import UseLanguage from '../Components/Home/UseLanguage' ;
 
 import Slide from '../Components/Slide' ;
+import { darkMode, lightMode } from '../Util/theme' ;
+import { mode } from '../Util/util' ;
+
+const { light } = mode ;
 
 const Container = styled.div`
     width : 90% ;
@@ -14,7 +17,7 @@ const Container = styled.div`
 
     overflow : hidden ;     
 
-    @media ${props => props.theme.mobileS} {
+    @media ${props => props.theme.mobileL} {
         width : 100% ;
     }
 `;
@@ -149,6 +152,7 @@ const Title = styled.h3`
     text-align : center ;
 
     user-select : none ;
+    color : ${props => props.theme.color.fontColor} ;
 
     @media ${props => props.theme.mobileL} {
         font-size : 24px ;
@@ -163,6 +167,8 @@ const Text = styled.p`
 
     text-align : center ;
     padding : 5px 3px ;
+
+    color : ${props => props.theme.color.fontColor} ;
 
     user-select : none ;
 
@@ -203,7 +209,7 @@ const Button = styled.div`
     
     border-radius : 20px ;
     
-    background-color : #111 ;
+    background-color : ${props => props.modeState === light ? darkMode.backgroundColor : lightMode.backgroundColor} ;
     opacity : 0.6 ;
 
     &:not(:last-child) {
@@ -211,7 +217,7 @@ const Button = styled.div`
     }
 `;
 
-const Home = () => {
+const Home = ({ modeState }) => {
 
       function moveScroll(y) {
         window.scroll({
@@ -269,7 +275,7 @@ const Home = () => {
                                 <Text>정보 공유와 저의 성장을 기록하기 위해서 만들었습니다.</Text>
                         </SlideTextContainer>
                         <SlideDataContainer>
-                            <Slide />
+                            <Slide modeState={modeState} />
                         </SlideDataContainer>
                     </SlideContainer>
             </Container>
@@ -277,4 +283,4 @@ const Home = () => {
     );
 };
 
-export default withCookies(memo(Home)) ;
+export default memo(Home) ;

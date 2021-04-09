@@ -1,12 +1,10 @@
 import styled from 'styled-components' ;
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome' ;
-import { faFacebookF, faGithub, faInstagram } from '@fortawesome/free-brands-svg-icons' ;
-
 import Helmet from 'react-helmet' ;
 
 const Container = styled.div`
     width : 100% ;
+
+    color : ${props => props.theme.color.fontColor} ;
 
     padding : 70px 0 ;
 
@@ -18,13 +16,17 @@ const Container = styled.div`
 const MyContainer = styled.div`
 
     width : 60% ;
-    height : 580px ;
+    height : 500px ;
+
+    border : 1px solid ${props => props.theme.color.profileBorderColor} ;
+    border-radius : ${props => props.theme.color.contentBorderRadius} ;
 
     margin : 0 auto ;
 
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23) ;
 
     @media ${props => props.theme.mobileS} {
+        border-radius : 0 ;
         width : 100% ;
         height : 300px ;
     }
@@ -38,7 +40,7 @@ const MainContainer = styled.div`
 `;
 
 const Main = styled.div`
-    height : 87% ;
+    height : 100% ;
     float : left ;
 `;
 
@@ -50,50 +52,7 @@ const Main2 = styled(Main)`
     
     width : 50% ;
 
-    border-left : 1px solid #111 ;
-`;
-
-const Footer = styled.ul`
-    width : 100% ;
-    height : 13% ;
-
-    border-top : 1px solid #111 ;
-    float : left ;
-
-    display : flex ;
-
-    justify-content : center ;
-    align-items : center ;
-`;
-
-const IconBox = styled.li`
-    width : 50px ;
-    &:not(:last-child) {
-        margin-right : 20px ;
-    }
-
-    @media ${props => props.theme.mobileS} {
-        width : 30px ;
-    }
-`;
-
-const Icon = styled(FontAwesomeIcon)`
-
-    box-sizing : content-box ;
-    cursor : pointer ;
-    font-size : 28px ;
-
-    transition : 0.3 font-size ease-in ;
-
-    &:hover {
-        font-size : 32px ;
-    }
-
-    @media ${props => props.theme.mobileS} {
-        font-size : 18px ;
-        &:hover {
-        }
-    }
+    border-left : 1px solid ${props => props.theme.color.profileBorderColor} ;
 `;
 
 const MyImg = styled.div`
@@ -203,17 +162,6 @@ const Profile = () => {
                                 </MyIntroductionLi>
                             </MyIntroduction>
                         </Main2>
-                        <Footer>
-                            <IconBox>
-                                <Icon icon={faFacebookF} color="#111" />
-                            </IconBox>
-                            <IconBox>
-                                <Icon icon={faGithub} color="#111" />
-                            </IconBox>
-                            <IconBox>
-                                <Icon icon={faInstagram} color="#111" />
-                            </IconBox>
-                        </Footer>
                     </MainContainer>
                 </MyContainer>
             </Container>

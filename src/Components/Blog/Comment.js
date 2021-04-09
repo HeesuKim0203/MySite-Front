@@ -11,6 +11,8 @@ const Container = styled.div`
 
     border-bottom : 1px solid #cfd8dc ;
 
+    color : ${props => props.theme.color.fontColor} ;
+
     padding : 30px ;
 
     &:last-child {
@@ -40,8 +42,6 @@ const HeaderTool = styled.div`
 
 const Button = styled.button`
     all : unset ;
-
-    color : #616161 ;
     
     font-weight : 550 ;
 
@@ -228,14 +228,15 @@ const Comment = ({ comment, deleteCommnet, onUpdateComment, onCheckUser }) => {
                             <DeleteButton onClick={() => deleteCommnet(id)}>
                                 삭제
                             </DeleteButton>
-                            <CommentCommentAdd>
+                            {/* <CommentCommentAdd>
                                 댓글 달기
-                            </CommentCommentAdd>
+                            </CommentCommentAdd> */}
                         </>
                     ) : (
                     <Form onSubmit={async (e) => {
                             const result = await onCheckUser(e, comment, password) ;
-                            return result ? setCheckUser(!checkUser) : null ;
+                            setPassword('') ;
+                            return result ? setCheckUser(!checkUser) : alert('비밀번호가 틀렸습니다.') ;
                         }}>
                         <Input 
                             status={checkUser ? '#999' : 'red'}
