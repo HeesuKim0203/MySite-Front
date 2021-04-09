@@ -24,12 +24,6 @@ export const axiosApi = {
             'Authorization' : 'Bearer ' + token
         }
     }),
-    getProjectList : () => api.get('api/projects'),
-    insertComment : commentData => api.post('api/comments', commentData),
-    deleteComment : id => api.delete(`api/comments/${id}`),
-    updateComment : (commentData, id) => api.post(`api/comments/${id}`, commentData),
-    getCommets : contentId => api.get(`api/comments/${contentId}`),
     checkUser : userData => api.post('api/comments/check', userData),
     visitorNum : () => api.get('/api/visitors'),
-    checkVisitor : () => api.post('api/visitors'),
 } ;

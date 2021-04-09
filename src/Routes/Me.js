@@ -3,8 +3,8 @@ import styled, { css } from 'styled-components' ;
 import { Link } from 'react-router-dom' ;
 import { withCookies } from 'react-cookie' ;
 import { Line, Doughnut } from 'react-chartjs-2' ;
+import { connect } from 'react-redux' ;
 
-import { connect } from 'react-redux';
 import Helmet from 'react-helmet' ;
 
 import Image from '../Components/Me/Image' ;
@@ -238,7 +238,7 @@ const Me = ({ contentType, cookies : { cookies : { token } } }) => {
             window.location('/') ;
         }
     }
-    async function geVisitorNumData() {
+    async function getVisitorNumData() {
         const { 
             data : {
                  result 
@@ -251,7 +251,7 @@ const Me = ({ contentType, cookies : { cookies : { token } } }) => {
     useEffect(()=> {
 
         checkUser(token) ;
-        geVisitorNumData()
+        getVisitorNumData()
 
         return () => {
             setDateData([]) ;

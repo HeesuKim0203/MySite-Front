@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom' ;
 
 import styled from 'styled-components' ;
 
-const GRAY_1 = '#bdbdbd' ;
-
 const Container = styled.li`
     width : 200px ;
     height : 58px ;

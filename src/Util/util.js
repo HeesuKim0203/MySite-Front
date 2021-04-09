@@ -1,5 +1,4 @@
 import { faReact, faJsSquare, faHtml5, faCss3Alt, faLaravel, faNode, faLinux, faJava, faAndroid, faPython } from '@fortawesome/free-brands-svg-icons' ;
-import { faWalking, faComment, faHiking } from '@fortawesome/free-solid-svg-icons' ;
 
 export const blogContentNum = 9 ;
 export const blogPageContentNum = 5 ;
@@ -20,9 +19,6 @@ export const language = [
 ] ;
 
 export const otherType = [
-    { text : '일상' , icon : faWalking },
-    { text : '이모저모' , icon : faComment },
-    { text : '여행기' , icon : faHiking },
 ] ;
 
 // asideTitle 길이와 little data의 갯수를 맞춰주세요
