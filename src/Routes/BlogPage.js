@@ -1,5 +1,6 @@
 import { useEffect } from 'react' ;
 import styled, { css } from 'styled-components' ;
+import Helmet from 'react-helmet' ;
 
 import MDEditor from '@uiw/react-md-editor' ;
 import { connect } from 'react-redux';
@@ -49,6 +50,18 @@ const CommentWrap= styled.div`
     width : 100% ;
 `;
 
+const Title = styled.h1`
+    font-size : 40px ;
+    
+    margin-bottom : 40px ;
+
+    line-height : 43px ;
+
+    @media ${props => props.theme.mobileL} {
+        font-size : 32px ;
+    }
+`;
+
 const cssText = css`
     h1, h2, h3, h4, h5, h6, a, p {
         color : #e0e0e0 ;
@@ -58,7 +71,16 @@ const cssText = css`
     }
 `;
 
-const BlogPage = ({ pageContents, pageSelect, text, id, pageContentsPotition, updatePageSelect, modeState }) => {
+const BlogPage = ({ 
+    pageContents, 
+    pageSelect, 
+    text, 
+    id, 
+    title,
+    pageContentsPotition, 
+    updatePageSelect, 
+    modeState 
+}) => {
 
     useEffect(() => {
 
@@ -73,15 +95,24 @@ const BlogPage = ({ pageContents, pageSelect, text, id, pageContentsPotition, up
 
     return (
         <>
-            {modeState === mode.dark ? (
-            <style>
-                {cssText}
-            </style>) : null }
+            <Helmet>
+                <meta
+                    name="description"
+                    content={title}
+                />
+                <title>{title}</title>
+            </Helmet>
+                {modeState === mode.dark ? (
+                    <style>
+                        {cssText}
+                    </style>) : null 
+                }
             <Container>
                     {
                         id !== -1 ? (
                         <>
                             <Main>
+                                <Title>{title}</Title>
                                 <MDEditor.Markdown id="content" source={ text } />
                             </Main>
                             <Footer>
@@ -143,7 +174,8 @@ export default withRouter(connect(
             pageSelect,
             text : content ? content.text : "",
             id : content ? content.id : -1,
-            pageContentsPotition : position 
+            pageContentsPotition : position,
+            title : content ? content.title : "",
         } ;
     }, 
     dispatch => ({

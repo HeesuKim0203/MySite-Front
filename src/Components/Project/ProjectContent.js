@@ -1,4 +1,5 @@
-import styled from 'styled-components' ;
+import { useEffect } from 'react';
+import styled, { css } from 'styled-components' ;
 
 const Container = styled.div`
 
@@ -55,18 +56,12 @@ const DescriptionContainer  = styled.div`
     align-items : center ;
 `;
 
-const Img = styled.div`
+const ContentLayOut = css`
     width : 100% ;
     height : 270px ;
 
     position : relative ;
     float : left ;
-
-    background-image : url(${props => props.src}) ;
-
-    background-size : 100% 270px ;
-    background-repeat : no-repeat ;
-    background-position : 0 0 ;
 
     @media ${props => props.theme.laptop} {
         height : 260px ;
@@ -74,6 +69,25 @@ const Img = styled.div`
     @media ${props => props.theme.mobileL} {
         height : 250px ;
     }
+` ;
+
+const Video = styled.video`
+
+    font-size : 20px ;
+
+    color : red ;
+
+    ${ContentLayOut}
+`;
+
+const Image = styled.div`
+
+    ${ContentLayOut}
+    background-image : url(${props => props.src}) ;
+
+    background-size : 100% 100% ;
+    background-repeat : no-repeat ;
+    background-position : 0 0 ;
 `;
 
 const TextContainer = styled.div`
@@ -153,6 +167,14 @@ const ProjectContent = ({ content }) => {
         window.open(url, '_blank') ;
     }
 
+    function fallback() {
+        const parnt = document.querySelector('video.videoProject') ;
+        const img = document.querySelector('video.videoProject div.imageError') ;
+
+        if (img)
+            parnt.parentNode.replaceChild(img, parnt);
+    }
+
     return (
         <Container onClick={onClickContent}>
             <TextContainer>
@@ -163,9 +185,18 @@ const ProjectContent = ({ content }) => {
                     <Title draggable="false">{title}</Title>
                 </TitleContainer>
             </TextContainer>
-            <Img 
+            {image.split(' ')[1] ? <Image
                 src={image.split(' ')[0]} 
-            />
+            /> : <Video 
+                className="videoProject"
+                autoPlay
+                playsinline 
+                loop
+                muted
+            >
+                <source src={image} type="video/webm" onError={fallback} />
+                <Image className="imageError" src={image.replace('webm', 'gif').replace('videos', 'images')} />
+            </Video>}
             <DescriptionContainer>
                     <Description>
                         { description }

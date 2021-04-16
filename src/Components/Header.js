@@ -210,7 +210,7 @@ const Header = ({ location }) => {
     const data= [
         {
             path : HOME,
-            text : 'HOME',
+            text : 'INFORMATION',
         },
         {
             path : DOCUMENT,
@@ -242,9 +242,9 @@ const Header = ({ location }) => {
             </Menu>
             <ImgContainer>
                     <>
-                        <Img imgUrl={require("../assets/header_image.jpg").default}/>
+                        <Img imgUrl={require("../assets/header_image.webp").default}/>
                         <TitContainer>
-                            <Title>Programer</Title>
+                            <Title>Programmer</Title>
                             <br />
                             <Typewriter
                                 onInit={(typewriter) => {

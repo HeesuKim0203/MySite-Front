@@ -14,18 +14,18 @@ const theme = { selectColor : SELECTCOLOR } ;
  
 export const darkMode = {
     backgroundColor : BLACK,
+    profileBackgroundColor : '#424242',
     fontColor : WHITE,
     aisdeMenuColor : WHITE,
-    contentBorderRadius : '15px',
     buttonFontColor : WHITE,
     profileBorderColor : WHITE,
     mobileContentColor : BLACK
 } ;
 export const lightMode = {
     backgroundColor : WHITE,
+    profileBackgroundColor : '#fff',
     fontColor : BLACK,
     aisdeMenuColor : '#9e9e9e',
-    contentBorderRadius : '0px',
     buttonFontColor : '#cfd8dc',
     profileBorderColor : BLACK,
     mobileContentColor : WHITE

@@ -1,4 +1,16 @@
-import { faReact, faJsSquare, faHtml5, faCss3Alt, faLaravel, faNode, faLinux, faJava, faAndroid, faPython } from '@fortawesome/free-brands-svg-icons' ;
+import { 
+    faReact, 
+    faJsSquare, 
+    faHtml5, 
+    faCss3Alt, 
+    faLaravel, 
+    faNode, 
+    faLinux, 
+    faJava, 
+    faAndroid, 
+    faPython,
+    faAws 
+} from '@fortawesome/free-brands-svg-icons' ;
 
 export const mode = { dark : 'dark', light : 'light' } ;
 
@@ -25,19 +37,12 @@ export const language = [
     { text : 'Java', icon : faJava, color : '#b71c1c', project : 1, rating : rank.B },
     { text : 'Android', icon : faAndroid, color : '#66bb6a', project : 1, rating : rank.B },
     { text : 'Python', icon : faPython , color : '#0277bd', project : 1, rating : rank.A },
-] ;
+    { text : 'AWS', icon : faAws, color : '#f57f17', project : 1, rating : rank.B }
+] ;  
 
-export const otherType = [
-    // { text : '일상' , icon : faWalking },
-    // { text : '이모저모' , icon : faComment },
-    // { text : '여행기' , icon : faHiking },
-] ;
 
 // asideTitle 길이와 little data의 갯수를 맞춰주세요
-// '잡담'
 export const asideTitle = [ '프로그래밍 언어' ] ;
-export const coreData = [ language, otherType ] ;
+export const coreData = [ language ] ;
 
-export const searchCoreData = [ ...language, ...otherType ] ;
-
-export const typeChartData = language.map(data =>({ type : data.text, num : 0, color : data.color }))
+export const searchCoreData = [ ...language ] ;

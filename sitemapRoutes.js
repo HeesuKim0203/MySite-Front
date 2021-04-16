@@ -1,5 +1,5 @@
 import React from 'react' ;
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom' ;
+import { BrowserRouter as Route } from 'react-router-dom' ;
 
 import { 
     HOME,
@@ -7,17 +7,15 @@ import {
     PROFILE,
 } from './src/Util/routes' ;
 
-const Template = () => {
+export default (ldList) => {
     return (
-            <Router>
-                    <Switch>
-                        <Route path={HOME} />
-                        <Route path={DOCUMENT}  />
-                        <Route path={PROFILE}  />
-                        <Redirect path="*" to={HOME} />
-                    </Switch>
-            </Router>
-    ) ;
+        <Route>
+            <Route path={HOME} />
+            <Route path={DOCUMENT}  />
+            {
+                ldList.map((id, index) => <Route key={index} path={`${DOCUMENT}/${id}`} />)
+            }
+            <Route path={PROFILE}  />
+        </Route>
+    )
 } ;
-
-export default Template ;

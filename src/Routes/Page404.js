@@ -3,6 +3,15 @@ import styled from 'styled-components' ;
 const Container = styled.div`
     width : 100% ;
     height : 500px ;
+
+    display : flex ;
+    flex-direction : column ;
+    justify-content : center ;
+    align-items : center ;
+
+    @media ${props => props.theme.mobileS} {
+        height : 300px ;
+    }
 `;
 
 const Img = styled.div`
@@ -11,34 +20,65 @@ const Img = styled.div`
     margin : 0 auto ;
 
     width : 450px ;
-    height : 350px ;
+    height : 400px ;
 
     background-image : url(${props => props.url}) ;
-    background-size : 450px 350px ;
+    background-size : 450px 400px ;
     background-repeat : no-repeat ;
+
+
+    @media ${props => props.theme.mobileS} {
+        width : 250px ;
+        height : 200px ;
+        background-size : 250px 200px ;
+    }
 `;
 
-const Text = styled.div`
+const Title = styled.div`
     position : absolute ;
 
     background-color : ${props => props.theme.color.backgroundColor} ;
-    color : ${props => props.theme.color.fontColor} ;
+    color : #9575cd ;
 
     font-size : 70px ;
-    font-weight : 700 ;
+    font-weight : 500 ;
 
-    bottom : 60px ;
+    bottom : 70px ;
     left : 147px ;
 
     user-select : none ;
+
+    @media ${props => props.theme.mobileS} {
+        bottom : 35px ;
+        left : 82px ;
+
+        font-size : 40px ;
+    }
+`;
+
+const Text = styled.span`
+    display : block ;
+    
+    font-weight : 650 ;
+    color : ${props => props.theme.color.fontColor} ;
+
+    margin-bottom : 10px ;
+
+    user-select : none ;
+
+    @media ${props => props.theme.mobileS} {
+        font-size : 12px ;
+    }
 `;
 
 const Page404 = () => {
     return (
         <Container>
-            <Img url={require('../assets/404.png').default}>
-                <Text>4 0 4</Text>
+            <Img url={require('../assets/404.webp').default}>
+                <Title>4  0  4</Title>
             </Img>
+            <Text>이 페이지는 없는 페이지 입니다.</Text>
+            <Text>다른 페이지로 이동해 주세요</Text>
         </Container>
     );
 };

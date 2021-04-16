@@ -158,12 +158,12 @@ const Title = styled.h3`
         font-size : 24px ;
     }
     @media ${props => props.theme.mobileS} {
-        font-size : 20px ;
+        font-size : 22px ;
     }
 `;
 
 const Text = styled.p`
-    font-size : 12px ;
+    font-size : 14px ;
 
     text-align : center ;
     padding : 5px 3px ;
@@ -173,10 +173,13 @@ const Text = styled.p`
     user-select : none ;
 
     @media ${props => props.theme.mobileL} {
-        font-size : 11px ;
+        font-size : 13px ;
     }
-    @media ${props => props.theme.mobileS} {
-        font-size : 9px ;
+`;
+
+const TextAdd = styled(Text)`
+    @media ${props => props.theme.tabletL} {
+        display : none ;
     }
 `;
 
@@ -239,12 +242,13 @@ const Home = ({ modeState }) => {
     return (
         <>
             <Helmet>
+                <meta name="description" content="초심자를 위한 프로그래밍 지식"/>
                 <title>Home  | Beginner</title>
             </Helmet>
             <FixMenu>
-                <Button onClick={onClickScroll1} />
-                <Button onClick={onClickScroll2} />
-                <Button onClick={onClickScroll3} />
+                <Button onClick={onClickScroll1} modeState={modeState} />
+                <Button onClick={onClickScroll2} modeState={modeState} />
+                <Button onClick={onClickScroll3} modeState={modeState} />
             </FixMenu>
             <Container>
                 <ContentContainer>
@@ -261,8 +265,8 @@ const Home = ({ modeState }) => {
                     <ProjectTextContainer>
                         <Title>Project</Title>
                         <Text>제가 현재까지 진행한 개인 프로젝트 입니다.</Text>
-                        <Text>마우스를 올리면 설명이 나옵니다.</Text>
-                        <Text>각 면을 좌클릭 시 상세 설명이 나옵니다.</Text>
+                        <TextAdd>사람모양의 아이콘을 클릭 해 보세요.</TextAdd>
+                        <TextAdd>각 면을 좌클릭 시 상세 설명이 나옵니다.</TextAdd>
                     </ProjectTextContainer>
                     <ProjectDataContainer>
                         <Project />

@@ -2,9 +2,10 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components' ;
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome' ;
-import { Scene, PerspectiveCamera, Group } from 'three' ;
+import { Scene, PerspectiveCamera, Group } from '../../node_modules/three/build/three.module' ;
 import { CSS3DRenderer, CSS3DObject } from '../../node_modules/three/examples/jsm/renderers/CSS3DRenderer.js' ;
-import { TrackballControls } from '../../node_modules/three/examples/jsm/controls/TrackballControls'
+import { TrackballControls } from '../../node_modules/three/examples/jsm/controls/TrackballControls' ;
+import { faTimes } from '@fortawesome/free-solid-svg-icons' ;
 
 import { axiosApi } from '../Util/api' ;
 import { language } from '../Util/util' ;
@@ -27,7 +28,7 @@ const ContentContainer = styled.div`
     
     grid-template-columns : repeat(2, 50%) ;
     grid-row-gap : 30px ;
-    @media ${props => props.theme.tabletS} {
+    @media ${props => props.theme.tabletL} {
         display : grid ;
         grid-template-columns : repeat(1, 100%) ;
     }
@@ -48,7 +49,7 @@ const Container3D = styled.div`
 
     margin : 0 auto ;
 
-    @media ${props => props.theme.tabletS} {
+    @media ${props => props.theme.tabletL} {
         display : none ;
     }
 `;
@@ -84,24 +85,28 @@ const ProjectContentContainer = styled.div`
     overflow : hidden ;
 
     z-index : 5 ;
+
+    @media ${props => props.theme.laptop} {
+        height : 750px ;
+    }
 `;
 
-const ProjectContentButton = styled.button`
+const ProjectContentButton = styled(FontAwesomeIcon)`
     all : unset ;
 
     position : absolute ;
-    
-    background-color : #fff ;
+
+    color : #fff ;
 
     z-index : 10 ;
 
-    right : 3px ;
-    bottom : 3px ;
+    top : 3px ;
+    left : 3px ;
     
     width : 15px ;
     height : 15px ;
     
-    border-radius : 30px ;
+    cursor : pointer ;
 `;
 
 const LeftContainer = styled.div`
@@ -113,6 +118,11 @@ const LeftContainer = styled.div`
     padding : 20px ;
 
     overflow : hidden ;
+
+    @media ${props => props.theme.laptop} {
+        width : 100% ;
+        height : 250px ;
+    }
 `;
 
 const Title = styled.h3`
@@ -185,6 +195,11 @@ const RightContainer = styled.div`
     float : left ;
 
     overflow : hidden ;
+
+    @media ${props => props.theme.laptop} {
+        width : 100% ;
+        height : 360px ;
+    }
 `;
 
 const Text = styled.span`
@@ -255,10 +270,10 @@ const Project = () => {
                 }
 
                 windowReSize = ()=> {
-                        if (window.innerWidth > 1024 && !animatOn) {
+                        if (window.innerWidth > 1220 && !animatOn) {
                             animatOn = true ;
                             requestAnimationFrame( animate ) ;
-                        }else if (window.innerWidth < 1024 && animatOn)  {
+                        }else if (window.innerWidth <= 1220 && animatOn)  {
                             animatOn = false ;
                             cancelAnimationFrame(animateStop) ;
                         }
@@ -324,19 +339,23 @@ const Project = () => {
                     group.add( new Element(0, 0, 0, 240, 0, {
                         width : `20px`,
                         height : `20px`,
+                        overflow : 'hidden',
+                        backgroundColor : '#333',
+                        display : 'flex',
+                        justifyContent : 'center'
                     },
-                    `<img width="100%" height="100%" src="${projects[0].image || ''}" />`
+                    `<video width="100%" height="100%" src="${projects[0].image || ''}" autoplay loop/>`
                     )) ;
                     group.add( new Element(3, 240, 0, 0, Math.PI / 2, {
                         width : `20px`,
                         height : `20px`,
                     }, 
-                    `<img class="kinoko" width="100%" height="100%" src="${projects[3].image.split(' ')[0] || ''}" />`) );
+                    `<image class="kinoko" width="100%" height="100%" src="${projects[3].image.split(' ')[0] || ''}" />`) );
                     group.add( new Element(2, 0, 0, -240, Math.PI, {
                         width : `20px`,
                         height : `20px`,
                     },
-                        `<img width="100%" height="100%" src="${projects[2].image || ''}" style="object-fit: cover;" />`
+                        `<video width="100%" height="100%" src="${projects[2].image || ''}" style="position : relative ; top : 0px ; left : 0px ;" autoplay loop />`
                     ) );
                     group.add( new Element(1, -240, 0, 0, - Math.PI / 2, {
                         width : `20px`,
@@ -346,11 +365,11 @@ const Project = () => {
                         display : 'flex',
                         justifyContent : 'center'
                     },
-                    `<img width="180px" height="100%" src="${projects[1].image || ''}" />`) ) ;
+                    `<video width="180px" height="100%" src="${projects[1].image || ''}"  autoplay loop />`) ) ;
 
                     scene.add(group) ;
 
-                    if (window.innerWidth > 1024) {
+                    if (window.innerWidth > 1220) {
                         animatOn = true ;
                         requestAnimationFrame( animate ) ;
                     }else  {
@@ -411,6 +430,7 @@ const Project = () => {
     }
     
     function projectContentOutButton(e) {
+        e.stopPropagation() ;
         const projectContent = document.getElementById('projectContent') ;
         
         projectContent.style.display = 'none' ;
@@ -433,10 +453,10 @@ const Project = () => {
                 </ContentContainer>
             </Container>
             <Container3D id="container">
-                <Button onClick={startButtonClick} image={require('../assets/me.png').default}/>
+                <Button onClick={startButtonClick} image={require('../assets/me.webp').default}/>
                 {projectContentData[selectData] &&
                     <ProjectContentContainer id="projectContent">
-                        <ProjectContentButton onClick={projectContentOutButton} />
+                        <ProjectContentButton icon={faTimes} onClickCapture={projectContentOutButton} />
                         <LeftContainer>
                             <Title>{projectContentData[selectData].title}</Title>
                             <Date>{projectContentData[selectData].period}</Date>

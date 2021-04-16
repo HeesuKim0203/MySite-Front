@@ -48,7 +48,7 @@ const Date = styled.span`
 `;
 
 const BlogPageContent = ({ content, location : { pathname } }) => {
-    const { title, updated_at, id} = content ;
+    const { title, created_at, id} = content ;
 
     const [ select, setSelect ] = useState(false) ;
 
@@ -67,7 +67,7 @@ const BlogPageContent = ({ content, location : { pathname } }) => {
         <Link to={`${DOCUMENT}/${id}`}>
             <Container select={select}>
                 <Title>{title}</Title>
-                <Date>{updated_at}</Date>
+                <Date>{created_at}</Date>
             </Container>
         </Link>
     );

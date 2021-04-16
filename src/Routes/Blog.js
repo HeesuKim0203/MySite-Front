@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react' ;
 import styled from 'styled-components' ;
+import Helmet from 'react-helmet' ;
 
 import BlogContainer from '../Components/Blog/BlogContainer' ; 
 import { connect } from 'react-redux';
@@ -44,27 +45,33 @@ const Blog = ({ contentsData, select }) => {
     }, [ contentsData ]) ;
 
     return (
-        <Container>
-            { error && error ? (<Message mode="error" text={error} />) : null }
-            <ContentContainer>
-                { contentsData && contentsData.map((content, index) => {
-                    return select === index ? (
-                        <BlogContainer 
-                            key={index}
-                            content={content}
-                            select={true}
-                            error={error}
-                        />
-                    ) : (
-                        <BlogContainer 
-                            key={index}
-                            content={content}
-                        />
-                    )
-                })}
-            </ContentContainer>
-            <ButtonContainer />
-        </Container>
+        <>
+            <Helmet>
+                <meta name="description" content="초심자를 위한 프로그래밍 지식"/>
+                <title>Blog | Beginner</title>
+            </Helmet>
+            <Container>
+                { error && error ? (<Message mode="error" text={error} />) : null }
+                <ContentContainer>
+                    { contentsData && contentsData.map((content, index) => {
+                        return select === index ? (
+                            <BlogContainer 
+                                key={index}
+                                content={content}
+                                select={true}
+                                error={error}
+                            />
+                        ) : (
+                            <BlogContainer 
+                                key={index}
+                                content={content}
+                            />
+                        )
+                    })}
+                </ContentContainer>
+                <ButtonContainer />
+            </Container>
+        </>
     );
 };
 
