@@ -28,20 +28,17 @@ const Title = styled.h5`
     font-family : 'Montserrat', sans-serif ;
 
     @media ${props => props.theme.laptop} {
-        font-size : 16px ;
-        margin-top : 10px ;
-    }
-    @media ${props => props.theme.mobileS} {
         font-size : 14px ;
+        margin-top : 10px ;
+        height : 30px ;
     }
 `;
 
 const Container = styled.div`
     width : 70% ;
     overflow : hidden ;
-    border-radius : ${props => props.theme.color.contentBorderRadius} ;
 
-    box-shadow: 0 5px 10px rgba(0,0,0,0.19), 0 3px 3px rgba(0,0,0,0.23) ;
+    border-radius : 20px ;
 
     cursor : pointer ;
 
@@ -56,6 +53,10 @@ const Container = styled.div`
         @media ${props => props.theme.tabletL} {
             margin-left : 0 ;
         }
+    }
+
+    @media ${props => props.theme.laptop} {
+        width : 80% ;
     }
 
     @media ${props => props.theme.tabletL} {
@@ -86,7 +87,7 @@ const Img = styled.div`
     float : left ; 
 
     @media ${props => props.theme.laptop} {
-        height : 160px ;
+        height : 180px ;
     }
     @media ${props => props.theme.tabletL} {
         border : 1px solid #eeeeee ;
@@ -171,7 +172,7 @@ const TitleContainer = styled.div`
 
 
 const StyleFontAwesomeIcon = styled(FontAwesomeIcon)`
-    font-size : 24px ;
+    font-size : 22px ;
 
     @media ${props => props.theme.mobileS} {
         font-size : 20px ;

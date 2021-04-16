@@ -1,6 +1,5 @@
 import { Route } from 'react-router-dom' ;
 import styled from 'styled-components' ;
-import Helmet from 'react-helmet' ;
 
 import AsideMenu from '../Components/Blog/AsideMenu' ;
 import {
@@ -47,20 +46,15 @@ const BlogRouter = ({ modeState }) => {
     }) ;
 
     return (
-        <>
-            <Helmet>
-                <title>Blog | Beginner</title>
-            </Helmet>
-            <Container>
-                <AsideMenuContainer>
-                    <AsideMenu asideData={asideData} />
-                </AsideMenuContainer>
-                <MainContainer>
-                    <Route exact path={DOCUMENT} component={Blog} />
-                    <Route path={`${DOCUMENT}/:id`} render={() => <BlogPage modeState={modeState} />} /> 
-                </MainContainer>
-            </Container>
-        </>
+        <Container>
+            <AsideMenuContainer>
+                <AsideMenu asideData={asideData} />
+            </AsideMenuContainer>
+            <MainContainer>
+                <Route exact path={DOCUMENT} component={Blog} />
+                <Route path={`${DOCUMENT}/:id`} render={() => <BlogPage modeState={modeState} />} /> 
+            </MainContainer>
+        </Container>
     ) ; 
 } ;
 

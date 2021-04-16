@@ -3,7 +3,6 @@ import { createStore, combineReducers } from 'redux' ;
 import { 
     blogContentNum,
     blogPageContentNum,
-    typeChartData
 } from '../Util/util' ;
 
 const STORE_DEFAULT_DATA = 'STORE_DEFAULT_DATA' ;
@@ -105,19 +104,9 @@ const contentReducer = (
     switch(action.type) {
         case STORE_DEFAULT_DATA :
 
-            const contentType = action.defaultData.reduce((prev, element) => {
-
-                prev.forEach((typeData) => {
-                    if(typeData.type === element.type)
-                        typeData.num ++ ;
-                }) ;
-                return prev ;
-            }, typeChartData) ;
-
              return {
                 ...state,                                            
                 defaultData :  action.defaultData,
-                contentType
             } ; 
              
          case SET_CONTENTS_DATA :
