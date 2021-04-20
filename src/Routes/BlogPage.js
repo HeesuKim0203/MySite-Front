@@ -1,6 +1,5 @@
 import { useEffect } from 'react' ;
 import styled, { css } from 'styled-components' ;
-import Helmet from 'react-helmet' ;
 
 import MDEditor from '@uiw/react-md-editor' ;
 import { connect } from 'react-redux';
@@ -17,14 +16,15 @@ import CommentContainer from '../Components/Blog/CommentContainer';
 import { blogPageContentNum, mode } from '../Util/util';
 import { createAction } from '../Store/store';
 import Message from '../Components/Message';
+import Seo from '../Components/Seo';
 
-const Container = styled.div`
+const Container = styled.main`
     width : 100% ;
     
     overflow : hidden ;
 `;
 
-const Main = styled.div`
+const Main = styled.section`
     width : 100% ;
 
     float : left ;
@@ -36,7 +36,7 @@ const ContentBox = styled.div`
     
 `;
 
-const Footer = styled.div`
+const Footer = styled.section`
     width : 100% ;
 
     float : left ;
@@ -77,9 +77,12 @@ const BlogPage = ({
     text, 
     id, 
     title,
+    type,
+    url,
     pageContentsPotition, 
     updatePageSelect, 
-    modeState 
+    modeState,
+    description
 }) => {
 
     useEffect(() => {
@@ -95,13 +98,13 @@ const BlogPage = ({
 
     return (
         <>
-            <Helmet>
-                <meta
-                    name="description"
-                    content={title}
-                />
-                <title>{title}</title>
-            </Helmet>
+            <Seo 
+                title={title}
+                url={`${DOCUMENT}/${id}`}
+                description={description}
+                type={type}
+                image={url}
+            />
                 {modeState === mode.dark ? (
                     <style>
                         {cssText}
@@ -169,13 +172,21 @@ export default withRouter(connect(
             if(buttons * blogPageContentNum <= id && id <= (buttons + 1) * blogPageContentNum)
                 position = buttons ;
         }) ;
-        return {
+        return content ? {
             pageContents,
             pageSelect,
-            text : content ? content.text : "",
-            id : content ? content.id : -1,
+            text : content.text ,
+            id : content.id,
             pageContentsPotition : position,
-            title : content ? content.title : "",
+            title : content.title,
+            description : content.description,
+            type : content.type,
+            url : content.image_url,
+        } : {
+            pageContents,
+            pageSelect,
+            pageContentsPotition : position,
+            id : -1
         } ;
     }, 
     dispatch => ({

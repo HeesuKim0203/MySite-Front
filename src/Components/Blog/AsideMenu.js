@@ -10,7 +10,7 @@ import { faSearch, faAlignJustify } from '@fortawesome/free-solid-svg-icons' ;
 import { Link } from 'react-router-dom';
 import { DOCUMENT } from '../../Util/routes';
 
-const Container = styled.div`
+const Container = styled.aside`
     width : 100% ;
 
     display : block ;

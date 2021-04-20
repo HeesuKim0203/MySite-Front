@@ -46,3 +46,9 @@ export const asideTitle = [ '프로그래밍 언어' ] ;
 export const coreData = [ language ] ;
 
 export const searchCoreData = [ ...language ] ;
+
+export const webData = {
+    webUrl : 'https://blog.heesu99.site',
+    titleData : '초보 프로그래머',
+    name : 'heesu99'
+} ;

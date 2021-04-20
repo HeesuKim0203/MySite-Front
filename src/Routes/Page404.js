@@ -1,4 +1,6 @@
 import styled from 'styled-components' ;
+import Seo from '../Components/Seo';
+import { PAGE404 } from '../Util/routes';
 
 const Container = styled.div`
     width : 100% ;
@@ -73,13 +75,20 @@ const Text = styled.span`
 
 const Page404 = () => {
     return (
-        <Container>
-            <Img url={require('../assets/404.webp').default}>
-                <Title>4  0  4</Title>
-            </Img>
-            <Text>이 페이지는 없는 페이지 입니다.</Text>
-            <Text>다른 페이지로 이동해 주세요</Text>
-        </Container>
+        <>
+            <Seo 
+                title={"URL에 맞는 페이지를 찾을 수 없습니다."}
+                url={PAGE404}
+                description={"없는 URL 접속시 에러 방지 페이지"}
+            />
+            <Container>
+                <Img url={require('../assets/404.webp').default}>
+                    <Title>4  0  4</Title>
+                </Img>
+                <Text>이 페이지는 없는 페이지 입니다.</Text>
+                <Text>다른 페이지로 이동해 주세요</Text>
+            </Container>
+        </>
     );
 };
 
