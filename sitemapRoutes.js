@@ -1,21 +1,23 @@
 import React from 'react' ;
-import { BrowserRouter as Route } from 'react-router-dom' ;
+import { BrowserRouter as Route, Switch } from 'react-router-dom' ;
 
 import { 
     HOME,
     DOCUMENT,
     PROFILE,
+    PAGE404,
 } from './src/Util/routes' ;
 
 export default (ldList) => {
     return (
-        <Route>
+        <Switch>
             <Route path={HOME} />
             <Route path={DOCUMENT}  />
             {
                 ldList.map((id, index) => <Route key={index} path={`${DOCUMENT}/${id}`} />)
             }
             <Route path={PROFILE}  />
-        </Route>
+            <Route path={PAGE404} />
+        </Switch>
     )
 } ;

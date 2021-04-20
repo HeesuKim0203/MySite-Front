@@ -1,5 +1,6 @@
 import styled from 'styled-components' ;
-import Helmet from 'react-helmet' ;
+import Seo from '../Components/Seo';
+import { PROFILE } from '../Util/routes';
 
 const Container = styled.div`
     width : 100% ;
@@ -127,10 +128,11 @@ const Profile = () => {
 
     return (
         <>
-            <Helmet>
-                <meta name="description" content="김희수의 Profile"/>
-                <title>Profile | Beginner</title>
-            </Helmet>
+            <Seo
+                title={"저에 대한 정보 입니다."}
+                url={PROFILE}
+                description={"저에 대한 정보 입니다."}
+            />
             <Container>
                 <MyContainer>
                     <MainContainer>

@@ -13,18 +13,12 @@ const ContainerMessage = styled.div`
     color : red ;
 `;
 
-const Message = ({ mode, text }) => {
+const Message = ({ text }) => {
 
     return (
-        <>
-            {mode ? (
-            <ContainerMessage>
-                {text}
-            </ContainerMessage>) : (
-                <>
-                </>
-            )}
-        </>
+        <ContainerMessage>
+            {text}
+        </ContainerMessage>
     );
 };
 

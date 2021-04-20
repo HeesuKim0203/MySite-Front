@@ -9,12 +9,15 @@ import { createAction } from './Store/store';
 import { ThemeProvider } from 'styled-components' ;
 import theme, { darkMode, lightMode } from './Util/theme' ;
 import { mode } from './Util/util' ;
+import Message from './Components/Message';
 
 function App({ setContents, setPageContents, setDefaultData, setProjectContents }) {
 
   const { dark, light } = mode ;
 
   const [ modeState, setModeState ] = useState(light) ;
+  const [ load, setLoadStatus ] = useState(false) ;
+  const [ error, setError ] = useState('') ;
 
   function modeChange(e) {
     setModeState(modeState === light ? dark : light) ;
@@ -39,9 +42,9 @@ function App({ setContents, setPageContents, setDefaultData, setProjectContents 
             setContents() ;
             setPageContents(contents) ;
         }catch {
-            console.log('error') ;
+          setError("서버로부터 데이터를 불러 올 수 없습니다. 새로고침 해주세요!") ;
         }finally {
-            
+            setLoadStatus(true) ;
         }
     }
     fetchData() ;
@@ -55,7 +58,11 @@ function App({ setContents, setPageContents, setDefaultData, setProjectContents 
           () => {theme.color=darkMode ; return theme}
         )()}>
       <GlobalStyle modeState={modeState} />
-      <Router modeChange={modeChange} modeState={modeState} />
+      { 
+        error ? 
+        <Message text={error}/>
+        : <Router modeChange={modeChange} modeState={modeState} load={load} /> 
+      }
     </ThemeProvider>
   );
 }

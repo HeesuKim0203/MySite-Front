@@ -9,6 +9,7 @@ import Home from '../Routes/Home' ;
 import BlogRouter from '../Routes/BlogRouter' ;
 import Profile from '../Routes/Profile' ;
 import Page404 from '../Routes/Page404' ;
+import Loder from './Loder' ;
 
 import { 
     HOME,
@@ -67,12 +68,12 @@ const ModeButton = styled.div`
     font-size : 1.3rem ;
 `;
 
-const Template = ({ modeChange, modeState }) => {
+const Template = ({ modeChange, modeState, load }) => {
     return (
         <Container>
             <Router>
                 <Header />
-                <TemplateContainer>
+                {load ? (<TemplateContainer>
                     <Switch>
                         <Route path={HOME} exact render={() => <Home modeState={modeState} />} />
                         <Route path={DOCUMENT} render={() => <BlogRouter modeState={modeState} />} />
@@ -80,7 +81,9 @@ const Template = ({ modeChange, modeState }) => {
                         <Route path={PAGE404} component={Page404} />
                         <Redirect path="*" to={PAGE404} />
                     </Switch>
-                </TemplateContainer>
+                </TemplateContainer>) : (
+                    <Loder />
+                )}
             </Router>
             <ModeButton onClick={modeChange} modeState={modeState}>
                 <FontAwesomeIcon icon={modeState === light ? faMoon : faSun } color={ modeState === light ? '#ffee58' : '#ff9800' } />

@@ -1,19 +1,20 @@
 import { useState, useEffect } from 'react' ;
 import styled from 'styled-components' ;
-import Helmet from 'react-helmet' ;
 
 import BlogContainer from '../Components/Blog/BlogContainer' ; 
 import { connect } from 'react-redux';
 import ButtonContainer from '../Components/Blog/ButtonContainer' ;
 import Message from '../Components/Message' ;
+import Seo from '../Components/Seo';
+import { DOCUMENT } from '../Util/routes';
 
-const Container = styled.div`
+const Container = styled.main`
     width : 100% ;
 
     overflow : hidden ;
 `;
 
-const ContentContainer = styled.div`
+const ContentContainer = styled.section`
     float : left ;
 
     width : 100% ;
@@ -46,10 +47,11 @@ const Blog = ({ contentsData, select }) => {
 
     return (
         <>
-            <Helmet>
-                <meta name="description" content="초심자를 위한 프로그래밍 지식"/>
-                <title>Blog | Beginner</title>
-            </Helmet>
+            <Seo 
+                title={"초심자도 따라 할 수 있는 프로그래밍 지식"}
+                url={DOCUMENT}
+                description={"제가 알고 있는 프로그래밍 지식에 대해 씁니다."}
+            />
             <Container>
                 { error && error ? (<Message mode="error" text={error} />) : null }
                 <ContentContainer>

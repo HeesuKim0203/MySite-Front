@@ -1,16 +1,17 @@
 import { memo } from 'react' ;
 import styled from 'styled-components' ;
-import Helmet from 'react-helmet' ;
 import Project from './Project' ;
 import UseLanguage from '../Components/Home/UseLanguage' ;
 
 import Slide from '../Components/Slide' ;
 import { darkMode, lightMode } from '../Util/theme' ;
 import { mode } from '../Util/util' ;
+import Seo from '../Components/Seo';
+import { HOME } from '../Util/routes';
 
 const { light } = mode ;
 
-const Container = styled.div`
+const Container = styled.main`
     width : 90% ;
 
     margin : 0 auto ;        
@@ -22,7 +23,7 @@ const Container = styled.div`
     }
 `;
 
-const ContentContainer = styled.div`
+const ContentContainer = styled.section`
     width : 100% ;
 
     float : left ;
@@ -65,7 +66,7 @@ const SlideContainer = styled.div`
     }
 `;
 
-const SlideDataContainer = styled.div`
+const SlideDataContainer = styled.section`
     margin-top : 45px ;
 
     width : 100% ;
@@ -241,10 +242,11 @@ const Home = ({ modeState }) => {
 
     return (
         <>
-            <Helmet>
-                <meta name="description" content="초심자를 위한 프로그래밍 지식"/>
-                <title>Home  | Beginner</title>
-            </Helmet>
+            <Seo
+                title={""}
+                url={HOME}
+                description={"저의 기술스택 지금까지 경험한 프로젝트를 볼 수 있는 공간입니다."}
+            />
             <FixMenu>
                 <Button onClick={onClickScroll1} modeState={modeState} />
                 <Button onClick={onClickScroll2} modeState={modeState} />
