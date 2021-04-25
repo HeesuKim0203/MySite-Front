@@ -11,6 +11,7 @@ import {
     faPython,
     faAws 
 } from '@fortawesome/free-brands-svg-icons' ;
+import { useState } from 'react' ;
 
 export const mode = { dark : 'dark', light : 'light' } ;
 
@@ -52,3 +53,31 @@ export const webData = {
     titleData : '초보 프로그래머',
     name : 'heesu99'
 } ;
+
+export function ApiHooks (api, apiData) {
+
+    const [ data, setData ] = useState([]) ;
+    const [ error, setError ] = useState('') ;
+    const [ load, setLoad ] = useState(true) ;
+  
+    const getData = async () => {
+        try {
+
+          const {
+              data : { result }
+          } = await api(apiData) ;
+
+          setData(result) ;
+
+        }catch {
+
+          setError("서버로부터 데이터를 불러올 수 없습니다.") ;
+
+        }finally {
+
+          setLoad(false) ;
+        }
+    } ;
+  
+    return { data, error, load, getData, setLoad } ;
+  }

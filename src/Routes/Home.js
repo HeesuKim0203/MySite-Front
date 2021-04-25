@@ -245,7 +245,7 @@ const Home = ({ modeState }) => {
             <Seo
                 title={""}
                 url={HOME}
-                description={"저의 기술스택 지금까지 경험한 프로젝트를 볼 수 있는 공간입니다."}
+                description={"heesu99의 기술스택 지금까지 경험한 프로젝트를 볼 수 있는 공간입니다."}
             />
             <FixMenu>
                 <Button onClick={onClickScroll1} modeState={modeState} />

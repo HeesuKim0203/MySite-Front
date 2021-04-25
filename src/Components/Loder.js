@@ -5,7 +5,7 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons' ;
 
 const Container = styled.div`
     height : 100vh ;
-    width : 100vw ;
+    width : 100% ;
     display : flex ;
     justify-content : center ;
     margin-top : 40px ;

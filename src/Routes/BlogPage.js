@@ -7,16 +7,18 @@ import { connect } from 'react-redux';
 import ButtonContainer from '../Components/Blog/ButtonContainer' ;
 import BlogPageContainer from '../Components/Blog/BlogPageContainer' ;
 
-import { withRouter } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
 
 import {
-    DOCUMENT
+    DOCUMENT, PAGE404
 } from '../Util/routes' ;
-import CommentContainer from '../Components/Blog/CommentContainer';
-import { blogPageContentNum, mode } from '../Util/util';
-import { createAction } from '../Store/store';
-import Message from '../Components/Message';
-import Seo from '../Components/Seo';
+import CommentContainer from '../Components/Blog/CommentContainer' ;
+import { blogPageContentNum, mode, ApiHooks } from '../Util/util' ;
+import { getContent } from '../Util/api' ;
+import { createAction } from '../Store/store' ;
+import Message from '../Components/Message' ;
+import Seo from '../Components/Seo' ;
+import Loder from '../Components/Loder' ;
 
 const Container = styled.main`
     width : 100% ;
@@ -62,7 +64,7 @@ const Title = styled.h1`
     }
 `;
 
-const cssText = css`
+const cssTextDark = css`
     h1, h2, h3, h4, h5, h6, a, p {
         color : #e0e0e0 ;
     }
@@ -71,19 +73,25 @@ const cssText = css`
     }
 `;
 
+const cssTextLight = css`
+    p {
+        color : #424242 ;
+    }
+`;
+
 const BlogPage = ({ 
     pageContents, 
     pageSelect, 
-    text, 
-    id, 
-    title,
-    type,
-    url,
-    pageContentsPotition, 
+    content,
+    id,
+    pageContentsPosition, 
     updatePageSelect, 
     modeState,
-    description
 }) => {
+
+    const { id : contentId, title, type, image_url } = content || {} ;
+
+    const { data, error, load, getData } = ApiHooks(getContent, contentId || -1) ;
 
     useEffect(() => {
 
@@ -92,31 +100,32 @@ const BlogPage = ({
             top : 0
         }) ;
         
-        updatePageSelect(pageContentsPotition) ;
+        updatePageSelect(pageContentsPosition) ;
+        getData() ;
 
-    }, [ updatePageSelect, pageContentsPotition, id ]) ;
+    }, [ updatePageSelect, pageContentsPosition, id ]) ;
 
     return (
         <>
             <Seo 
                 title={title}
                 url={`${DOCUMENT}/${id}`}
-                description={description}
+                description={data && data.description}
                 type={type}
-                image={url}
+                image={image_url}
             />
-                {modeState === mode.dark ? (
-                    <style>
-                        {cssText}
-                    </style>) : null 
-                }
+            <style>
+                { modeState === mode.dark ? cssTextDark : cssTextLight }
+            </style>
             <Container>
-                    {
-                        id !== -1 ? (
+                    { id !== -1 ? 
+                    load ? <Loder /> : 
+                    error ? <Message text={"서버로부터 데이터를 받아올 수 없습니다."}/>  :
+                        (
                         <>
                             <Main>
                                 <Title>{title}</Title>
-                                <MDEditor.Markdown id="content" source={ text } />
+                                <MDEditor.Markdown id="content" source={data && data.text} />
                             </Main>
                             <Footer>
                                 <ContentBox>
@@ -139,12 +148,11 @@ const BlogPage = ({
                                     <ButtonContainer />
                                 </ButtonWrap>
                                 <CommentWrap>
-                                    <CommentContainer contentId={id} />
+                                    <CommentContainer contentId={contentId} />
                                 </CommentWrap>
                             </Footer>
                         </>
-                        ) : <Message mode={'error'} text={"게시물이 없습니다."}/>
-                    }
+                        ) : <Redirect to={PAGE404}/> }
             </Container>
         </>
     );
@@ -172,21 +180,12 @@ export default withRouter(connect(
             if(buttons * blogPageContentNum <= id && id <= (buttons + 1) * blogPageContentNum)
                 position = buttons ;
         }) ;
-        return content ? {
+        return {
             pageContents,
             pageSelect,
-            text : content.text ,
-            id : content.id,
-            pageContentsPotition : position,
-            title : content.title,
-            description : content.description,
-            type : content.type,
-            url : content.image_url,
-        } : {
-            pageContents,
-            pageSelect,
-            pageContentsPotition : position,
-            id : -1
+            pageContentsPosition : position,
+            content,
+            id
         } ;
     }, 
     dispatch => ({

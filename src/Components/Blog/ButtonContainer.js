@@ -4,7 +4,6 @@ import { withRouter } from 'react-router-dom';
 import styled from 'styled-components' ;
 import { createAction } from '../../Store/store';
 
-
 import {
     DOCUMENT
 } from '../../Util/routes' ;

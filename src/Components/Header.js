@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Link, withRouter } from 'react-router-dom' ;
 
 import styled, { css } from 'styled-components' ;
@@ -214,13 +215,19 @@ const Header = ({ location }) => {
         },
         {
             path : DOCUMENT,
-            text : 'DOCUMENT',
+            text : 'Blog',
         },
         {
             path : PROFILE,
             text : 'PROFILE',
         },
-    ]
+    ] ;
+
+    useEffect(() => {
+        const typeCheck = document.querySelector('span.Typewriter__wrapper') ;
+        
+        typeCheck.className = "Typewriter__wrapper notranslate" ;
+    }, []) ;
     
     return (
         <Container>
@@ -248,7 +255,7 @@ const Header = ({ location }) => {
                             <br />
                             <Typewriter
                                 onInit={(typewriter) => {
-                                    typewriter.typeString('Kim Hee su')
+                                    typewriter.typeString('Heesu99')
                                       .changeDelay(800)
                                       .pauseFor(2500)
                                       .deleteAll()

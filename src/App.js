@@ -2,54 +2,36 @@ import { useEffect, useState } from 'react' ;
 
 import Router from './Components/Router' ;
 import GlobalStyle from './Components/GlobalStyle' ;
-import { axiosApi } from './Util/api';
-import { connect } from 'react-redux';
-import { createAction } from './Store/store';
 
 import { ThemeProvider } from 'styled-components' ;
 import theme, { darkMode, lightMode } from './Util/theme' ;
-import { mode } from './Util/util' ;
+import { mode, ApiHooks } from './Util/util' ;
+import { getContents, checkVisitor } from './Util/api' ;
+import { connect } from 'react-redux' ;
+import { createAction } from './Store/store' ;
 import Message from './Components/Message';
 
-function App({ setContents, setPageContents, setDefaultData, setProjectContents }) {
+function App({ contentsData, setDefaultData, setPageContents }) {
 
   const { dark, light } = mode ;
 
   const [ modeState, setModeState ] = useState(light) ;
-  const [ load, setLoadStatus ] = useState(false) ;
-  const [ error, setError ] = useState('') ;
 
   function modeChange(e) {
     setModeState(modeState === light ? dark : light) ;
   }
 
+  const { data, error, load, getData } = ApiHooks(getContents) ;
+
   useEffect(() => {
+    
+   if(!contentsData.length) 
+      getData() ;
+      setDefaultData(data) ;
+      setPageContents(data) ;
+      checkVisitor() ;
 
-    function checkVisitor() {
-      axiosApi.checkVisitor() ;
-      return ;
-    }
-
-    async function fetchData() {
-      try {
-            const { 
-                data : { 
-                    contents 
-                } 
-            } = await axiosApi.getContents() ;
-            
-            setDefaultData(contents) ;
-            setContents() ;
-            setPageContents(contents) ;
-        }catch {
-          setError("서버로부터 데이터를 불러 올 수 없습니다. 새로고침 해주세요!") ;
-        }finally {
-            setLoadStatus(true) ;
-        }
-    }
-    fetchData() ;
-    checkVisitor() ;
-  }, [ setDefaultData, setContents, setPageContents, setProjectContents ]) ;
+  }, [ data ]) ;
 
   return (
     <ThemeProvider theme={
@@ -59,24 +41,22 @@ function App({ setContents, setPageContents, setDefaultData, setProjectContents 
         )()}>
       <GlobalStyle modeState={modeState} />
       { 
-        error ? 
-        <Message text={error}/>
-        : <Router modeChange={modeChange} modeState={modeState} load={load} /> 
+        error ? <Message text={"서버로 부터 데이터를 불러올 수 없습니다."}/>
+        : <Router modeChange={modeChange} modeState={modeState} load={load}/> 
       }
     </ThemeProvider>
   );
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-      setContents : () => 
-          dispatch(createAction.setContents()),
-      setPageContents : contents => 
-          dispatch(createAction.setPageContents(contents)),
-      setDefaultData : defaultData =>
-          dispatch(createAction.setDefaultData(defaultData)),
-  }
-} ;
 
-
-export default  connect(null, mapDispatchToProps)(App) ;
+export default connect( 
+  ({ 
+  content : { contentsData, select }
+  }) => ({
+    contentsData
+  }), dispatch => ({
+  setPageContents : contents => 
+      dispatch(createAction.setPageContents(contents)),
+  setDefaultData : defaultData =>
+      dispatch(createAction.setDefaultData(defaultData)),
+}))(App) ;
