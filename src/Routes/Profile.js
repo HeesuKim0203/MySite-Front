@@ -129,9 +129,9 @@ const Profile = () => {
     return (
         <>
             <Seo
-                title={"저에 대한 정보 입니다."}
+                title={"Profile"}
                 url={PROFILE}
-                description={"저에 대한 정보 입니다."}
+                description={"heesu99의 정보입니다."}
             />
             <Container>
                 <MyContainer>
@@ -142,20 +142,12 @@ const Profile = () => {
                         <Main2>
                             <MyIntroduction>
                                 <MyIntroductionLi>
-                                    <TitleText>김희수</TitleText><br/>
+                                    <TitleText>Heesu99</TitleText><br/>
                                     <Content>Front Programer</Content>
-                                </MyIntroductionLi>
-                                <MyIntroductionLi>
-                                    {/* <Text>전화번호</Text><br/>
-                                    <Content>010-5293-8620</Content> */}
                                 </MyIntroductionLi>
                                 <MyIntroductionLi>
                                     <Text>이메일</Text><br/>
                                     <Content>rlagmltn456@gmail.com</Content>
-                                </MyIntroductionLi>
-                                <MyIntroductionLi>
-                                    {/* <Text>주소</Text><br/>
-                                    <Content>대구 광역시 수성구</Content> */}
                                 </MyIntroductionLi>
                                 <MyIntroductionLi>
                                     <Text>홈페이지</Text><br/>

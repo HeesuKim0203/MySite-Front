@@ -25,7 +25,7 @@ export const lightMode = {
     backgroundColor : WHITE,
     profileBackgroundColor : '#fff',
     fontColor : BLACK,
-    aisdeMenuColor : '#9e9e9e',
+    aisdeMenuColor : '#424242',
     buttonFontColor : '#cfd8dc',
     profileBorderColor : BLACK,
     mobileContentColor : WHITE

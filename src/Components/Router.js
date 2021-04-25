@@ -1,15 +1,12 @@
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom' ;
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome' ;
 import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons' ;
+import { Suspense, lazy } from 'react' ;
+import Loder from './Loder' ;
 
 import styled from 'styled-components' ;
 
 import Header from './Header' ;
-import Home from '../Routes/Home' ;
-import BlogRouter from '../Routes/BlogRouter' ;
-import Profile from '../Routes/Profile' ;
-import Page404 from '../Routes/Page404' ;
-import Loder from './Loder' ;
 
 import { 
     HOME,
@@ -68,22 +65,27 @@ const ModeButton = styled.div`
     font-size : 1.3rem ;
 `;
 
+const Home = lazy(() => import('../Routes/Home')) ;
+const BlogRouter = lazy(() => import('../Routes/BlogRouter')) ;
+const Profile = lazy(() => import('../Routes/Profile')) ;
+const Page404 = lazy(() => import('../Routes/Page404')) ;
+
 const Template = ({ modeChange, modeState, load }) => {
     return (
         <Container>
             <Router>
                 <Header />
-                {load ? (<TemplateContainer>
-                    <Switch>
-                        <Route path={HOME} exact render={() => <Home modeState={modeState} />} />
-                        <Route path={DOCUMENT} render={() => <BlogRouter modeState={modeState} />} />
-                        <Route path={PROFILE} component={Profile} />
-                        <Route path={PAGE404} component={Page404} />
-                        <Redirect path="*" to={PAGE404} />
-                    </Switch>
-                </TemplateContainer>) : (
-                    <Loder />
-                )}
+                { load ? <Loder /> : <TemplateContainer>
+                    <Suspense fallback={<Loder />}>
+                        <Switch>
+                            <Route path={HOME} exact render={() => <Home modeState={modeState} />} />
+                            <Route path={DOCUMENT} render={() => <BlogRouter modeState={modeState} />} />
+                            <Route path={PROFILE} component={Profile} />
+                            <Route path={PAGE404} component={Page404} />
+                            <Redirect path="*" to={PAGE404} />
+                        </Switch>
+                    </Suspense>
+                </TemplateContainer>}
             </Router>
             <ModeButton onClick={modeChange} modeState={modeState}>
                 <FontAwesomeIcon icon={modeState === light ? faMoon : faSun } color={ modeState === light ? '#ffee58' : '#ff9800' } />

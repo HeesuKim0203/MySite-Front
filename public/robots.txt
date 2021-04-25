@@ -1,16 +1,10 @@
+# https://www.robotstxt.org/robotstxt.html
+
 User-agent: *
 Disallow: /
 
+# Google Search
 User-agent: Googlebot
 Allow : / 
-Disallow: /api*/
-Disallow: /oauth*/
-Disallow: /userprofile*/
-
-ser-agent: Yeti
-Allow: /
-Disallow: /api*/
-Disallow: /oauth*/
-Disallow: /userprofile*/
 
 Sitemap: https://blog.heesu99.site/sitemap.xml

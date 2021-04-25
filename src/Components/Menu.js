@@ -28,6 +28,10 @@ const Container = styled.li`
         width : 80px ;
         font-size : 13px ;
         height : 40px ;
+
+        &:first-child {
+            width : 100px ;
+        }
     }
 `;
 

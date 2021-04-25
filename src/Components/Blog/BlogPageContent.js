@@ -33,7 +33,7 @@ const Title = styled.span`
     font-weight : 500 ;
 
     @media ${props => props.theme.mobileS} {
-        font-size : 9px ;
+        font-size : 12px ;
 
         font-weight : 600 ;
     }

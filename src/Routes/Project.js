@@ -7,10 +7,9 @@ import { CSS3DRenderer, CSS3DObject } from '../../node_modules/three/examples/js
 import { TrackballControls } from '../../node_modules/three/examples/jsm/controls/TrackballControls' ;
 import { faTimes } from '@fortawesome/free-solid-svg-icons' ;
 
-import { axiosApi } from '../Util/api' ;
+import { getProjectList } from '../Util/api' ;
 import { language } from '../Util/util' ;
 import ProjectContent from '../Components/Project/ProjectContent' ;
-import Loder from '../Components/Loder';
 
 const Container = styled.div`
     width : 80% ;
@@ -220,8 +219,6 @@ const Project = () => {
 
     const [ projectContentData, setProjectContents ] = useState([]) ;
     const [ selectData, setSelectData ] = useState(0) ;
-    const [ load, setLoadStatus ] = useState(false) ;
-    const [ error, setError ] = useState('') ;
 
     useEffect(() => {
 
@@ -235,7 +232,7 @@ const Project = () => {
                   data : { 
                       projects
                   }
-                } = await axiosApi.getProjectList() ;
+                } = await getProjectList() ;
 
                 setProjectContents(projects) ;
 
@@ -386,9 +383,9 @@ const Project = () => {
                 get3dData() ;
     
             }catch {
-                setError('서버로부터 데이터를 불러 올 수 없습니다. 페이지를 새로고침 해주세요!') ;
+
             }finally {
-                setLoadStatus(true) ;
+
             }
         }
 

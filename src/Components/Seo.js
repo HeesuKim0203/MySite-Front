@@ -37,7 +37,7 @@ const Seo = ({ title, url, description, type, image }) => {
                         'item' : {
                             '@id' : `${webUrl}${url}`,
                             'name' : `${type} : ${title}`,
-                            image
+                            image,
                         }
                     }
                 ]
@@ -65,10 +65,10 @@ const Seo = ({ title, url, description, type, image }) => {
             <meta property="og:url" content={`${webUrl}${url}`}/>
             <meta property="og:image" content={image}/>
             <meta property="og:description" content={description} />
-            <meta property="url" content={`${webUrl}${url}`} />
-            <meta property="description" content={description} />
-            <meta property="image" content={`${webUrl}${url}`} />
-            <title>{title ? `${type ? type : `${titleData} `} : ${title} | ${name}` : `${titleData} | ${name}`}</title>
+            <meta name="url" content={`${webUrl}${url}`} />
+            <meta name="description" content={description} />
+            <meta name="image" content={`${webUrl}${url}`} />
+            <title>{title ? `${type ? `${type} : ` : `${titleData} `} ${title} | ${name}` : `${titleData} | ${name}`}</title>
             <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
         </Helmat>
     );

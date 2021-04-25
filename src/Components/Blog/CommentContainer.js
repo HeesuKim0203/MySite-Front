@@ -1,7 +1,14 @@
 import { useEffect, useState } from 'react' ;
 import styled from 'styled-components' ;
-import { axiosApi } from '../../Util/api';
 import Comment from './Comment';
+
+import { 
+    insertComment,
+    deleteComment,
+    updateComment,
+    getCommets,
+    checkUser
+} from '../../Util/api';
 
 const Container = styled.div`
     width : 100% ;
@@ -29,7 +36,10 @@ const Form = styled.form`
     width : 80% ;
 
     margin : 0 auto ;
-    
+
+    @media ${props => props.theme.mobileS} {
+        width : 90% ;
+    }  
 `;
 
 const Input = styled.input`
@@ -38,16 +48,16 @@ const Input = styled.input`
     width : 180px ;
     height : 30px ;
     
-    border : 1px solid ${props => props.theme.color.fontColor} ; ;
+    border-bottom : 1px solid ${props => props.theme.color.fontColor} ;
 
     padding-left : 5px ;
 
     @media ${props => props.theme.mobileS} {
-        width : 60px ;
+        width : 30% ;
         height : 15px ;
-        padding-left : 2px ;
+        padding-left : 3px ;
 
-        font-size : 9px ;
+        font-size : 12px ;
     }
 `;
 
@@ -73,9 +83,8 @@ const Text = styled.textarea`
     margin-top : 10px ;
 
     @media ${props => props.theme.mobileS} {
-        padding : 3px ;
-        width : 80% ;
-        font-size : 9px ;
+        width : 95% ;
+        font-size : 12px ;
     }
 `;
 
@@ -127,7 +136,7 @@ const CommentContainer = ({ contentId }) => {
                 data : {
                     result
                 }
-            } = await axiosApi.insertComment(commentData) ;
+            } = await insertComment(commentData) ;
 
             if(result) {
                 setUserName('') ;
@@ -149,7 +158,7 @@ const CommentContainer = ({ contentId }) => {
                 data : {
                     result
                 }
-            } = await axiosApi.deleteComment(id) ;
+            } = await deleteComment(id) ;
 
             if(result) {
                 const findId = commentsList.findIndex(comment => comment.id === id) ;
@@ -180,7 +189,7 @@ const CommentContainer = ({ contentId }) => {
                 data : {
                     result
                 }
-            } = await axiosApi.updateComment(updateData, commentData.id) ;
+            } = await updateComment(updateData, commentData.id) ;
 
             if(result) {
 
@@ -220,7 +229,7 @@ const CommentContainer = ({ contentId }) => {
                 data : {
                     result
                 }
-            } = await axiosApi.checkUser(userData) ;
+            } = await checkUser(userData) ;
 
             resultValue = result ;
 
@@ -254,7 +263,7 @@ const CommentContainer = ({ contentId }) => {
             try {
                 const {
                     data
-                } = await axiosApi.getCommets(contentId) ;
+                } = await getCommets(contentId) ;
 
                 setCommentsList(data) ;
 
