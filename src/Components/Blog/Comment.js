@@ -210,7 +210,7 @@ const Comment = ({ comment, deleteCommnet, onUpdateComment, onCheckUser }) => {
     }
 
     return (
-        <Container>
+        <Container className="notranslate">
             <Header>
                 <StyledFontAwesomeIcon icon={ faUser } />
                 <UserName>

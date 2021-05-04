@@ -72,15 +72,15 @@ const AllDataViewButton = styled.div`
     cursor : pointer ;
 
     @media ${props => props.theme.laptop} {
-        font-size : 12px ;
+        padding : 10px 0 10px 0 ;
         margin-left : 5px ;
-
+        margin-top : 0px ;
+    }
+    @media ${props => props.theme.tabletL} {
+        color : #e0e0e0  ;
     }
     @media ${props => props.theme.mobileS} {
         font-size : 8px ;
-        padding : 10px 6px 10px 6px ;
-        margin-top : 10px ;
-        color : #e0e0e0 ;
     }
 `;
 
@@ -171,6 +171,10 @@ const Form = styled.form`
 
     font-family: 'Ubuntu', sans-serif ;
 
+    @media ${props => props.theme.mobileS} {
+        height : 25px ;
+        width : 150px ;
+    }
 `;
 
 const SearhInput = styled.input`
@@ -319,4 +323,5 @@ export default connect(
             searchContents : search => dispatch(createAction.searchContents(search)),
             searchTitle : search => dispatch(createAction.searchTitle(search))
         }
-    ))(memo(AsideMenu)) ;
+    )
+)(memo(AsideMenu)) ;

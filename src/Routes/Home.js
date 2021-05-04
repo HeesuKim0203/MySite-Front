@@ -257,7 +257,7 @@ const Home = ({ modeState }) => {
                     <LanguageTextContainer>
                         <Title>Skills</Title>
                         <Text>제가 현재 쓸 수 있는 개발 스택입니다.</Text>
-                        <Text>개발 경험이 있어서 지식을 갖추고 있습니다.</Text>
+                        <Text>클릭 시 프로젝트 경험 횟수와 랭크가 있습니다.</Text>
                     </LanguageTextContainer>
                     <LanguageDataContainer>
                         <UseLanguage />

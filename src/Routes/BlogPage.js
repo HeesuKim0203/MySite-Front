@@ -133,7 +133,7 @@ const BlogPage = ({
         <>
             <Seo 
                 title={title}
-                url={`${DOCUMENT}/${id}`}
+                url={`${DOCUMENT}/${content.id}`}
                 description={data && data.description}
                 type={type}
                 image={image_url}

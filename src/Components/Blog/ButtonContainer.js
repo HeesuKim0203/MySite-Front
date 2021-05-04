@@ -63,7 +63,7 @@ const ButtonContainer = ({
             : updatePageSelect(e.target.innerHTML - 1)) : null ;
     } ;
     return (
-        <Container onClick={onClickButton}>
+        <Container onClick={onClickButton} className="notranslate">
                 { documentState ? (buttonsData && buttonsData.map((__, index) => {
                     return select === index ? (
                         <Button 

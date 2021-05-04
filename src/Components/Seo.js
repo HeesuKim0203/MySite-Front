@@ -1,4 +1,5 @@
 import Helmat from 'react-helmet' ;
+import { DOCUMENT } from '../Util/routes';
 import { webData } from '../Util/util' ;
 
 const Seo = ({ title, url, description, type, image }) => {
@@ -26,7 +27,7 @@ const Seo = ({ title, url, description, type, image }) => {
                         '@type' : 'ListItem',
                         'position' : 1,
                         'item' : {
-                            '@id' : `${webUrl}/document`,
+                            '@id' : `${webUrl}${DOCUMENT}`,
                             'name' : 'blog',
                             'image' : '/logo512.webp'
                         },

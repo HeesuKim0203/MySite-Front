@@ -284,7 +284,7 @@ const CommentContainer = ({ contentId }) => {
     }, [contentId]) ;
 
     return (
-        <Container>
+        <Container className="notranslate">
             { commentsList && commentsList.map((comment, index) => (
                 <Comment 
                     key={index} 
@@ -313,12 +313,12 @@ const CommentContainer = ({ contentId }) => {
                     <Text 
                         type="text" 
                         rows="4" 
-                        placeholder="여러분의 소중한 댓글 입력해주세요" 
+                        placeholder="Please leave comments." 
                         required 
                         value={text} 
                         onChange={onChangeText} 
                     />
-                    <Button type="submit">댓글 달기</Button>
+                    <Button type="submit">Comment!</Button>
                 </Form>
             </CommetsWrap>
         </Container>

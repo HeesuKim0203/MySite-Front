@@ -222,15 +222,9 @@ const Header = ({ location }) => {
             text : 'PROFILE',
         },
     ] ;
-
-    useEffect(() => {
-        const typeCheck = document.querySelector('span.Typewriter__wrapper') ;
-        
-        typeCheck.className = "Typewriter__wrapper notranslate" ;
-    }, []) ;
     
     return (
-        <Container>
+        <Container className="notranslate">
             <style>
                 {TypewriterStyled}
             </style>

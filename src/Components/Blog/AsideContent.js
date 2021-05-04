@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import { DOCUMENT } from '../../Util/routes' ;
 
 const Title = styled.h6`
-    font-size : 20px ;
+    font-size : 22px ;
     font-weight : 700 ;
 
     color : ${props => props.theme.color.fontColor} ;
@@ -17,7 +17,7 @@ const Title = styled.h6`
     cursor : default ;
 
     @media ${props => props.theme.laptop} {
-        font-size : 16px ;
+        font-size : 18px ;
     }
     @media ${props => props.theme.tabletL} {
         color : #fff ;
@@ -52,7 +52,7 @@ const AsideMenu = styled.ul`
 const Menu = styled.li`
     width : 80% ;
 
-    padding : 15px 0 15px 15px ;
+    padding : 20px 0 20px 15px ;
 
     display : flex ;
 
@@ -62,6 +62,7 @@ const Menu = styled.li`
 
     @media ${props => props.theme.tabletL} {
         color : #e0e0e0  ;
+        padding : 15px 0 15px 15px ;
     }
 
     @media ${props => props.theme.mobileS} {
@@ -85,12 +86,12 @@ const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
 
     font-weight : 700 ;
 
-    @media ${props => props.theme.laptop} {
-        font-size : 22px ;
+    @media ${props => props.theme.tabletL} {
+        font-size : 24px ;
     }
+
     @media ${props => props.theme.mobileS} {
         font-size : 14px ;
-        color : #e0e0e0  ;
     }
 `;
 
@@ -99,18 +100,17 @@ const Text = styled.span`
 
     margin-left : 20px ;
 
-    font-size : 14px ;
+    font-size : 16px ;
 
     font-weight : 550 ;
 
-    @media ${props => props.theme.laptop} {
-        font-size : 12px ;
-        margin-left : 5px ;
+    @media ${props => props.theme.tabletL} {
+        font-size : 15px ;
     }
+
     @media ${props => props.theme.mobileS} {
-        font-size : 8px ;
+        font-size : 10px ;
         margin-left : 2px ;
-        color : #e0e0e0 ;
     }
 `;
 
@@ -126,7 +126,7 @@ const AsideContent = ({ title, menu, onClickMenuContent }) => {
                         <FontContainer>
                             <StyledFontAwesomeIcon icon={menu.icon} />
                         </FontContainer>
-                        <Text>{menu.text}</Text>
+                        <Text className="notranslate">{menu.text}</Text>
                     </Menu>
                 </Link>
                 )}
