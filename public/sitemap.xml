@@ -2,16 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
 <url> <loc>https://blog.heesu99.site/</loc> </url>
 <url> <loc>https://blog.heesu99.site/</loc> </url>
-<url> <loc>https://blog.heesu99.site/blog</loc> </url>
-<url> <loc>https://blog.heesu99.site/blog/21</loc> </url>
-<url> <loc>https://blog.heesu99.site/blog/19</loc> </url>
-<url> <loc>https://blog.heesu99.site/blog/18</loc> </url>
-<url> <loc>https://blog.heesu99.site/blog/17</loc> </url>
-<url> <loc>https://blog.heesu99.site/blog/16</loc> </url>
-<url> <loc>https://blog.heesu99.site/blog/15</loc> </url>
-<url> <loc>https://blog.heesu99.site/blog/14</loc> </url>
-<url> <loc>https://blog.heesu99.site/blog/12</loc> </url>
-<url> <loc>https://blog.heesu99.site/blog/11</loc> </url>
+<url> <loc>https://blog.heesu99.site/document</loc> </url>
+<url> <loc>https://blog.heesu99.site/document/21</loc> </url>
+<url> <loc>https://blog.heesu99.site/document/19</loc> </url>
+<url> <loc>https://blog.heesu99.site/document/18</loc> </url>
+<url> <loc>https://blog.heesu99.site/document/17</loc> </url>
+<url> <loc>https://blog.heesu99.site/document/16</loc> </url>
+<url> <loc>https://blog.heesu99.site/document/15</loc> </url>
+<url> <loc>https://blog.heesu99.site/document/14</loc> </url>
+<url> <loc>https://blog.heesu99.site/document/12</loc> </url>
+<url> <loc>https://blog.heesu99.site/document/11</loc> </url>
 <url> <loc>https://blog.heesu99.site/profile</loc> </url>
 <url> <loc>https://blog.heesu99.site/404</loc> </url>
 </urlset>

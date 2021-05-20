@@ -268,7 +268,7 @@ const Home = ({ modeState }) => {
                         <Title>Project</Title>
                         <Text>제가 현재까지 진행한 개인 프로젝트 입니다.</Text>
                         <TextAdd>사람모양의 아이콘을 클릭 해 보세요.</TextAdd>
-                        <TextAdd>각 면을 좌클릭 시 상세 설명이 나옵니다.</TextAdd>
+                        <TextAdd>각 면을 우클릭 시 상세 설명이 나옵니다.</TextAdd>
                     </ProjectTextContainer>
                     <ProjectDataContainer>
                         <Project />

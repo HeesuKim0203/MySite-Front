@@ -215,7 +215,7 @@ const Header = ({ location }) => {
         },
         {
             path : DOCUMENT,
-            text : 'Blog',
+            text : 'DOCUMENT',
         },
         {
             path : PROFILE,

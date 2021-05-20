@@ -54,7 +54,7 @@ const Blog = ({
     return (
         <>
             <Seo 
-                title={"Blog"}
+                title={"Document"}
                 url={DOCUMENT}
                 description={"초심자도 따라할 수 있는 프로그래밍 지식창고"}
             />
