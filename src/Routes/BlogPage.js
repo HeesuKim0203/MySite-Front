@@ -144,7 +144,7 @@ const BlogPage = ({
             <Container>
                     { id !== -1 ? 
                     load ? <Loder /> : 
-                    error ? <Message text={"서버로부터 데이터를 받아올 수 없습니다."}/>  :
+                    error ? <Message text="서버로부터 데이터를 받아올 수 없습니다." />  :
                         (
                         <>
                             <Main>

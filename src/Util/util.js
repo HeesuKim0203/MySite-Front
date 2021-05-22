@@ -17,7 +17,6 @@ export const mode = { dark : 'dark', light : 'light' } ;
 
 export const blogContentNum = 9 ;
 export const blogPageContentNum = 5 ;
-
 export const LanguageContentNum = 4 ;
 
 const rank = {
@@ -52,6 +51,63 @@ export const webData = {
     webUrl : 'https://blog.heesu99.site',
     titleData : '초보 프로그래머',
     name : 'heesu99'
+} ;
+
+export const FIXEDMENUVALUE = [ 260, 810, 2800 ] ;
+
+// Fixed 메뉴 함수
+function moveScroll(y) {
+  window.scroll({
+      behavior : 'smooth',
+      top : y
+  }) ;
+}
+
+export const MakeFixMenu = dataArr => {
+  return dataArr.map(data => {
+    return () => {
+      moveScroll(data) ;
+    }
+  })
+} ;
+
+export const homeText = {
+  // Title, 텍스트 배열 변수명 같도록 지정할 것
+  SKILL : 'Skill',
+  PROJECT : 'Project',
+  BLOG : 'Blog',
+  Skill : [
+    "제가 현재 쓸 수 있는 개발 스택입니다.",
+    "클릭 시 프로젝트 경험 횟수와 랭크가 있습니다."
+  ],
+  Project : [
+    "제가 현재까지 진행한 개인 프로젝트 입니다."
+  ],
+  threejs : [
+    "사람모양의 아이콘을 클릭 해 보세요.",
+    "각 면을 우클릭 시 상세 설명이 나옵니다."
+  ],
+  Blog : [
+    "저의 게시물 입니다.",
+    "정보 공유와 저의 성장을 기록하기 위해서 만들었습니다."
+  ],
+  returnJSX(str, Text, TabeltLHiddenText) {
+
+    let jsx = [] ;
+
+    if (this.hasOwnProperty(str)) {
+      jsx = this[str].map((text, index) => <Text key={index}>{text}</Text>) ;
+    }
+
+    if(str === this.PROJECT) {
+      jsx = [
+        ...jsx,
+        ...this.threejs.map((text, index) => <TabeltLHiddenText key={(index + this[str].length)}>{text}</TabeltLHiddenText>)
+      ] ;
+    }
+
+    return jsx ;
+  }
 } ;
 
 export function ApiHooks (api, apiData) {

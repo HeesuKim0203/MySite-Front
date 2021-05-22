@@ -129,9 +129,9 @@ const Profile = () => {
     return (
         <>
             <Seo
-                title={"Profile"}
+                title="Profile"
                 url={PROFILE}
-                description={"heesu99의 정보입니다."}
+                description="heesu99의 정보입니다."
             />
             <Container>
                 <MyContainer>

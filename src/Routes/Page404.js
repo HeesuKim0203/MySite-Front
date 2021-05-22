@@ -77,9 +77,9 @@ const Page404 = () => {
     return (
         <>
             <Seo 
-                title={"URL에 맞는 페이지를 찾을 수 없습니다."}
+                title="URL에 맞는 페이지를 찾을 수 없습니다."
                 url={PAGE404}
-                description={"없는 URL 접속시 에러 방지 페이지"}
+                description="없는 URL 접속시 에러 방지 페이지"
             />
             <Container>
                 <Img url={require('../assets/404.webp').default}>

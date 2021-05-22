@@ -24,7 +24,7 @@ const Container = styled.div`
     position : relative ;
 `;
 
-const TemplateContainer = styled.main`
+const TemplateContainer = styled.div`
     width : 80% ;
     margin : 0 auto ;
 

@@ -2,15 +2,22 @@
 > 학교 과제와 프로그래밍을 해 오면서 여러 개발자분들의 경험담에 도움을 받았습니다.
 > 그래서 저도 저의 경험담을 공유하고 싶어서 개발하게 되었습니다.
 
-:running: [방문하기] : https://blog.heesu99.site
+:running: [방문하기](https://blog.heesu99.site)  
 **피드백 전부 환영입니다!**
 
-#### 2021.05.20
-###### 1. Home Project 상세 설명 부분 오타 수정
+### 2021.05.21~2021.05.22
+#### 1. INFORMATION 페이지 리팩토링 작업
+> 텍스트 변수화
+> 중복 코드 제거
+#### 2. Three.js 부분 마우스 클릭 렌더링 일부 수정
+> 처음 클릭한 뒤 다음 클릭이 Three.js 애니메이션에 시간에 적용되지 않는 문제 해결
+
+### 2021.05.20
+#### 1. IMFORMATION 페이지 Project 상세 설명 부분 오타 수정
 > 좌클릭 ->> 우클릭으로 변경
 
-#### 2021.05.11
-###### 1. 구글 번역기 이슈 해결 
+### 2021.05.11
+#### 1. 구글 번역기 이슈 해결 
 > https://lifesaver.codes/answer/make-react-resilient-to-dom-mutations-from-google-translate
 > 구글 번역기는 해당 노드 안에 text를 font태그로 변경
 > 그 때문에 Text가 Node로 변경되어 React가 인식이 불가능해서 발생하는 에러였습니다.

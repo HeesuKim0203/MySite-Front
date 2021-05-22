@@ -212,6 +212,7 @@ const HIGHT = 450 ;
 const FACEWIDTH = 480 ;
 const FACEHEIGHT = 310 ;
 
+// mouseEvent 공유 변수 선언
 let mouseEvent = false ;
 let animateStop ;
 
@@ -270,13 +271,13 @@ const Project = () => {
                 }
 
                 windowReSize = ()=> {
-                        if (window.innerWidth > 1220 && !animatOn) {
-                            animatOn = true ;
-                            requestAnimationFrame( animate ) ;
-                        }else if (window.innerWidth <= 1220 && animatOn)  {
-                            animatOn = false ;
-                            cancelAnimationFrame(animateStop) ;
-                        }
+                    if (window.innerWidth > 1220 && !animatOn) {
+                        animatOn = true ;
+                        requestAnimationFrame( animate ) ;
+                    }else if (window.innerWidth <= 1220 && animatOn)  {
+                        animatOn = false ;
+                        cancelAnimationFrame(animateStop) ;
+                    }
                 }
 
                 function Element(id, x, y, z, ry, css, child = '') {
@@ -396,20 +397,22 @@ const Project = () => {
         } ;
     }, []) ;
 
-    function startAnimateControll(e) {
-    
-        e.stopPropagation() ;
-        const container = document.getElementById('container') ;
+    // clear 공유 변수 선언
+    let clear ;
 
-        mouseEvent = true ;
-
-        setTimeout(() => {
+    function start3DTimeOut() {
+        clear = setTimeout(() => {
             mouseEvent = false ;
-            container.addEventListener('click', startAnimateControll, false) ;
-         }, 10000) ;
-
-         container.removeEventListener('click', startAnimateControll, false) ;
+        }, 10000) ;
     }
+
+    function startAnimateControll(e) {
+        e.stopPropagation() ;
+        mouseEvent = true ;
+        if(clear) clearTimeout(clear) ;
+        start3DTimeOut() ;
+    }
+
     function startButtonClick(e) {
         e.stopPropagation() ; 
     

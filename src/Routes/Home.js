@@ -1,13 +1,14 @@
 import { memo } from 'react' ;
 import styled from 'styled-components' ;
 import Project from './Project' ;
-import UseLanguage from '../Components/Home/UseLanguage' ;
 
+import UseLanguage from '../Components/Home/UseLanguage' ;
 import Slide from '../Components/Slide' ;
+import Seo from '../Components/Seo' ;
+
+import { HOME } from '../Util/routes' ;
 import { darkMode, lightMode } from '../Util/theme' ;
-import { mode } from '../Util/util' ;
-import Seo from '../Components/Seo';
-import { HOME } from '../Util/routes';
+import { mode, homeText, MakeFixMenu, FIXEDMENUVALUE } from '../Util/util' ;
 
 const { light } = mode ;
 
@@ -33,8 +34,7 @@ const ContentContainer = styled.section`
     margin-top : 60px ;
     padding : 20px ;
 
-    &:nth-child(2) {
-        // slideContainer margin-top과 같이 변경
+    &:not(:first-child) {
         margin-top : 160px ;
 
         @media ${props => props.theme.mobileL} {
@@ -49,22 +49,7 @@ const ContentContainer = styled.section`
     @media ${props => props.theme.mobileL} {
         padding : 0 ;
     }
-`;
-
-const SlideContainer = styled.div`
-    width : 100% ;
-
-    float : left ;
-
-    overflow : hidden ;
-
-    // contentContainer margin-top과 같이 변경    
-    margin-top : 200px ;
-
-    @media ${props => props.theme.mobileL} {
-        margin-top : 180px ;
-    }
-`;
+`; 
 
 const SlideDataContainer = styled.section`
     margin-top : 45px ;
@@ -178,7 +163,7 @@ const Text = styled.p`
     }
 `;
 
-const TextAdd = styled(Text)`
+const TabeltLHiddenText = styled(Text)`
     @media ${props => props.theme.tabletL} {
         display : none ;
     }
@@ -223,41 +208,25 @@ const Button = styled.div`
 
 const Home = ({ modeState }) => {
 
-      function moveScroll(y) {
-        window.scroll({
-            behavior : 'smooth',
-            top : y
-        }) ;
-      }
-
-      function onClickScroll1(e) {
-        moveScroll(260) ;
-      }
-      function onClickScroll2(e) {
-        moveScroll(810) ;
-      }
-      function onClickScroll3(e) {
-        moveScroll(2800) ;
-      }
+    const { SKILL, PROJECT, BLOG } = homeText ;
 
     return (
         <>
             <Seo
-                title={""}
+                title=""
                 url={HOME}
-                description={"heesu99의 기술스택 지금까지 경험한 프로젝트를 볼 수 있는 공간입니다."}
+                description="heesu99의 기술스택 지금까지 경험한 프로젝트를 볼 수 있는 공간입니다."
             />
             <FixMenu>
-                <Button onClick={onClickScroll1} modeState={modeState} />
-                <Button onClick={onClickScroll2} modeState={modeState} />
-                <Button onClick={onClickScroll3} modeState={modeState} />
+                { MakeFixMenu(FIXEDMENUVALUE).map((func, index) => 
+                    <Button key={index} onClick={func} modeState={modeState} />
+                )}
             </FixMenu>
             <Container>
                 <ContentContainer>
                     <LanguageTextContainer>
-                        <Title>Skills</Title>
-                        <Text>제가 현재 쓸 수 있는 개발 스택입니다.</Text>
-                        <Text>클릭 시 프로젝트 경험 횟수와 랭크가 있습니다.</Text>
+                        <Title>{SKILL}</Title>
+                        { homeText.returnJSX(SKILL, Text) }
                     </LanguageTextContainer>
                     <LanguageDataContainer>
                         <UseLanguage />
@@ -265,25 +234,22 @@ const Home = ({ modeState }) => {
                 </ContentContainer>
                 <ContentContainer>
                     <ProjectTextContainer>
-                        <Title>Project</Title>
-                        <Text>제가 현재까지 진행한 개인 프로젝트 입니다.</Text>
-                        <TextAdd>사람모양의 아이콘을 클릭 해 보세요.</TextAdd>
-                        <TextAdd>각 면을 우클릭 시 상세 설명이 나옵니다.</TextAdd>
+                        <Title>{PROJECT}</Title>
+                        { homeText.returnJSX(PROJECT, Text, TabeltLHiddenText) }
                     </ProjectTextContainer>
                     <ProjectDataContainer>
                         <Project />
                     </ProjectDataContainer>
                 </ContentContainer>
-                    <SlideContainer>
-                        <SlideTextContainer>
-                                <Title>Blog</Title>
-                                <Text>저의 게시물 입니다.</Text>
-                                <Text>정보 공유와 저의 성장을 기록하기 위해서 만들었습니다.</Text>
-                        </SlideTextContainer>
-                        <SlideDataContainer>
-                            <Slide modeState={modeState} />
-                        </SlideDataContainer>
-                    </SlideContainer>
+                <ContentContainer>
+                    <SlideTextContainer>
+                            <Title>{BLOG}</Title>
+                            { homeText.returnJSX(BLOG, Text) }
+                    </SlideTextContainer>
+                    <SlideDataContainer>
+                        <Slide modeState={modeState} />
+                    </SlideDataContainer>
+                </ContentContainer>
             </Container>
         </>
     );
