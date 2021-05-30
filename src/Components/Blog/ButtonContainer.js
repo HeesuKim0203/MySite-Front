@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react' ;
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom' ;
+import { connect } from 'react-redux' ;
 import styled from 'styled-components' ;
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome' ;
+import { faChevronCircleLeft, faChevronCircleRight } from '@fortawesome/free-solid-svg-icons'
+
 import { createAction } from '../../Store/store';
 
 import {
@@ -11,30 +15,47 @@ import {
 const Button = styled.button`
     all : unset ;
 
-    padding : 10px 20px ;
-
-    font-size : 18px ;
-    font-weight : 900 ;
-
-    border-radius : ${props => props.theme.color.contentBorderRadius} ;
-    
-    color : ${props => props.select ? props.theme.selectColor : props.theme.color.buttonFontColor} ;
-
-    @media ${props => props.theme.mobileL} {
-        padding : 8px 10px ;
-        font-size : 12px ;
-    }
-`;
-
-const Container = styled.div`
-
-    float : left ;
-    width : 100% ;
+    width : 27px ;
+    height : 27px ;
 
     display : flex ;
     
     justify-content : center ;
     align-items : center ;
+
+    font-size : 18px ;
+    font-weight : 900 ;
+
+    color : ${ props => props.select ? props.theme.selectColor : props.theme.color.buttonFontColor} ;
+
+    &:not(:first-child) {
+        margin-left : 10px ;
+    }
+
+    user-select : none ;
+    cursor : pointer ;
+`;
+
+const Container = styled.div`
+    float : left ;
+    width : 100% ;
+    
+    display : inline-flex ;
+    justify-content : center ;
+    align-items : center ;
+
+    margin : 0 auto ;
+`;
+
+const NumberButtonContainer = styled.div`
+
+    float : left ;
+
+    display : flex ;
+    justify-content : center ;
+    align-items : center ;
+
+    margin-left : 10px ;
 `;
 
 const ButtonContainer = ({ 
@@ -62,9 +83,32 @@ const ButtonContainer = ({
             ( documentState ? updateSelect(e.target.innerHTML - 1)
             : updatePageSelect(e.target.innerHTML - 1)) : null ;
     } ;
+
+    function onClickLeftButton(e) {
+
+        if(Number(documentState ? select : pageSelect) <= 0) 
+            return ;
+
+        return documentState ? updateSelect(select - 1)
+        : updatePageSelect(pageSelect - 1) ;
+    }
+
+    function onClickRightButton(e) {
+
+        if(documentState ?  select >= buttonsData.length - 1 : pageSelect >= pageButtonsData.length - 1) 
+            return ;
+
+        return documentState ? updateSelect(select + 1)
+        : updatePageSelect(pageSelect + 1) ;
+    }
+
     return (
-        <Container onClick={onClickButton} className="notranslate">
-                { documentState ? (buttonsData && buttonsData.map((__, index) => {
+        <Container className="notranslate">
+            <Button onClick={onClickLeftButton}>
+                <FontAwesomeIcon icon={faChevronCircleLeft}/>
+            </Button>
+            <NumberButtonContainer onClick={onClickButton} >
+                { documentState ? ( buttonsData && buttonsData.map((__, index) => {
                     return select === index ? (
                         <Button 
                             key={index}
@@ -87,7 +131,11 @@ const ButtonContainer = ({
                         >{index + 1}</Button>
                     ) ;
                 })) }
-            </Container>
+            </NumberButtonContainer>
+            <Button onClick={onClickRightButton}>
+                <FontAwesomeIcon icon={faChevronCircleRight}/>
+            </Button>
+        </Container>
     );
 };
 

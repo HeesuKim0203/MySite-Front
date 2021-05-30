@@ -3,32 +3,20 @@ import styled, { css } from 'styled-components' ;
 const Container = styled.div`
 
     float : left ;
-
+    
     width : 80% ;
     overflow : hidden ;
+    margin : 0 auto ;
 
-    background-color : ${props => props.theme.color.backgroundColor} ;
+    padding : 15px 25px ;
+
+    background-color : ${props => props.theme.color.profileBackgroundColor} ;
     color : ${props => props.theme.color.fontColor} ;
 
-    &:nth-child(2n) {
-        margin-left : 9.5% ;
+    border-radius : 20px ;
 
-        @media ${props => props.theme.tabletS} {
-            margin-left : 14.5% ;
-        }
-        @media ${props => props.theme.mobileS} {
-            margin-left : 0 ;
-        }
-    }
-    &:nth-child(2n - 1) {
-        margin-left : 9.5% ;
-
-        @media ${props => props.theme.tabletS} {
-            margin-left : 14.5% ;
-        }
-        @media ${props => props.theme.mobileS} {
-            margin-left : 0 ;
-        }
+    &:not(:first-child) {
+        margin-top : 20px ;
     }
 
     @media ${props => props.theme.tabletS} {
@@ -36,7 +24,7 @@ const Container = styled.div`
     }
 
     @media ${props => props.theme.mobileS} {
-        width : 100% ;
+        width : 90% ;
     }
 `;
 
@@ -44,9 +32,6 @@ const DescriptionContainer  = styled.div`
     width : 100% ;
     
     display : flex ;
-
-    background-color : ${props => props.theme.color.backgroundColor} ;
-    color : ${props => props.theme.color.fontColor} ;
 
     font-size : 13px ;
 
@@ -90,7 +75,6 @@ const Image = styled.div`
 `;
 
 const TextContainer = styled.div`
-    position : relative ;
     width : 100% ;
 
     float : left ;
@@ -171,7 +155,7 @@ const ProjectContent = ({ content }) => {
         const img = document.querySelector('video.videoProject div.imageError') ;
 
         if (img)
-            parnt.parentNode.replaceChild(img, parnt);
+            parnt.parentNode.replaceChild(img, parnt) ;
     }
 
     return (

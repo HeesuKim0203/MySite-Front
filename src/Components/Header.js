@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { Link, withRouter } from 'react-router-dom' ;
 
 import styled, { css } from 'styled-components' ;

@@ -8,7 +8,7 @@ export const size = {
 
 const WHITE = '#eeeeee' ; 
 const BLACK = '#222' ;
-const SELECTCOLOR = '#3949ab' ;
+const SELECTCOLOR = '#fb9300' ;
 
 const theme = { selectColor : SELECTCOLOR } ;
  
@@ -26,7 +26,7 @@ export const lightMode = {
     profileBackgroundColor : '#fff',
     fontColor : BLACK,
     aisdeMenuColor : '#424242',
-    buttonFontColor : '#cfd8dc',
+    buttonFontColor : '#343f56',
     profileBorderColor : BLACK,
     mobileContentColor : WHITE
 } ;

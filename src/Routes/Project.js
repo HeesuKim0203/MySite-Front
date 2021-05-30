@@ -26,11 +26,12 @@ const ContentContainer = styled.div`
     width : 100% ;
     display : none ;
     
-    grid-template-columns : repeat(2, 50%) ;
-    grid-row-gap : 30px ;
     @media ${props => props.theme.tabletL} {
-        display : grid ;
-        grid-template-columns : repeat(1, 100%) ;
+        display : flex ;
+        overflow : hidden ;
+
+        flex-direction : column ;
+        justify-content : center ;
     }
 `;
 
@@ -321,6 +322,8 @@ const Project = () => {
                         if (imageObj.children[0].className === 'kinoko') {
                             imageObj.innerHTML = '' ;
                             imageObj.innerHTML = `<iframe width="100%" height="100%" src="${projects[3].image.split(' ')[1] || ''}" frameborder="0" allowfullscreen style=""></iframe>` ;
+                        }else {
+                            imageObj.children[0].setAttribute('autoplay', 'true') ;
                         }
                         
                         const projectContent = document.getElementById('projectContent') ;
@@ -337,7 +340,7 @@ const Project = () => {
 
                 function get3dData() {
 
-                    group.add( new Element(0, 0, 0, 240, 0, {
+                    group.add( new Element(0, 0, 0, 239, 0, {
                         width : `20px`,
                         height : `20px`,
                         overflow : 'hidden',
@@ -345,20 +348,20 @@ const Project = () => {
                         display : 'flex',
                         justifyContent : 'center'
                     },
-                    `<video width="100%" height="100%" src="${projects[0].image || ''}" autoplay loop/>`
+                    `<video width="100%" height="100%" src="${projects[0].image || ''}" />`
                     )) ;
-                    group.add( new Element(3, 240, 0, 0, Math.PI / 2, {
+                    group.add( new Element(3, 239, 0, 0, Math.PI / 2, {
                         width : `20px`,
                         height : `20px`,
                     }, 
                     `<image class="kinoko" width="100%" height="100%" src="${projects[3].image.split(' ')[0] || ''}" />`) );
-                    group.add( new Element(2, 0, 0, -240, Math.PI, {
+                    group.add( new Element(2, 0, 0, -239, Math.PI, {
                         width : `20px`,
                         height : `20px`,
                     },
-                        `<video width="100%" height="100%" src="${projects[2].image || ''}" style="position : relative ; top : 0px ; left : 0px ;" autoplay loop />`
+                        `<video width="100%" height="100%" src="${projects[2].image || ''}" style="position : relative ; top : 0px ; left : 0px ;" />`
                     ) );
-                    group.add( new Element(1, -240, 0, 0, - Math.PI / 2, {
+                    group.add( new Element(1, -239, 0, 0, - Math.PI / 2, {
                         width : `20px`,
                         height : `20px`,
                         overflow : 'hidden',
@@ -366,7 +369,7 @@ const Project = () => {
                         display : 'flex',
                         justifyContent : 'center'
                     },
-                    `<video width="180px" height="100%" src="${projects[1].image || ''}"  autoplay loop />`) ) ;
+                    `<video width="180px" height="100%" src="${projects[1].image || ''}" />`) ) ;
 
                     scene.add(group) ;
 

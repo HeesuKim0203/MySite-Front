@@ -30,21 +30,17 @@ const Title = styled.span`
     font-size : 15px ;
     flex : 1 ;
 
+    margin-right : 5px ;
+
     font-weight : 500 ;
 
-    @media ${props => props.theme.mobileS} {
-        font-size : 12px ;
-
-        font-weight : 600 ;
-    }
+    overflow : hidden ; 
+    text-overflow : ellipsis ; 
+    white-space : nowrap ;
 `;
 
 const Date = styled.span`
     font-size : 12px ;
-
-    @media ${props => props.theme.mobileS} {
-        font-size : 7px ;
-    }
 `;
 
 const BlogPageContent = ({ content, location : { pathname } }) => {
