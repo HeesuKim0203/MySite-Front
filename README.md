@@ -7,11 +7,11 @@
 
 ### 2021.06.01~2021.06.03
 ### 이슈 해결 !
-#### 1. Pagination 버튼이 서버에서 데이터가 오지않는 예외시 사라지지 않는 버그 해결
-    buttonData가 없으면 사라지게 설정 -> redux 오류 모드 설정 필요:cold_sweat: 
-#### 2. https://ik.imagekit.io 이용한 document 페이지 이미지 렌더링 개선
+#### 1. Pagination 버튼이 서버에서 데이터가 오지않는 예외시 사라지지 않는 버그 해결 :cold_sweat: 
+    buttonData가 없으면 사라지게 설정 -> redux 오류 모드 설정 필요
+#### 2. https://ik.imagekit.io 이용한 document 페이지 이미지 렌더링 개선 :sweat: 
     ec2 서버와 연동(DB 일부 수정) 
-    게시글 페이지의 이미지 렌더링 개선 필요:sweat: 
+    게시글 페이지의 이미지 렌더링 개선 필요
 
 ---
 
