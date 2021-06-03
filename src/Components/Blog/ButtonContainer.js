@@ -86,7 +86,7 @@ const ButtonContainer = ({
 
     function onClickLeftButton(e) {
 
-        if(Number(documentState ? select : pageSelect) <= 0) 
+        if( Number( documentState ? select : pageSelect ) <= 0 ) 
             return ;
 
         return documentState ? updateSelect(select - 1)
@@ -104,9 +104,11 @@ const ButtonContainer = ({
 
     return (
         <Container className="notranslate">
-            <Button onClick={onClickLeftButton}>
-                <FontAwesomeIcon icon={faChevronCircleLeft}/>
-            </Button>
+            { buttonsData.length ? 
+                (<Button onClick={onClickLeftButton}>
+                    <FontAwesomeIcon icon={faChevronCircleLeft}/>
+                </Button>) : null 
+            }
             <NumberButtonContainer onClick={onClickButton} >
                 { documentState ? ( buttonsData && buttonsData.map((__, index) => {
                     return select === index ? (
@@ -132,9 +134,11 @@ const ButtonContainer = ({
                     ) ;
                 })) }
             </NumberButtonContainer>
-            <Button onClick={onClickRightButton}>
-                <FontAwesomeIcon icon={faChevronCircleRight}/>
-            </Button>
+            { buttonsData.length ?
+                (<Button onClick={onClickRightButton}>
+                    <FontAwesomeIcon icon={faChevronCircleRight}/>
+                </Button>) : null 
+            }
         </Container>
     );
 };

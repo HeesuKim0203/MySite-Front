@@ -9,6 +9,7 @@ import {
     DOCUMENT
 } from '../../Util/routes' ;
 import { searchCoreData } from '../../Util/util' ;
+import { useEffect, useRef } from 'react';
 
 const Title = styled.h5`
     font-size : 16px ;
@@ -79,7 +80,7 @@ const Img = styled.div`
     width : 100% ;
     height : 220px ;
 
-    background-image : url(${props=>props.url}) ;
+    background-image : url(${props=>`https://ik.imagekit.io/u1jztfg71ed${props.url}?tr=w-1,h-1:w-400,h-300`}) ;
     background-repeat : no-repeat ;
     background-position : center center ;
     background-size : cover ;
@@ -181,13 +182,20 @@ const StyleFontAwesomeIcon = styled(FontAwesomeIcon)`
 
 const Content = ({ content }) => {
     const { id, title, image_url, created_at, type } = content ;
+    const Image = useRef() ;
 
     const core = searchCoreData.filter(data => data.text === type)[0] ;
+
+    useEffect(() => {
+        setTimeout(() => {
+            Image.current.style.backgroundImage = `url(https://ik.imagekit.io/u1jztfg71ed${image_url}?tr=w-400,h-300)` ;
+        }, 300);
+    }, []) ;
 
     return (
             <Container>
                 <Link to={`${DOCUMENT}/${id}`}>
-                <Img url={image_url} />
+                <Img ref={Image} url={image_url} />
                 <TextContainer>
                     <HeadContainer>
                         <Date draggable="false">{created_at && created_at.substring(0, 10)}</Date>
