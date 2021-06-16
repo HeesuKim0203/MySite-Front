@@ -331,8 +331,8 @@ const Project = () => {
                         setSelectData(id) ;
                     }, false) ;
             
-                    const object = new CSS3DObject( divContainer );
-                    object.position.set( x, y, z );
+                    const object = new CSS3DObject( divContainer ) ;
+                    object.position.set( x, y, z ) ;  
                     object.rotation.y = ry ;
             
                     return object ;
@@ -359,7 +359,7 @@ const Project = () => {
                         width : `20px`,
                         height : `20px`,
                     },
-                        `<video width="100%" height="100%" src="${projects[2].image || ''}" style="position : relative ; top : 0px ; left : 0px ;" />`
+                    `<video width="100%" height="100%" src="${projects[2].image || ''}" style="position : relative ; top : 0px ; left : 0px ;" />`
                     ) );
                     group.add( new Element(1, -239, 0, 0, - Math.PI / 2, {
                         width : `20px`,

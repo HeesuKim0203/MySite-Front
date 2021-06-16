@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from 'react' ;
-import styled, { css } from 'styled-components' ;
+import { memo, useEffect } from 'react' ;
+import styled from 'styled-components' ;
 
-import MDEditor from '@uiw/react-md-editor' ;
+import MarkdownPreview from '@uiw/react-markdown-preview' ;
 import { connect } from 'react-redux';
 
 import ButtonContainer from '../Components/Blog/ButtonContainer' ;
@@ -13,7 +13,7 @@ import {
     DOCUMENT, PAGE404
 } from '../Util/routes' ;
 import CommentContainer from '../Components/Blog/CommentContainer' ;
-import { blogPageContentNum, mode, ApiHooks } from '../Util/util' ;
+import { blogPageContentNum, ApiHooks, LazyImageObserver } from '../Util/util' ;
 import { getContent } from '../Util/api' ;
 import { createAction } from '../Store/store' ;
 import Message from '../Components/Message' ;
@@ -58,26 +58,30 @@ const Title = styled.h1`
     margin-bottom : 40px ;
 
     line-height : 43px ;
+    color : ${props => props.theme.color.fontColor} ;
 
     @media ${props => props.theme.mobileL} {
         font-size : 32px ;
     }
 `;
 
-const cssTextDark = css`
-    h1, h2, h3, h4, h5, h6, a, p {
-        color : #e0e0e0 ;
-    }
-    code {
-        background-color : #e0e0e0  !important ;
-    }
-`;
+const LazyImage = memo((props) => {
 
-const cssTextLight = css`
-    p {
-        color : #424242 ;
-    }
-`;
+    const { className, src, alt, width, height, style } = props ;
+    const { imageSrc, imageRef } = LazyImageObserver({ src, dataSrc : props["data-src"] }) ;
+
+    return (
+        <img 
+            className={className} 
+            ref={imageRef} 
+            src={imageSrc} 
+            alt={alt}
+            width={width}
+            height={height}
+            style={style}
+         />
+    )
+}) ;
 
 const BlogPage = ({ 
     pageContents, 
@@ -90,9 +94,13 @@ const BlogPage = ({
 }) => {
 
     const { id : contentId, title, type, image_url } = content || {} ;
+    const { data, error, load, getData, setLoad } = ApiHooks(getContent, contentId || -1) ;
 
-    const { data, error, load, getData } = ApiHooks(getContent, contentId || -1) ;
-
+    function markDownlinkTarget(e) {
+        e.preventDefault() ;
+        window.open(e.target.href, '_blank') ;
+    }
+    
     useEffect(() => {
 
         if (typeof Node === 'function' && Node.prototype) {
@@ -100,7 +108,7 @@ const BlogPage = ({
             Node.prototype.removeChild = function(child) {
               if (child.parentNode !== this) {
                 if (console) {
-                  console.error('Cannot remove a child from a different parent', child, this);
+                //   console.error('Cannot remove a child from a different parent', child, this) ;
                 }
                 return child;
               }
@@ -111,11 +119,11 @@ const BlogPage = ({
             Node.prototype.insertBefore = function(newNode, referenceNode) {
               if (referenceNode && referenceNode.parentNode !== this) {
                 if (console) {
-                  console.error('Cannot insert before a reference node from a different parent', referenceNode, this);
+                //   console.error('Cannot insert before a reference node from a different parent', referenceNode, this);
                 }
-                return newNode;
+                return newNode ;
               }
-              return originalInsertBefore.apply(this, arguments);
+              return originalInsertBefore.apply(this, arguments) ;
             }
         }
 
@@ -124,79 +132,10 @@ const BlogPage = ({
         }) ;
 
         updatePageSelect(pageContentsPosition) ;
+        setLoad(true) ;
         getData() ;
 
-
     }, [ updatePageSelect, pageContentsPosition, id ]) ;
-
-
-    // useEffect(() => {
-
-    //     let lazyLoad ;
-    //     let lazyloadImages = document.getElementsByTagName("IMG") ;
-    //     console.log(lazyloadImages) ;
-
-    //     if ("IntersectionObserver" in window) {
-    //         const imageObserver = new IntersectionObserver((entries, observer) => {
-    //             entries.forEach((entry) => {
-    //                 if (entry.isIntersecting) {
-    //                     const image = entry.target ; 
-    //                     image.src = image.dataset.src ;
-    //                     image.classList.remove("lazy") ;
-    //                     imageObserver.unobserve(image) ;
-    //                 }
-    //             });
-    //         })
-
-    //         Array.prototype.forEach.call(lazyloadImages, image => {
-    //             image.className = 'lazy' ;
-    //             let url = image.src.split("/")[image.src.split("/").length - 1] ;
-    //             image.setAttribute("src", `https://ik.imagekit.io/u1jztfg71ed/${url}?tr=w-1,h-1:w-${Number(image.width)},h-${Number(image.height)}`) ;
-    //             image.setAttribute("data-src", `https://ik.imagekit.io/u1jztfg71ed/${url}?tr=w-${Number(image.width)},h-${Number(image.height)}`) ;
-    //             imageObserver.observe(image) ;
-    //         }) ;
-    //     }else {
-    //         let lazyloadThrottleTimeout ;
-            
-    //         let lazyloadImages = document.querySelectorAll(".lazy") ;
-
-    //         lazyLoad = function lazyLoad() {
-    //             if(lazyloadThrottleTimeout) {
-    //                 clearTimeout(lazyloadThrottleTimeout);
-    //               }    
-            
-    //               lazyloadThrottleTimeout = setTimeout(function() {
-    //                 let scrollTop = window.pageYOffset;
-    //                 lazyloadImages.forEach(function(img) {
-    //                     if(img.offsetTop < (window.innerHeight + scrollTop)) {
-    //                       img.src = img.dataset.src ;
-    //                       img.classList.remove('lazy') ;
-    //                     }
-    //                 });
-    //                 if( lazyloadImages.length === 0 ) { 
-    //                   document.removeEventListener("scroll", lazyLoad ) ;
-    //                   window.removeEventListener("resize", lazyLoad ) ;
-    //                   window.removeEventListener("orientationChange", lazyLoad );
-    //                 }
-    //             }, 20) ;
-    //         }
-
-    //         document.addEventListener("scroll", lazyLoad);
-    //         window.addEventListener("resize", lazyLoad);
-    //         window.addEventListener("orientationChange", lazyLoad);
-    //     }
-
-    //     return () => {
-    //         let lazyloadImages = document.querySelectorAll(".lazy") ;
-    //         lazyloadImages.forEach(function(img) {
-    //             img.classList.remove('lazy') ;
-    //         });
-    //         document.removeEventListener("scroll", lazyLoad ) ;
-    //         window.removeEventListener("resize", lazyLoad ) ;
-    //         window.removeEventListener("orientationChange", lazyLoad ) ;
-    //     }
-          
-    // }, [ load, data ]) ;
 
     return (
         <>
@@ -207,9 +146,6 @@ const BlogPage = ({
                 type={type}
                 image={image_url}
             />
-            <style>
-                { modeState === mode.dark ? cssTextDark : cssTextLight }
-            </style>
             <Container>
                     { id !== -1 ? 
                     load ? <Loder /> : 
@@ -218,7 +154,21 @@ const BlogPage = ({
                         <>
                             <Main>
                                 <Title>{title}</Title>
-                                <MDEditor.Markdown id="content" source={data && data.text} />
+                                <MarkdownPreview
+                                    className={modeState}
+                                    source={data && data.text}
+                                    components={{
+                                        a : ({ node, ...props }) =>  
+                                            <a 
+                                                onClick={markDownlinkTarget}  
+                                                {...props}
+                                            />,
+                                        img : ({node, ...props}) => 
+                                            <LazyImage 
+                                                {...props} 
+                                            />
+                                    }}
+                                />
                             </Main>
                             <Footer>
                                 <ContentBox>

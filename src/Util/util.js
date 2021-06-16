@@ -11,7 +11,7 @@ import {
     faPython,
     faAws 
 } from '@fortawesome/free-brands-svg-icons' ;
-import { useState } from 'react' ;
+import { useEffect, useRef, useState } from 'react' ;
 
 export const mode = { dark : 'dark', light : 'light' } ;
 
@@ -116,24 +116,60 @@ export function ApiHooks (api, apiData) {
     const [ error, setError ] = useState('') ;
     const [ load, setLoad ] = useState(true) ;
   
-    const getData = async () => {
-        try {
+    const getData = async ( loadState = true ) => {
 
-          const {
-              data : { result }
-          } = await api(apiData) ;
+      if(!loadState)
+        return setLoad(false) ;
 
-          setData(result) ;
+      try {
 
-        }catch {
+        const {
+            data : { result }
+        } = await api(apiData) ;
 
-          setError("서버로부터 데이터를 불러올 수 없습니다.") ;
+        setData(result) ;
 
-        }finally {
+      }catch {
 
-          setLoad(false) ;
-        }
-    } ;
+        setError("서버로부터 데이터를 불러올 수 없습니다.") ;
+
+      }finally {
+
+        setLoad(false) ;
+      }
+  } ;
   
-    return { data, error, load, getData, setLoad } ;
-  }
+  return { data, error, load, getData, setLoad } ;
+}
+
+export function LazyImageObserver( { src, dataSrc } ) {
+  const [ imageSrc, setImageSrc ] = useState(src) ;
+  const imageRef = useRef(null) ;
+  
+  useEffect(() => {
+    let observer ;
+    let timeOutClear ;
+
+    if(imageRef) {
+      observer = new IntersectionObserver(
+        ([entry]) => {
+          if(entry.isIntersecting) {
+            timeOutClear = setTimeout(() => {
+              setImageSrc(dataSrc) ;
+            }, 150) ;
+            observer.unobserve( imageRef.current ) ;
+          } 
+        }, { threshold : [ 0.25 ] }
+      ) ;
+      clearTimeout(timeOutClear) ;
+      observer.observe( imageRef.current ) ;
+    }
+
+    return () => {
+      observer && observer.disconnect(imageRef) ;
+    } ;
+
+  }, [ imageRef, imageSrc, dataSrc ]) ;
+
+  return { imageSrc, imageRef } ;
+}

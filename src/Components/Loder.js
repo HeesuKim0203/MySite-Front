@@ -9,6 +9,9 @@ const Container = styled.div`
     display : flex ;
     justify-content : center ;
     margin-top : 40px ;
+
+    color : ${props => props.theme.color.fontColor} ;
+
 `;
 
 const Loder = () => (

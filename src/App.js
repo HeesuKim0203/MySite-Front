@@ -14,6 +14,9 @@ import Message from './Components/Message';
 function App({ contentsData, setDefaultData, setPageContents }) {
 
   const { dark, light } = mode ;
+  const cookieViewMode = window.localStorage.getItem('view_mode') ;
+  const seessionStorage = window.sessionStorage.getItem('visited') ;
+  const { data, error, load, getData } = ApiHooks(getContents) ;
 
   const [ modeState, setModeState ] = useState(light) ;
 
@@ -21,15 +24,35 @@ function App({ contentsData, setDefaultData, setPageContents }) {
     setModeState(modeState === light ? dark : light) ;
   }
 
-  const { data, error, load, getData } = ApiHooks(getContents) ;
+  useEffect(() => {
+
+    if(!seessionStorage) getData() ;
+    else getData(false) ;
+
+    if(cookieViewMode)
+      cookieViewMode === dark ? setModeState(dark) : setModeState(light) ;
+    else
+      window.localStorage.setItem('view_mode', modeState) ;
+
+    checkVisitor() ;
+  }, []) ;
+
+  useEffect(() => {
+    window.localStorage.setItem('view_mode', modeState) ;
+  }, [ modeState ]) ;
 
   useEffect(() => {
     
-   if(!contentsData.length) 
-      getData() ;
-      setDefaultData(data) ;
-      setPageContents(data) ;
-      checkVisitor() ;
+  if(!contentsData.length && data.length && !seessionStorage) {
+    window.sessionStorage.setItem('visited', true) ;
+    window.sessionStorage.setItem('content_data', JSON.stringify(data)) ;
+    setDefaultData(data) ;
+    setPageContents(data) ;
+  } else if(seessionStorage) {
+    const data = JSON.parse(window.sessionStorage.getItem('content_data')) ;
+    setDefaultData(data) ;
+    setPageContents(data) ;
+  }
 
   }, [ data ]) ;
 
@@ -51,7 +74,7 @@ function App({ contentsData, setDefaultData, setPageContents }) {
 
 export default connect( 
   ({ 
-  content : { contentsData, select }
+  content : { contentsData }
   }) => ({
     contentsData
   }), dispatch => ({

@@ -31,6 +31,15 @@ const GlobalStyled = createGlobalStyle`
         color : black ;
         text-decoration : none ;
     }
+
+    .dark {
+        color : #e0e0e0 !important ;
+        code {
+            background-color : #e0e0e0 !important ;
+            color : #111 !important ;
+        }
+    }
+
 `;
 
 export default GlobalStyled ;
