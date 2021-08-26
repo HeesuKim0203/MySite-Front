@@ -4,14 +4,10 @@ import LanguageContent from './LanguageContent';
 const Container = styled.div`
     float : left ;
 
-    overflow : hidden ;
+    margin-top : 10px ;
 
-    &:nth-child(2) {
-        margin-top : 15px ;
-
-        @media ${props => props.theme.mobileS} {
-            margin-top : 2px ;
-        }
+    &:not(:first-child) {
+        margin-top : 5px ;
     }
 `;
 

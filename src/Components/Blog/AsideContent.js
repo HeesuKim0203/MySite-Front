@@ -13,6 +13,8 @@ const Title = styled.h6`
 
     color : ${props => props.theme.color.fontColor} ;
 
+    font-family : 'Noto Sans KR', sans-serif ;   
+
     user-select : none ;
     cursor : default ;
 
@@ -99,6 +101,7 @@ const Text = styled.span`
     display : block ;
 
     margin-left : 20px ;
+    font-family : 'Roboto', sans-serif ;
 
     font-size : 16px ;
 

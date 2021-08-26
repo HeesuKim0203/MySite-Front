@@ -117,7 +117,7 @@ const Title = styled.h1`
     font-weight : 600 ;
     font-size : 82px ;
 
-    font-family : 'Montserrat', sans-serif ;
+    font-family : 'Roboto', sans-serif ;
 
     user-select : none ;
 
@@ -144,6 +144,8 @@ const TypewriterStyled = css`
 
         font-weight : 500 ;
         font-size : 30px ;
+
+        font-family : 'Roboto', sans-serif ;
 
         margin-top : 15px ;
 
@@ -179,6 +181,7 @@ const Button = styled.button`
 
     font-size : 22px ;
     font-weight : 600 ;
+    font-family : 'Roboto', sans-serif ;
 
     color : #fff ;
 

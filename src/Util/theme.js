@@ -1,4 +1,6 @@
 export const size = {
+    // 1600 사이즈
+    // 1656 ~ 1400
     laptop : 1400,
     tabletL : 1220,
     tabletS : 1024,
@@ -6,7 +8,7 @@ export const size = {
     mobileS : 468  
 }
 
-const WHITE = '#eeeeee' ; 
+const WHITE = '#e0e0e0' ; 
 const BLACK = '#222' ;
 const SELECTCOLOR = '#fb9300' ;
 

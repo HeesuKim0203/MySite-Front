@@ -26,7 +26,7 @@ const Title = styled.h5`
 
     user-select : none ;
 
-    font-family : 'Montserrat', sans-serif ;
+    font-family : 'Noto Sans KR', sans-serif ;
 
     @media ${props => props.theme.laptop} {
         font-size : 14px ;
@@ -155,8 +155,8 @@ const Date = styled.span`
     padding-left : 5px ;
 
     user-select : none ;
-
-    font-family : 'Montserrat', sans-serif ;
+    
+    font-family : 'Noto Sans KR', sans-serif ;
 
     @media ${props => props.theme.laptop} {
         font-size : 7px ;

@@ -25,14 +25,19 @@ const UseLanguageWrap = styled.div`
     
     flex-direction : column ;
 
-    overflow : hidden ;
+    @media (max-width : 1656px) and ( min-width : 1400px ) {
+        display : grid ;
+        
+        grid-template-columns : repeat(3, 30%) ;
+    }
+
 `;
 
 const UseLanguage = () => {
 
     let num = 0 ;
 
-    const menu = language.reduce((prev, item, index ) => {
+    const menu = language.reduce((prev, item, index) => {
         if(index === num) {
             prev.push([]) ;
             num += LanguageContentNum ;

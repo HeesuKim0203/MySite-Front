@@ -8,6 +8,8 @@ const Container = styled.li`
     width : 200px ;
     height : 58px ;
 
+    font-family: 'Roboto', sans-serif ;
+
     display : flex ;
     
     justify-content : center ;

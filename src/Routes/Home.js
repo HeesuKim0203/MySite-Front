@@ -73,7 +73,6 @@ const SlideTextContainer = styled.div`
 const LanguageDataContainer = styled.div`
     float : left ;
     width : 40% ;
-    height : 350px ;
 
     margin-left : 10% ;
 
@@ -84,9 +83,6 @@ const LanguageDataContainer = styled.div`
     @media ${props => props.theme.laptop} {
         width : 100% ;
         margin-left : 0 ;
-    }
-    @media ${props => props.theme.mobileS} {
-        height : 260px ;
     }
 `;
 
@@ -135,7 +131,11 @@ const Title = styled.h3`
     width : 100% ;
     font-size : 28px ;
 
+    margin-bottom : 5px ; 
+
     text-align : center ;
+
+    font-family : 'Roboto', sans-serif ;
 
     user-select : none ;
     color : ${props => props.theme.color.fontColor} ;
@@ -150,6 +150,8 @@ const Title = styled.h3`
 
 const Text = styled.p`
     font-size : 14px ;
+
+    font-family : 'Noto Sans KR', sans-serif ;
 
     text-align : center ;
     padding : 5px 3px ;

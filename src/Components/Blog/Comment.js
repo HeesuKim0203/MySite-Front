@@ -77,6 +77,7 @@ const UserName = styled.span`
     display : inline-block ;
 
     text-decoration : underline ;
+    font-family : 'Noto Sans KR', sans-serif ;
 
     font-weight : 600 ;
 
@@ -123,6 +124,7 @@ const Input = styled.input`
     padding-left : 2px ;
 
     text-align : left ;
+    font-family : 'Noto Sans KR', sans-serif ;
 
     font-size : 12px ;
 
@@ -142,6 +144,7 @@ const TextArea = styled.textarea`
 
     width : 100% ;
     height : 80px ;
+    font-family : 'Noto Sans KR', sans-serif ;
 
     @media ${props => props.theme.mobileS} {
         height : 40px ;
@@ -157,6 +160,7 @@ const SubmitButton = styled(Button)`
 
     text-align : center ;
     font-size : 14px ;
+    font-family : 'Noto Sans KR', sans-serif ;
 
     border : 1px solid #999 ;
 

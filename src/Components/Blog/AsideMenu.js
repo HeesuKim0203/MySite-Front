@@ -66,6 +66,8 @@ const AllDataViewButton = styled.div`
 
     padding : 20px 10px 20px 10px ;
 
+    font-family : 'Noto Sans KR', sans-serif ;
+
     color : ${props => props.theme.color.aisdeMenuColor} ;
 
     user-select : none ;
@@ -169,8 +171,6 @@ const Form = styled.form`
     width : 200px ;
     height : 40px ;
 
-    font-family: 'Ubuntu', sans-serif ;
-
     @media ${props => props.theme.mobileS} {
         height : 25px ;
         width : 150px ;
@@ -188,6 +188,8 @@ const SearhInput = styled.input`
     float : left ;
 
     font-weight : 550 ;
+
+    font-family : 'Noto Sans KR', sans-serif ;
 
     font-size : 16px ;
     color : #424242 ;

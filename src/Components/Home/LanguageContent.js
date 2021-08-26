@@ -3,42 +3,50 @@ import styled from 'styled-components' ;
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome' ;
 import { useState } from 'react';
 
-const Container = styled.div`
-    width : 80px ;
-    height : 120px ;
+const Wrap = styled.div`
+    width : 105px ;
+    height : 150px ;
 
     float : left ;
 
     cursor : pointer ;
 
     &:not(:last-child) {
-        margin-right : 20px ;
-
-        @media ${props => props.theme.mobileL} {
-            margin-right : 10px ;
-        }
+        margin-right : 13px ;
     }
 
     @media ${props => props.theme.mobileL} {
-        width : 65px ;
+        width : 100px ;
+        height : 130px ;
+    }
+
+    @media ${props => props.theme.mobileS} {
+        width : 70px ;
+        height : 90px ;
+    }
+`;
+
+const Container = styled.div`
+    width : 100% ;
+    height : 105px ;
+
+    @media ${props => props.theme.mobileL} {
         height : 100px ;
     }
 
     @media ${props => props.theme.mobileS} {
-        width : 60px ;
-        height : 90px ;
+        height : 70px ;
     }
 `;
 
 const Img = styled.div`
     width: 100% ;
-    height : 80px ;
+    height : 100% ;
 
-    margin : 5px auto 0 auto ;
+    border-radius : 100% ;
 
-    border-radius : 100px ;
-
-    background-color : #dbdbdb ;
+    background-color : #eeeeee ;
+    box-shadow : #b3e5fc 0px 3px 12px, #bdbdbd 0px 2px 8px 0px  ;
 
     display : flex ;
 
@@ -48,10 +56,6 @@ const Img = styled.div`
     align-items : center ;
 
     float : left ;
-
-    @media ${props => props.theme.mobileL} {
-        height : 60px ;
-    }
 `;
 
 const TextContainer = styled.div`
@@ -75,23 +79,23 @@ const Text = styled.span`
     font-weight : 600 ;
     user-select : none ;
 
+    font-family : 'Roboto', sans-serif ;
+
     color : ${props => props.theme.color.fontColor} ;
 
     font-size : 14px ;
 
-    @media ${props => props.theme.mobileL} {
-        font-size : 11px ;
-        font-weight : 500 ;
-    }
     @media ${props => props.theme.mobileS} {
-        font-size : 10px ;
+        font-size : 11px ;
     }
 `;
 
 const TextData = styled.span`
     display : block ;
 
-    font-size : 11px ;
+    font-family : 'Roboto', sans-serif ;
+
+    font-size : 15px ;
     font-weight : 600 ;
 
     float : left ;
@@ -100,24 +104,33 @@ const TextData = styled.span`
     user-select : none ;
 
     &:first-child {
-        font-size : 18px ;
+        font-size : 22px ;
         font-weight : 700 ;
     }
 
     &:not(:last-child) {
         margin-bottom : 3px ;
     }
+
+    @media ${props => props.theme.mobileS} {
+        font-size : 11px ;
+
+        &:first-child {
+            font-size : 18px ;
+            font-weight : 700 ;
+        }
+    }
 `;
 
 const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
 
-    font-size : 52px ;
+    font-size : 48px ;
 
     @media ${props => props.theme.mobileL} {
-        font-size : 38px ;
+        font-size : 42px ;
     }
     @media ${props => props.theme.mobileS} {
-        font-size : 34px ;
+        font-size : 32px ;
     }
     
 `;
@@ -133,22 +146,24 @@ const LanguageContent = ({ menu }) => {
     }
 
     return (
-        <Container>
-            <Img onClick={onClickLanguage}>
-                {textMode ? 
-                    <StyledFontAwesomeIcon icon={icon} color={color} /> : 
-                    (
-                    <>
-                        <TextData color={rating[1]} >{rating[0]}</TextData>
-                        <TextData>project {project}</TextData>
-                    </>
-                    )
-                }
-            </Img>
-            <TextContainer>
-                <Text>{text}</Text>
-            </TextContainer>
-        </Container>
+        <Wrap>
+            <Container>
+                <Img onClick={onClickLanguage}>
+                    {textMode ? 
+                        <StyledFontAwesomeIcon icon={icon} color={color} /> : 
+                        (
+                        <>
+                            <TextData color={rating[1]} >{rating[0]}</TextData>
+                            <TextData>Project {project}</TextData>
+                        </>
+                        )
+                    }
+                </Img>
+                <TextContainer>
+                    <Text>{text}</Text>
+                </TextContainer>
+            </Container>
+        </Wrap>
     );
 };
 

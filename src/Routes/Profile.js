@@ -24,9 +24,13 @@ const MyContainer = styled.div`
 
     margin : 0 auto ;
 
-    @media ${props => props.theme.mobileS} {
+    @media ${props => props.theme.mobileL} {
         border-radius : 0 ;
         width : 100% ;
+        height : 450px ;
+    }
+
+    @media ${props => props.theme.mobileS} {
         height : 300px ;
     }
 `;
@@ -45,6 +49,11 @@ const Main = styled.div`
 
 const Main1 = styled(Main)`
     width : 50% ;
+
+    @media ${props => props.theme.tabletS} {
+        width : 100% ;
+        height : 50% ;
+    }
 `;
 
 const Main2 = styled(Main)`   
@@ -52,6 +61,14 @@ const Main2 = styled(Main)`
     width : 50% ;
 
     border-left : 1px solid ${props => props.theme.color.profileBorderColor} ;
+
+    @media ${props => props.theme.tabletS} {
+        width : 100% ;
+        height : 50% ;
+
+        border-left : none ;
+        border-top : 1px solid ${props => props.theme.color.profileBorderColor} ;
+    }
 `;
 
 const MyImg = styled.div`
@@ -60,19 +77,25 @@ const MyImg = styled.div`
 `;
 
 const MyIntroduction = styled.ul`
-    padding-right : 30px ;
+    padding : 20px 30px ;
     margin-top : 10% ;
-    margin-left : 18% ;
 
-    @media ${props => props.theme.mobileS} {
-        padding-right : 0 ;
-        margin-left : 8% ;
+    @media ${props => props.theme.tabletS} {
+        margin-top : 0% ;
+
+        padding : 10px 15px ;
     }
 `;
 
 const MyIntroductionLi = styled.li`
     &:not(:last-child) {
         margin-bottom : 50px ;
+    }
+
+    @media ${props => props.theme.tabletS} {
+        &:not(:last-child) {
+            margin-bottom : 25px ;
+        }
     }
 
     @media ${props => props.theme.mobileS} {
@@ -86,6 +109,8 @@ const TitleText = styled.span`
     display : inline-block ;
 
     font-size : 22px ;
+
+    font-family : 'Noto Sans KR', sans-serif ;
 
     padding-bottom : 8px ;
 
@@ -110,6 +135,8 @@ const Text = styled.span`
 
     padding-bottom : 8px ;
 
+    font-family : 'Noto Sans KR', sans-serif ;
+
     font-weight : 550 ;
 
     @media ${props => props.theme.mobileS} {
@@ -119,6 +146,7 @@ const Text = styled.span`
 `;
 
 const Content = styled.span`
+    font-family : 'Noto Sans KR', sans-serif ;
     @media ${props => props.theme.mobileS} {
         font-size : 10px ;
     }
@@ -143,7 +171,7 @@ const Profile = () => {
                             <MyIntroduction>
                                 <MyIntroductionLi>
                                     <TitleText>Heesu99</TitleText><br/>
-                                    <Content>Front Programer</Content>
+                                    <Content>Programer</Content>
                                 </MyIntroductionLi>
                                 <MyIntroductionLi>
                                     <Text>이메일</Text><br/>

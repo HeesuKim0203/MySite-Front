@@ -91,6 +91,8 @@ const TitleContainer = styled.div`
 const Title = styled.h5`
     box-sizing : content-box ;
 
+    font-family : 'Roboto', sans-serif ;
+
     height : 23px ;
 
     font-size : 17px ;
@@ -115,6 +117,8 @@ const DateContainer = styled.div`
     width : 100% ;
 
     text-align : center ;
+
+    font-family : 'Noto Sans KR', sans-serif ;
 `;
 
 const Date = styled.span`
@@ -125,6 +129,7 @@ const Date = styled.span`
     font-size : 12px ;
 
     user-select : none ;
+    font-family : 'Noto Sans KR', sans-serif ;
 
     @media ${props => props.theme.mobileL} {
         font-size : 10px ;
@@ -136,6 +141,8 @@ const Date = styled.span`
 
 const Description = styled.p`
     display : inline-block ;
+
+    font-family : 'Noto Sans KR', sans-serif ;
     
     padding : 5px 10px ;
     line-height : 18px ;

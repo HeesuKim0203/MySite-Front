@@ -34,6 +34,8 @@ const Title = styled.span`
 
     font-weight : 500 ;
 
+    font-family : 'Noto Sans KR', sans-serif ;
+
     overflow : hidden ; 
     text-overflow : ellipsis ; 
     white-space : nowrap ;
@@ -41,6 +43,8 @@ const Title = styled.span`
 
 const Date = styled.span`
     font-size : 12px ;
+
+    font-family : 'Noto Sans KR', sans-serif ;
 `;
 
 const BlogPageContent = ({ content, location : { pathname } }) => {
